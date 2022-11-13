@@ -1,0 +1,16 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="cancel()">Cancel</ion-button>
+      </ion-buttons>
+      <ion-title>{{'activities.create'|translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <app-edit-activity-form [form]="form"></app-edit-activity-form>
+  </ion-content>
+</ion-content>

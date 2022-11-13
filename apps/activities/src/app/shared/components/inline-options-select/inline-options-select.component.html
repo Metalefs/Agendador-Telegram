@@ -1,0 +1,9 @@
+<div class="{{customClass}}" [ngClass]="{'validation-error': formGroup.get(controlName)?.dirty && formGroup.get(controlName)?.errors}">
+  <div class="row align-items-center">
+    <div class="col-2 mx-1" *ngFor="let option of options">
+      <a [ngClass]="{'selected': selectedOptions.includes(option)}" href="javascript:;" (click)="toggleSelectOption(option)">
+        {{getOptionLabel(option)}}
+      </a>
+    </div>
+  </div>
+</div>

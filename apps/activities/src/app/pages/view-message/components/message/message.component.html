@@ -1,0 +1,42 @@
+<ion-item
+  *ngIf="activity"
+  [routerLink]="'/activity/' + activity.id"
+  [detail]="false"
+>
+  <div slot="start" [class]="!activity.done ? 'dot dot-unread' : 'dot'"></div>
+  <ion-row>
+    <ion-col>
+      <ion-note>
+        <ion-icon name="alarm-outline"></ion-icon>
+        {{ activity.date }}
+      </ion-note>
+      <span class="date">
+        <ion-icon
+          name="chevron-forward"
+          size="small"
+          *ngIf="isIos()"
+        ></ion-icon>
+      </span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-label class="ion-text-wrap">
+        <ion-row>
+          <app-activity-type-icon
+            [type]="activity.type!"
+          ></app-activity-type-icon>
+          <h2>
+            {{ activity.title }}
+          </h2>
+          <p *ngIf="activity.description">
+            {{ activity.description }}
+          </p>
+        </ion-row>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-row slot="end">
+    <ion-icon name="create-outline" size="small"></ion-icon>
+  </ion-row>
+</ion-item>

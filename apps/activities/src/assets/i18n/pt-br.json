@@ -1,0 +1,130 @@
+{
+  "general":{
+    "schedule":"Cronograma",
+    "activities":"Atividades",
+    "actions":"Ações",
+    "add": "Adicionar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "type": "Tipo",
+    "weekdays": {
+      "index": "Dias da semana",
+      "monday": "Segunda-feira",
+      "tuesday": "Terça-feira",
+      "wednesday": "Quarta-feira",
+      "thursday": "Quinta-feira",
+      "friday": "Sexta-feira",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
+    },
+    "months": {
+      "index": "Meses",
+      "january": "Janeiro",
+      "february": "Fevereiro",
+      "march": "Março",
+      "april": "Abril",
+      "may": "Maio",
+      "june": "Junho",
+      "july": "Julho",
+      "august": "Agosto",
+      "september": "Setembro",
+      "october": "Outubro",
+      "november": "Novembro",
+      "december": "Dezembro"
+    },
+    "occurs": {
+      "index": "Ocorre",
+      "once": "Uma vez",
+      "daily": "Diariamente",
+      "weekly": "Semanalmente",
+      "monthly": "Mensalmente",
+      "yearly": "Anualmente",
+      "every": "A cada",
+      "sporadically": "Esporadicamente"
+    },
+    "startingFrom": {
+      "index": "A partir de",
+      "today": "Hoje",
+      "tomorrow": "Amanhã",
+      "nextWeek": "Próxima semana",
+      "nextMonth": "Próximo mês",
+      "nextYear": "Próximo ano",
+      "specificDate": "Data específica"
+    },
+    "until": {
+      "index": "Até",
+      "never": "Nunca",
+      "after": "Depois",
+      "afterX": "Depois de {0}",
+      "afterXDays": "Depois de {0} dias",
+      "afterXMonths": "Depois de {0} meses",
+      "afterXYears": "Depois de {0} anos",
+      "afterXWeeks": "Depois de {0} semanas"
+    },
+    "or": "ou",
+    "at": "em",
+    "by": "Por"
+  },
+  "activities": {
+    "add":"Adicionar uma atividade",
+    "create":"Criar uma atividade",
+    "edit":"Editar uma atividade",
+    "choose":"Escolha uma atividade",
+    "shopping": "Fazer compras",
+    "cleaning": "Lavar a louça",
+    "prep": "Preparar refeições",
+    "meal": "Refeição",
+    "workout": "Treino",
+    "hydrate": "Hidratação",
+    "supplement": "Suplemento",
+    "sleep": "Dormir",
+    "form": {
+      "title": {
+        "label":"Insira o titulo",
+        "placeholder":"Titulo da atividade"
+      },
+      "description": {
+        "label":"Insira a descrição",
+        "placeholder":"Descrição da atividade"
+      },
+      "date": {
+        "label":"Insira a data",
+        "placeholder":"Data da atividade"
+      },
+      "time": {
+        "label": "Insira o horário",
+        "placeholder": "Horário da atividade"
+      },
+      "recurrence": {
+        "label": "Insira a recorrência",
+        "placeholder": "Recorrência da atividade"
+      },
+      "weekdays": "Dias da semana",
+      "type": "Tipo de atividade"
+    }
+  },
+  "meals":{
+    "add": "Adicionar uma refeição"
+  },
+  "scheduleRepetition": {
+    "title": "Recorrência",
+    "form": {
+      "startDateInput": {
+        "label": "Data de início",
+        "placeholder": "Selecione a data de início"
+      },
+      "RepeatIntervalUnitInput": {
+        "label": "Repetir a cada",
+        "placeholder": "Selecione a unidade"
+      },
+      "weekdayInput": {
+        "label": "Dia da semana",
+        "placeholder": "N° do dia útil"
+      },
+      "applicableMonthsSelect": {
+        "label": "Meses do ano",
+        "placeholder": "Selecione os meses"
+      }
+    }
+  }
+}

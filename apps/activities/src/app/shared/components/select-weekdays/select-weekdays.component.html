@@ -1,0 +1,3 @@
+<ion-select [interface]="'action-sheet'" placeholder="{{'activities.form.weekdays'|translate}}" [multiple]="true">
+  <ion-select-option *ngFor="let day of options" [value]="day.value">{{day.label}}</ion-select-option>
+</ion-select>

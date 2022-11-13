@@ -1,0 +1,130 @@
+{
+  "general": {
+    "schedule": "Schedule",
+    "activities": "Activities",
+    "actions": "Actions",
+    "add": "Add",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "type": "Type",
+    "weekdays": {
+      "index": "Days of the week",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "months": {
+      "index": "Months",
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "November": "November",
+      "december": "December"
+    },
+    "occurs": {
+      "index": "Occurs",
+      "once": "Once",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Annually",
+      "every": "Every",
+      "sporadically": "Sporadically"
+    },
+    "startingFrom": {
+      "index": "From",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "nextWeek": "Next week",
+      "nextMonth": "Next month",
+      "nextYear": "Next year",
+      "specificDate": "Specific date"
+    },
+    "until": {
+      "index": "Until",
+      "never": "Never",
+      "after": "After",
+      "afterX": "After {0}",
+      "afterXDays": "After {0} days",
+      "afterXMonths": "After {0} months",
+      "afterXYears": "After {0} years",
+      "afterXWeeks": "After {0} weeks"
+    },
+    "or": "or",
+    "at": "at",
+    "by": "by"
+  },
+  "activities": {
+    "add": "Add an activity",
+    "create": "Create an activity",
+    "edit": "Edit an activity",
+    "choose": "Choose an activity",
+    "shopping": "Grocery shopping",
+    "cleaning": "Wash dishes",
+    "prep": "Meal prep",
+    "meal": "Meal",
+    "workout": "Workout",
+    "hydrate": "Hydrate",
+    "supplement": "Supplement",
+    "sleep": "Sleep",
+    "form": {
+      "title": {
+        "label": "Insert title",
+        "placeholder": "Activity title"
+      },
+      "description": {
+        "label": "Enter description",
+        "placeholder": "Description of the activity"
+      },
+      "date": {
+        "label": "Insert date",
+        "placeholder": "Date of the activity"
+      },
+      "time": {
+        "label": "Insert time",
+        "placeholder": "Schedule of the activity"
+      },
+      "recurrence": {
+        "label": "Insert recurrence",
+        "placeholder": "Activity recurrence"
+      },
+      "weekdays": "Weekdays",
+      "type": "Activity type"
+    }
+  },
+  "meals": {
+    "add": "Add a meal"
+  },
+  "scheduleRepetition": {
+    "title": "Recorrência",
+    "form": {
+      "startDateInput": {
+        "label": "Data de início",
+        "placeholder": "Selecione a data de início"
+      },
+      "RepeatIntervalUnitInput": {
+        "label": "Repetir a cada",
+        "placeholder": "Selecione a unidade"
+      },
+      "weekdayInput": {
+        "label": "Dia da semana",
+        "placeholder": "N° do dia útil"
+      },
+      "applicableMonthsSelect": {
+        "label": "Meses do ano",
+        "placeholder": "Selecione os meses"
+      }
+    }
+  }
+}

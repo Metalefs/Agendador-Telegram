@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="activity">
+  <ion-item>
+    <ion-icon name="person-circle" color="primary"></ion-icon>
+    <ion-label class="ion-text-wrap">
+      <h2>
+        {{ activity.title }}
+        <span class="date">
+          <ion-note>{{ activity.date }}</ion-note>
+        </span>
+      </h2>
+      <h3>{{'general.by'|translate}}: <ion-note>Me</ion-note></h3>
+      <h3>{{'general.type'|translate}}:
+        <ion-note>{{'activities.'+activity.type | translate}}</ion-note>
+      </h3>
+      <app-activity-type-icon [type]="activity.type!"></app-activity-type-icon>
+    </ion-label>
+  </ion-item>
+
+  <div class="ion-padding">
+    <app-edit-activity-form ></app-edit-activity-form>
+  </div>
+</ion-content>
+

@@ -1,0 +1,49 @@
+<form [formGroup]="form">
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="stacked">{{'activities.form.title.label'|translate}}</ion-label>
+        <ion-input formControlName="title" type="text" [placeholder]="'activities.form.title.placeholder'|translate"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="inline">{{'activities.form.time.label'|translate}}</ion-label>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" formControlName="time" presentation="time"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="inline">{{'activities.form.recurrence.label'|translate}}</ion-label>
+        <app-select-weekdays [formGroup]="form" [controlName]="'weekdays'"></app-select-weekdays>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="inline">{{'activities.form.type'|translate}}</ion-label>
+        <ion-select formControlName="type" interface="action-sheet" [placeholder]="">
+          <ion-select-option *ngFor="let type of getActivityTypes()" [value]="type.name">
+            {{'activities.'+type.name|translate}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="stacked">{{'activities.form.description.label'|translate}}</ion-label>
+        <ion-textarea formControlName="description" [placeholder]="'activities.form.description.placeholder'|translate"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</form>
