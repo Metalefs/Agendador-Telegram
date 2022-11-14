@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@capacitor/storage';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,23 +12,25 @@ export class LanguageService {
   constructor(public translateService: TranslateService) {
   }
 
-  loadLanguage() {
+  async loadLanguage() {
     this.translateService.currentLang = '';
 
     this.translateService.addLangs(this.supportLanguages);
-    const currentLanguage = localStorage.getItem('language');
+    const currentLanguage = await (await Storage.get({key:'language'})).value;
 
     if (!currentLanguage || !this.supportLanguages.includes(currentLanguage)) {
       this.translateService.setDefaultLang('pt-br');
       this.selectedLanguage = 'pt-br';
-      localStorage.setItem('language', 'pt-br');
+      Storage.set({ key: 'language', value: 'pt-br' })
+
 
       let browserlang = this.translateService.getBrowserCultureLang();
       browserlang = browserlang!.toLocaleLowerCase();
       if (this.supportLanguages.includes(browserlang)) {
         this.translateService.use(browserlang);
         this.selectedLanguage = browserlang;
-        localStorage.setItem('language', browserlang);
+        Storage.set({ key: 'language', value: browserlang })
+
       }
     } else {
       this.translateService.use(currentLanguage);
@@ -37,6 +41,6 @@ export class LanguageService {
   useLang(lang: string) {
     this.translateService.use(lang);
     this.selectedLanguage = lang;
-    localStorage.setItem('language', lang);
+    Storage.set({ key: 'language', value: lang })
   }
 }

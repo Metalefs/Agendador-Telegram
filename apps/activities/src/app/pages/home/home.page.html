@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> {{'general.schedule'|translate}} </ion-title>
+    <ion-content>
+      <ion-button expand="full" (click)="logout()">
+        <ion-icon [name]="'log-out'"></ion-icon>
+      </ion-button>
+    </ion-content>
   </ion-toolbar>
 </ion-header>
 

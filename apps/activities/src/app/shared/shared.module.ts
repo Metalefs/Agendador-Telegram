@@ -13,7 +13,7 @@ import { SelectWeekdaysModule } from './components/select-weekdays/select-weekda
   declarations: [
     EditActivityComponent,
     InlineOptionsSelectComponent,
-    ActivityTypeIconComponent
+    ActivityTypeIconComponent,
   ],
   imports: [
     CommonModule,

@@ -7,7 +7,7 @@ import { MongoClient } from 'mongodb';
 export const mongoConnectionString = process.env.DBURL;
 const client = new MongoClient(mongoConnectionString);
 // Database Name
-const dbName = 'products';
+const dbName = 'mealPrep';
 export async function dbconnection() {
   // Use connect method to connect to the server
   console.log('Connecting...');

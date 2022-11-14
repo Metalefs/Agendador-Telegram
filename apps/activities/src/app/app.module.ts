@@ -4,7 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   TranslateModule,
   TranslateLoader,
@@ -14,6 +14,7 @@ import { LanguageService } from './shared/services/language-service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
+import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
 
 const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -28,7 +29,9 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
         deps: [HttpClient]
       }
     }), AppRoutingModule],
-  providers: [LanguageService,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [LanguageService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

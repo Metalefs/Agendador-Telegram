@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../shared/services/data.service';
-import { ActionSheetController, ModalController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { ModalController } from '@ionic/angular';
 import { EditActivityComponent } from '../../shared/components/edit-activity/edit-activity.component';
 import { IActivity, IconTypeEnum } from '@uncool/shared';
 import { ItemReorderEventDetail } from '@ionic/angular';
+import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,13 +18,13 @@ export class HomePage implements OnInit{
   activities!:IActivity[];
   constructor(
     public modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController,
+    private authService: AuthenticationService,
     public service: DataService,
-    private translate: TranslateService) {
+    private router: Router) {
       this.openModal = this.openModal.bind(this);
   }
 
-  ngOnInit(){
+  async ngOnInit(){
     this.activities = this.service.getActivities();
   }
 
@@ -44,36 +45,6 @@ export class HomePage implements OnInit{
     ev.detail.complete();
   }
 
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: this.translate.instant('activities.add'),
-      subHeader: this.translate.instant('activities.choose'),
-      buttons: [
-        {
-          text: await this.translate.get('activities.shopping').toPromise(),
-          handler: async () => await this.openModal()
-        },
-        {
-          text: await this.translate.get('activities.prep').toPromise(),
-          handler: async () => await this.openModal()
-        },
-        {
-          text: await this.translate.get('activities.meal').toPromise(),
-          handler: async () => await this.openModal()
-        },
-        {
-          text: await this.translate.get('activities.cleaning').toPromise(),
-          handler: async () => await this.openModal()
-        },
-      ],
-    });
-
-    await actionSheet.present();
-
-    const result = await actionSheet.onDidDismiss();
-    this.result = JSON.stringify(result, null, 2);
-  }
-
   async openModal() {
     const activityModal = await this.modalCtrl.create({
       component: EditActivityComponent,
@@ -81,5 +52,10 @@ export class HomePage implements OnInit{
     });
     activityModal.present();
   }
+
+  async logout() {
+		await this.authService.logout();
+		this.router.navigateByUrl('/', { replaceUrl: true });
+	}
 
 }
