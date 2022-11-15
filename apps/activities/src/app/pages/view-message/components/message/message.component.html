@@ -1,6 +1,6 @@
 <ion-item
   *ngIf="activity"
-  [routerLink]="'/activity/' + activity.id"
+  [routerLink]="'/activity/' + activity._id"
   [detail]="false"
 >
   <div slot="start" [class]="!activity.done ? 'dot dot-unread' : 'dot'"></div>

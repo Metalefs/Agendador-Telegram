@@ -6,6 +6,7 @@ import { IActivity, IconTypeEnum } from '@uncool/shared';
 import { ItemReorderEventDetail } from '@ionic/angular';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { Router } from '@angular/router';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-home',
@@ -22,15 +23,23 @@ export class HomePage implements OnInit{
     public service: DataService,
     private router: Router) {
       this.openModal = this.openModal.bind(this);
+      this.createActivity = this.createActivity.bind(this);
   }
 
   async ngOnInit(){
-    this.activities = this.service.getActivities();
+   this.getActivities()
+  }
+
+  getActivities(){
+    this.service.getActivities().subscribe(activities => {
+      this.activities = activities;
+    });
   }
 
   refresh(ev: any) {
     setTimeout(() => {
       ev.detail.complete();
+      this.getActivities()
     }, 3000);
   }
 
@@ -50,7 +59,15 @@ export class HomePage implements OnInit{
       component: EditActivityComponent,
       componentProps: { userId: 8675309 }
     });
+    activityModal.onDidDismiss().then(this.createActivity)
     activityModal.present();
+  }
+
+  async createActivity(activity: OverlayEventDetail){
+    console.log(activity)
+    this.service.create(activity.data).subscribe(()=> {
+      this.getActivities()
+    });
   }
 
   async logout() {

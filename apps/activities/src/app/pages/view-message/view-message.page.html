@@ -25,7 +25,8 @@
   </ion-item>
 
   <div class="ion-padding">
-    <app-edit-activity-form ></app-edit-activity-form>
+    {{this.form?.value |json}}
+    <app-edit-activity-form (onInitForm)="this.form = $event"></app-edit-activity-form>
   </div>
 </ion-content>
 

@@ -1,6 +1,7 @@
 import { ActivityTypeEnum } from '../enums/ActivityTypeEnum';
+import { IBaseModel } from './IBaseModel';
 
-export interface IActivity{
+export interface IActivity extends IBaseModel{
   priority?: number;
   title?: string;
   date?: string;
@@ -9,6 +10,6 @@ export interface IActivity{
   weekdays?: string;
   description?: string;
   type?: ActivityTypeEnum;
-  id?: string;
+  _id?: string;
   done?: boolean;
 }

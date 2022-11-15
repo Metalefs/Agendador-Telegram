@@ -78,6 +78,7 @@
     "hydrate": "Hidratação",
     "supplement": "Suplemento",
     "sleep": "Dormir",
+    "empty": "Nenhuma atividade encontrada",
     "form": {
       "title": {
         "label":"Insira o titulo",

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IActivity } from '@uncool/shared';
 import { DataService } from '../../shared/services/data.service';
@@ -10,6 +11,7 @@ import { DataService } from '../../shared/services/data.service';
 })
 export class ViewMessagePage implements OnInit {
   public activity!: IActivity;
+  form!: UntypedFormGroup;
 
   constructor(
     private data: DataService,
@@ -18,7 +20,10 @@ export class ViewMessagePage implements OnInit {
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.activity = this.data.getMessageById(parseInt(id as any, 10));
+    if(id)
+      this.data.geActivityById(id).subscribe(activity => {
+        this.activity = activity;
+      });
   }
 
   getBackButtonText() {

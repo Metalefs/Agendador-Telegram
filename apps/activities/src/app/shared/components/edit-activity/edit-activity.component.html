@@ -11,6 +11,8 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <app-edit-activity-form [form]="form"></app-edit-activity-form>
+    {{this.form?.value |json}}
+
+    <app-edit-activity-form (onInitForm)="this.form = $event"></app-edit-activity-form>
   </ion-content>
 </ion-content>

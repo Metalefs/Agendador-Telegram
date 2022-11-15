@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 
@@ -8,6 +8,7 @@ import { DataService } from '../../services/data.service';
 })
 export class EditActivityFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
+  @Output() onInitForm = new EventEmitter<UntypedFormGroup>()
   constructor(private service: DataService, private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
@@ -20,6 +21,7 @@ export class EditActivityFormComponent implements OnInit {
       description: [,],
       type: [, Validators.required]
     });
+    this.onInitForm.emit(this.form);
   }
 
   getActivityTypes(){

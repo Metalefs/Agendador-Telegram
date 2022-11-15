@@ -20,15 +20,7 @@ export class EditActivityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      title: [, [Validators.required]],
-      date: [, [Validators.required]],
-      time: [, [Validators.required]],
-      recurrence: [, Validators.required],
-      weekdays: [, Validators.required],
-      description: [,],
-      type: [, Validators.required]
-    });
+
   }
 
   cancel() {

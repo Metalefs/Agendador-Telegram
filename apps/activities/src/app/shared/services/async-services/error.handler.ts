@@ -18,6 +18,7 @@ export class ErrorHandler {
 
   async handle(error: any) {
     await this.handleError(error);
+    throw error
   }
 
   async handleError(error: any) {
@@ -30,7 +31,6 @@ export class ErrorHandler {
       enableHtml: true,
       easeTime: 250
     });
-    return throwError(error);
   }
 
   getErrorMessageFromObject(data: any):any {

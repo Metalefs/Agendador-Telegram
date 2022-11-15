@@ -7,8 +7,4 @@ export class ActivitiesService extends BaseService {
   constructor(@Inject('DATABASE_CONNECTION') protected db: Db) {
     super(db, "activities");
   }
-
-  getActivities(user) {
-    return this.find({userId:user});
-  }
 }

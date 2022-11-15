@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ControlContainer, FormGroupDirective } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { fadeInOutAnimation } from '../../animations';
 import { BaseFormControlComponent } from '../../models/BaseFormControl';
@@ -8,7 +9,13 @@ import { getWeekdays } from '../../utils/calendar';
   selector: 'app-select-weekdays',
   templateUrl: './select-weekdays.component.html',
   styleUrls: ['./select-weekdays.component.scss'],
-  animations: [fadeInOutAnimation]
+  animations: [fadeInOutAnimation],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useExisting: FormGroupDirective
+    }
+  ]
 })
 export class SelectWeekdaysComponent extends BaseFormControlComponent implements OnInit {
   options:any = [];

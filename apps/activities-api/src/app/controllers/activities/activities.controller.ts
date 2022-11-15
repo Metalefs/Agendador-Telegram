@@ -1,18 +1,38 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
+import { IActivity } from '@uncool/shared';
 
 import { ActivitiesService } from './activities.service';
 
-@Controller()
+@Controller('activities')
 export class ActivitiesController {
-  constructor(private readonly appService: ActivitiesService) {}
+  constructor(private readonly activitiesService: ActivitiesService) {}
 
-  @Get()
-  getActivities(@Req() req) {
+  @Get('/')
+  list(@Req() req) {
     console.log(req);
-    return this.appService.getActivities('');
+    return this.activitiesService.list();
   }
-  @Get('/:id')
-  getActivity() {
-    return this.appService.getActivities('');
+  @Get(':id')
+  findById(@Param() params)
+  {
+    console.log(params);
+    return this.activitiesService.findById(params.id);
+  }
+  @Post()
+  create(@Body() post: IActivity)
+  {
+    return this.activitiesService.insert(post);
+  }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() post: IActivity)
+  {
+    console.log(post);
+    return this.activitiesService.update({_id:id}, post);
+  }
+  @Delete(':id')
+  delete(@Param() params)
+  {
+    console.log(params);
+    return this.activitiesService.findById(params.id);
   }
 }
