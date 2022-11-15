@@ -12,4 +12,5 @@ export interface IActivity extends IBaseModel{
   type?: ActivityTypeEnum;
   _id?: string;
   done?: boolean;
+  userId?: string;
 }

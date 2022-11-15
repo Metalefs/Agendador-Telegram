@@ -19,16 +19,15 @@
       </span>
     </ion-col>
   </ion-row>
+
   <ion-row>
-    <ion-row class="ion-justify-content-center ion-align-items-center">
-      <app-activity-type-icon
-        [type]="activity.type!"
-        [showLabel]="true"
-      ></app-activity-type-icon>
-    </ion-row>
+    <app-activity-type-icon
+      [type]="activity.type!"
+      [showLabel]="true"
+    ></app-activity-type-icon>
   </ion-row>
 
-  <ion-label class="ion-text-wrap">
+  <!-- <ion-label class="ion-text-wrap ion-padding">
     <ion-row class="ion-align-items-center">
       <h2>
         {{ activity.title }}
@@ -39,7 +38,7 @@
         {{ activity.description }}
       </p>
     </ion-row>
-  </ion-label>
+  </ion-label> -->
 
   <ion-row slot="end">
     <ion-icon name="create-outline" size="small"></ion-icon>

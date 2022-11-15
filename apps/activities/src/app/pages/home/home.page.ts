@@ -66,9 +66,10 @@ export class HomePage implements OnInit{
   }
 
   async createActivity(activity: OverlayEventDetail){
-    this.service.create(activity.data).subscribe(()=> {
-      this.getActivities()
-    });
+    if(activity.role === 'confirm')
+      this.service.create(activity.data).subscribe(()=> {
+        this.getActivities()
+      });
   }
 
   async delete(activity:IActivity){

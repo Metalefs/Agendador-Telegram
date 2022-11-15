@@ -1,3 +1,15 @@
-<ion-select [formControlName]="controlName" [interface]="'action-sheet'" placeholder="{{'activities.form.weekdays'|translate}}" [multiple]="true">
-  <ion-select-option *ngFor="let day of options" [value]="day.value">{{day.label}}</ion-select-option>
-</ion-select>
+<ion-item>
+  <ion-label position="inline">{{
+    'activities.form.recurrence.label' | translate
+  }}</ion-label>
+  <ion-select
+    [formControlName]="controlName"
+    [interface]="'action-sheet'"
+    placeholder="{{ 'activities.form.weekdays' | translate }}"
+    [multiple]="true"
+  >
+    <ion-select-option *ngFor="let day of options" [value]="day.value">{{
+      day.label
+    }}</ion-select-option>
+  </ion-select>
+</ion-item>

@@ -4,7 +4,7 @@ export class UserModel extends AuthModel {
   _id?: string;
   username?: string;
   password!: string;
-  email!: string;
+  email?: string;
   token?: string;
   roles?: number[] = [];
   // personal information

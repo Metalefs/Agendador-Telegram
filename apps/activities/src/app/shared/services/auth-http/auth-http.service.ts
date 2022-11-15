@@ -26,7 +26,7 @@ export class AuthenticationService {
 		if (token && token.value) {
 			console.log('set token: ', token.value);
 			this.token = token.value;
-			this.isAuthenticated.next(true);
+      this.setUser(JSON.parse(token.value));
 		} else {
 			this.isAuthenticated.next(false);
 		}

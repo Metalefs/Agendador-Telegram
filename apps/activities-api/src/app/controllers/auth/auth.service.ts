@@ -1,12 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Db } from 'mongodb';
+import { Injectable } from '@nestjs/common';
 import { UserService } from '../../services/user.service';
 
 @Injectable()
 export class AuthService{
-  userService:UserService;
-  constructor(@Inject('DATABASE_CONNECTION') protected db: Db) {
-    this.userService = new UserService(db);
+  constructor(private userService: UserService) {
   }
 
   register(user) {
