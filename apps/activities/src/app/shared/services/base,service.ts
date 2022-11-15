@@ -33,8 +33,7 @@ export class BaseService<T extends IBaseModel> {
   }
 
   update(item: T): Observable<T> {
-    return this.http.put<T>(`${environment.endpoint}/${this.domainRoute}/${item._id}`,
-      {item}).pipe(
+    return this.http.put<T>(`${environment.endpoint}/${this.domainRoute}/${item._id}`, item).pipe(
         retry(3),
         catchError(()=>{this.errorHandler.handle; return []})
       )

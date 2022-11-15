@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { IActivity } from '@uncool/shared';
 import { DataService } from '../../shared/services/data.service';
 
@@ -22,16 +23,44 @@ export class ViewMessagePage implements OnInit {
 
   constructor(
     private data: DataService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastController: ToastController,
+    private loadingController: LoadingController,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.loadActivity()
+  }
+
+  async loadActivity(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if(id) {
-      this.data.geActivityById(id).subscribe(activity => {
+      this.data.geActivityById(id).subscribe(async (activity) => {
+        await loading.dismiss();
+
         this.activity = activity;
       });
     }
+  }
+
+  async update(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    this.data.update(this.form.value).subscribe(async ()=>{
+      await loading.dismiss();
+      this.loadActivity();
+      const toast = await this.toastController.create({
+        message: 'Activity updated',
+        duration: 1500,
+        position: 'top'
+      });
+
+      await toast.present();
+    })
   }
 
   fillForm(){

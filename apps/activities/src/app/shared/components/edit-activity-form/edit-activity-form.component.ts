@@ -13,6 +13,7 @@ export class EditActivityFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
+      _id: [, []],
       title: [, [Validators.required]],
       date: [, [Validators.required]],
       time: [, [Validators.required]],

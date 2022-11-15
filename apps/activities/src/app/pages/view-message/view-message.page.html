@@ -20,12 +20,15 @@
       <h3>{{'general.type'|translate}}:
         <ion-note>{{'activities.'+activity.type | translate}}</ion-note>
       </h3>
-      <app-activity-type-icon [type]="activity.type!"></app-activity-type-icon>
+      <app-activity-type-icon [type]="activity.type!" [showLabel]="true"></app-activity-type-icon>
     </ion-label>
   </ion-item>
 
   <div class="ion-padding">
     <app-edit-activity-form (onInitForm)="this.form = $event"></app-edit-activity-form>
+    <ion-buttons slot="end">
+      <ion-button (click)="update()" [strong]="true">{{'activities.update'|translate}}</ion-button>
+    </ion-buttons>
   </div>
 </ion-content>
 

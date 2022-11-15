@@ -17,8 +17,8 @@ export class LoginPage implements OnInit {
 		private fb: UntypedFormBuilder,
 		private authService: AuthenticationService,
 		private alertController: AlertController,
-		private router: Router,
 		private loadingController: LoadingController,
+		private router: Router,
     private modalCtrl: ModalController,
 	) {}
 

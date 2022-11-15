@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../shared/services/data.service';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { EditActivityComponent } from '../../shared/components/edit-activity/edit-activity.component';
 import { IActivity, IconTypeEnum } from '@uncool/shared';
 import { ItemReorderEventDetail } from '@ionic/angular';
@@ -20,6 +20,8 @@ export class HomePage implements OnInit{
   constructor(
     public modalCtrl: ModalController,
     private authService: AuthenticationService,
+    private toastController: ToastController,
+    private loadingController: LoadingController,
     public service: DataService,
     private router: Router) {
       this.openModal = this.openModal.bind(this);
@@ -64,10 +66,26 @@ export class HomePage implements OnInit{
   }
 
   async createActivity(activity: OverlayEventDetail){
-    console.log(activity)
     this.service.create(activity.data).subscribe(()=> {
       this.getActivities()
     });
+  }
+
+  async delete(activity:IActivity){
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    this.service.delete(activity._id!).subscribe(async ()=>{
+      await loading.dismiss();
+      this.getActivities();
+      const toast = await this.toastController.create({
+        message: 'Activity deleted',
+        duration: 1500,
+        position: 'top'
+      });
+
+      await toast.present();
+    })
   }
 
   async logout() {
