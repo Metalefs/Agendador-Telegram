@@ -1,4 +1,4 @@
-import { Db } from 'mongodb';
+import { Db, ObjectId } from 'mongodb';
 
 export class BaseService {
   constructor(protected dbconnection: Db, protected collection) {}
@@ -26,8 +26,7 @@ export class BaseService {
   findById = async (id) => {
     return this.dbconnection
       .collection(this.collection)
-      .find({ id: parseInt(id) })
-      .toArray();
+      .findOne({ _id: new ObjectId(id) });
   };
 
   getByName = async (name) => {

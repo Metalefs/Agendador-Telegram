@@ -1,9 +1,10 @@
-<div [ngSwitch]="activityMap.iconType">
+<ion-item [ngSwitch]="activityMap?.iconType">
   <ion-icon *ngSwitchCase="iconTypes.icon" [name]="activityMap.icon"> </ion-icon>
   <ion-thumbnail *ngSwitchCase="iconTypes.thumbnail">
     <img
       [alt]="activityMap.icon"
-      src="../../../assets/icon/{{ activityMap.icon }}.png"
+      src="../../../assets/icon/{{ activityMap.icon }}"
     />
   </ion-thumbnail>
-</div>
+  <ion-label *ngIf="showLabel">{{ 'activities.' + activityMap.name | translate }}</ion-label>
+</ion-item>

@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class DataService extends BaseService<IActivity>{
   public activityTypesMap = [
     { name: ActivityTypeEnum.shopping, icon: 'cart-outline', iconType: 'icon' },
-    { name: ActivityTypeEnum.cleaning, icon: 'dish-washing.png', iconType: 'thumbnail' },
+    { name: ActivityTypeEnum.cleaning, icon: 'bowls.png', iconType: 'thumbnail' },
     { name: ActivityTypeEnum.prep, icon: 'chef.png', iconType: 'thumbnail' },
     { name: ActivityTypeEnum.meal, icon: 'meal.png', iconType: 'thumbnail' },
     { name: ActivityTypeEnum.workout, icon: 'barbell-outline', iconType: 'icon' },

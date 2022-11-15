@@ -4,10 +4,12 @@ import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-activity-type-icon',
-  templateUrl: './activity-type-icon.component.html'
+  templateUrl: './activity-type-icon.component.html',
+  styleUrls: ['./activity-type-icon.component.scss']
 })
 export class ActivityTypeIconComponent implements OnInit {
   @Input() type!:ActivityTypeEnum;
+  @Input() showLabel = false;
   activityMap!:any;
   iconTypes = IconTypeEnum;
 

@@ -9,7 +9,6 @@ export class ActivitiesController {
 
   @Get('/')
   list(@Req() req) {
-    console.log(req);
     return this.activitiesService.list();
   }
   @Get(':id')

@@ -11,7 +11,14 @@ import { DataService } from '../../shared/services/data.service';
 })
 export class ViewMessagePage implements OnInit {
   public activity!: IActivity;
-  form!: UntypedFormGroup;
+  private _form!: UntypedFormGroup;
+  public get form(): UntypedFormGroup {
+    return this._form;
+  }
+  public set form(value: UntypedFormGroup) {
+    this._form = value;
+    this.fillForm();
+  }
 
   constructor(
     private data: DataService,
@@ -20,10 +27,16 @@ export class ViewMessagePage implements OnInit {
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if(id)
+    if(id) {
       this.data.geActivityById(id).subscribe(activity => {
         this.activity = activity;
       });
+    }
+  }
+
+  fillForm(){
+    console.log(this.activity)
+    this.form.patchValue(this.activity)
   }
 
   getBackButtonText() {

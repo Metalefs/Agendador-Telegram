@@ -8,7 +8,7 @@
     <ion-col>
       <ion-note>
         <ion-icon name="alarm-outline"></ion-icon>
-        {{ activity.date }}
+        {{ activity.time | date: 'HH:mm' }}
       </ion-note>
       <span class="date">
         <ion-icon
@@ -20,23 +20,29 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col>
-      <ion-label class="ion-text-wrap">
-        <ion-row>
-          <app-activity-type-icon
-            [type]="activity.type!"
-          ></app-activity-type-icon>
-          <h2>
-            {{ activity.title }}
-          </h2>
-          <p *ngIf="activity.description">
-            {{ activity.description }}
-          </p>
-        </ion-row>
-      </ion-label>
-    </ion-col>
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <app-activity-type-icon
+        [type]="activity.type!"
+        [showLabel]="true"
+      ></app-activity-type-icon>
+    </ion-row>
   </ion-row>
+
+  <ion-label class="ion-text-wrap">
+    <ion-row class="ion-align-items-center">
+      <h2>
+        {{ activity.title }}
+      </h2>
+    </ion-row>
+    <ion-row>
+      <p *ngIf="activity.description">
+        {{ activity.description }}
+      </p>
+    </ion-row>
+  </ion-label>
+
   <ion-row slot="end">
     <ion-icon name="create-outline" size="small"></ion-icon>
   </ion-row>
 </ion-item>
+
