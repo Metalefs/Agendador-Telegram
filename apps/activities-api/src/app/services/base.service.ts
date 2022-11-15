@@ -3,7 +3,7 @@ import { Db } from 'mongodb';
 export class BaseService {
   constructor(protected dbconnection: Db, protected collection) {}
 
-  add =async (item) => {
+  insert =async (item) => {
     await this.dbconnection.collection(this.collection).insertOne(item);
   };
 
@@ -17,6 +17,10 @@ export class BaseService {
 
   find = async (filter) => {
     return this.dbconnection.collection(this.collection).find(filter).toArray();
+  };
+
+  findOne = async (filter) => {
+    return this.dbconnection.collection(this.collection).findOne(filter);
   };
 
   findById = async (id) => {

@@ -11,7 +11,7 @@ const TOKEN_KEY = 'user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<UserModel | any> = new BehaviorSubject<any>(null);
+  public currentUserSubject: BehaviorSubject<UserModel | any> = new BehaviorSubject<any>(null);
   public currentUser: Observable<UserModel | any>;
 	isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   token = '';
@@ -38,6 +38,7 @@ export class AuthenticationService {
   public setUser(user: UserModel) {
     Storage.set({ key: TOKEN_KEY, value:  JSON.stringify(user) })
     this.currentUserSubject.next(user);
+    this.isAuthenticated.next(true);
   }
   public getUser() {
     return Storage.get({ key: TOKEN_KEY })
@@ -46,8 +47,7 @@ export class AuthenticationService {
   signup(user: UserModel) {
     return this.http
       .post<any>(
-        `${environment.endpoint}/auth/register`,
-        { user }
+        `${environment.endpoint}/auth/register`, user
       )
       .pipe(
         map((user) => {

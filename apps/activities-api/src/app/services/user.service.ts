@@ -13,36 +13,33 @@ export class UserService extends BaseService {
     super(db, 'user')
   }
 
-  async authenticate(user: UserModel) {
-    console.log('query:', { email: user.email }, { password: user.password });
+  async authenticate(login: Partial<UserModel>) {
+    console.log('query:', { email: login.email }, { password: login.password });
 
-    if (!user.password) throw "invalid email or password";
-    return await this.find({ email: user.email }).then((user: any) => {
-      
-      if (user == 0) {
-        throw "user not found";
-      }
-      if (user !== undefined)
-        if (user && bcrypt.compareSync(user.password, user.password)) {
-          const token = jwt.sign({ sub: user._id }, process.env.CRYPT, { expiresIn: '7d' });
-          console.log("successful login: ", { ...user, token });
+    if (!login.password) throw "invalid email or password";
+    const user = await this.findOne({ email: login.email }) as unknown as UserModel;
+    console.log(user)
+    if (!user) {
+      throw "user not found";
+    }
+    if (user && bcrypt.compareSync(login.password, user.password)) {
+      const token = jwt.sign({ sub: user._id }, process.env.CRYPT, { expiresIn: '7d' });
+      console.log("successful login: ", { ...user, token });
 
-          user.token = token;
-          this.updateUserToken({ ...user, token });
+      user.token = token;
+      this.updateUserToken({ ...user, token });
 
-          return {
-            ...user,
-            token
-          };
-        }
-
-    });
+      return {
+        ...user,
+        token
+      };
+    }
   }
 
-  async create(user: UserModel) {
+  async create(user: Partial<UserModel>) {
     // validate
     const find = await this.find({ email: user.email })[0];
-    console.log("FIND", find);
+
     if (find !== 0 && find !== undefined) {
       throw 'email "' + user.email + '" is already being used!';
     }
@@ -53,7 +50,7 @@ export class UserService extends BaseService {
     console.log("creating user:", user);
     if (user.email && user.password) {
       // save user
-      await this.create(user);
+      await this.insert(user);
 
       const token = jwt.sign({ sub: user.id }, process.env.CRYPT, { expiresIn: '7d' });
       console.log("usuário cadastrado com sucesso. token gerado", { ...user, token });
@@ -94,22 +91,22 @@ export class UserService extends BaseService {
   }
 
   async getById(id: string) {
-    return await this.find({ id })[0] as UserModel[];
+    return await this.findOne({ id }) as unknown as UserModel;
   }
 
   async getByEmail(email: string) {
-    return await this.find({ email })[0] as UserModel;
+    return await this.findOne({ email }) as unknown as UserModel;
   }
 
   async getByToken(token: string) {
-    const user = await this.find({ token })[0];
+    const user = await this.findOne({ token }) as unknown as UserModel;
     if (user)
       return user as UserModel;
     else throw 'user not found'
   }
 
-  async updateUserToken(_user: UserModel) {
-    const user = await this.getById(_user.id)[0];
+  async updateUserToken(_user: Partial<UserModel>) {
+    const user = await this.getById(_user.id);
 
     // validate
     if (!user) throw 'user not found';

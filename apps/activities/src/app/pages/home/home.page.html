@@ -1,11 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> {{'general.schedule'|translate}} </ion-title>
-    <ion-content>
+
+    <ion-buttons slot="end">
       <ion-button expand="full" (click)="logout()">
         <ion-icon [name]="'log-out'"></ion-icon>
       </ion-button>
-    </ion-content>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -27,9 +28,7 @@
     >
       <ion-item-sliding *ngFor="let activity of activities">
         <ion-item>
-          <app-message
-            [activity]="activity"
-          ></app-message>
+          <app-message [activity]="activity"></app-message>
           <ion-reorder slot="start"></ion-reorder>
         </ion-item>
 

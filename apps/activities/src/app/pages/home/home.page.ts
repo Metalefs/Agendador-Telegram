@@ -55,7 +55,7 @@ export class HomePage implements OnInit{
 
   async logout() {
 		await this.authService.logout();
-		this.router.navigateByUrl('/', { replaceUrl: true });
+		this.router.navigate(['/login']);
 	}
 
 }

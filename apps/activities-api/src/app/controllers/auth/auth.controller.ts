@@ -7,12 +7,12 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/register')
-  register(@Body() req) {
-    console.log(req);
-    return this.authService.register('');
+  register(@Body() body) {
+    return this.authService.register(body);
   }
   @Post('/login')
-  login() {
-    return this.authService.login('');
+  login(@Body() body) {
+    console.log(body);
+    return this.authService.login(body);
   }
 }

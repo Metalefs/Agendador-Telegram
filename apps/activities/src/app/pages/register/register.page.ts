@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, NavParams, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.css'],
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.css'],
 })
-export class LoginPage implements OnInit {
+export class RegisterPage implements OnInit {
 
   credentials!: UntypedFormGroup;
 
@@ -29,20 +29,19 @@ export class LoginPage implements OnInit {
 		});
 	}
 
-	async login() {
+	async register() {
 		const loading = await this.loadingController.create();
 		await loading.present();
 
-		this.authService.login(this.credentials.value!).subscribe(
+		this.authService.signup(this.credentials.value!).subscribe(
 			async (res) => {
 				await loading.dismiss();
-        console.info("logged in")
-				this.router.navigate(['/home']);
+				this.router.navigateByUrl('/home', { replaceUrl: true });
 			},
 			async (res) => {
 				await loading.dismiss();
 				const alert = await this.alertController.create({
-					header: 'Login failed',
+					header: 'Signup failed',
 					message: res.error.error,
 					buttons: ['OK']
 				});
@@ -60,4 +59,10 @@ export class LoginPage implements OnInit {
 	get password() {
 		return this.credentials.get('password');
 	}
+
+  getBackButtonText() {
+    const win = window as any;
+    const mode = win && win.Ionic && win.Ionic.mode;
+    return mode === 'ios' ? 'Home' : '';
+  }
 }

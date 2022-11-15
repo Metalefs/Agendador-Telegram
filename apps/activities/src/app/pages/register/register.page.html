@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        [text]="getBackButtonText()"
+        defaultHref="/"
+      ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col>
+      <form (ngSubmit)="register()" [formGroup]="credentials">
+        <div class="input-group">
+          <ion-item>
+            <ion-input
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+            ></ion-input>
+          </ion-item>
+          <div
+            *ngIf="(email!.dirty || email!.touched) && email?.errors"
+            class="errors"
+          >
+            <span *ngIf="email!.errors!['required']!">Email is required</span>
+            <span *ngIf="email!.errors!['email']!">Email is invalid</span>
+          </div>
+          <ion-item>
+            <ion-input
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+            ></ion-input>
+          </ion-item>
+          <div
+            *ngIf="(password!.dirty || password!.touched) && password?.errors"
+            class="errors"
+          >
+            <span *ngIf="password!.errors!['required']!"
+              >Password is required</span
+            >
+            <span *ngIf="password!.errors!['minlength']"
+              >Password needs to be 6 characters</span
+            >
+          </div>
+        </div>
+
+        <ion-button type="submit" expand="block" [disabled]="!credentials.valid"
+          >Create account</ion-button
+        >
+        <!--
+    <ion-button type="button" expand="block" color="tertiary">
+      <ion-icon name="logo-google" slot="start"></ion-icon>
+      Sign in with Google
+    </ion-button>
+    <ion-button type="button" expand="block" color="tertiary">
+      <ion-icon name="logo-apple" slot="start"></ion-icon>
+      Sign in with Apple
+    </ion-button> -->
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-content>

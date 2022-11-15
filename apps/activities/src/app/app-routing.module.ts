@@ -6,8 +6,13 @@ import { AutoLoginGuard } from './core/guard/autoLogin.guard';
 const routes: Routes = [
   {
     path: 'login',
-    canLoad: [AutoLoginGuard], // Check if we should show the introduction or forward to inside
+    canActivate: [AutoLoginGuard], // Check if we should show the introduction or forward to inside
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    canActivate: [AutoLoginGuard], // Check if we should show the introduction or forward to inside
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'home',
@@ -23,6 +28,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/login',
     pathMatch: 'full'
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
 ];
 

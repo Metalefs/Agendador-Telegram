@@ -1,7 +1,7 @@
 ion-content {
 	--padding-start: 10%;
 	--padding-end: 10%;
-	--background: url('../../../assets/images/bg.jpg')
+	--background: url('../../../assets/icon/undraw_sign_in_re_o58h.svg')
 		0 0/100% 100% no-repeat;
 }
 ion-row {
