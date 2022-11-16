@@ -4,20 +4,18 @@
   [detail]="false"
 >
   <div slot="start" [class]="!activity.done ? 'dot dot-unread' : 'dot'"></div>
-  <ion-row>
-    <ion-col>
-      <ion-note>
-        <ion-icon name="alarm-outline"></ion-icon>
-        {{ activity.time | date: 'HH:mm' }}
-      </ion-note>
-      <span class="date">
-        <ion-icon
-          name="chevron-forward"
-          size="small"
-          *ngIf="isIos()"
-        ></ion-icon>
-      </span>
-    </ion-col>
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-note>
+      <ion-icon name="alarm-outline"></ion-icon>
+      {{ activity.time | date: 'HH:mm' }}
+    </ion-note>
+    <span class="date">
+      <ion-icon
+        name="chevron-forward"
+        size="small"
+        *ngIf="isIos()"
+      ></ion-icon>
+    </span>
   </ion-row>
 
   <ion-row>
@@ -27,18 +25,18 @@
     ></app-activity-type-icon>
   </ion-row>
 
-  <!-- <ion-label class="ion-text-wrap ion-padding">
-    <ion-row class="ion-align-items-center">
+  <ion-label class="ion-text-wrap ion-padding">
+    <!-- <ion-row class="ion-align-items-center">
       <h2>
         {{ activity.title }}
       </h2>
-    </ion-row>
+    </ion-row> -->
     <ion-row>
       <p *ngIf="activity.description">
         {{ activity.description }}
       </p>
     </ion-row>
-  </ion-label> -->
+  </ion-label>
 
   <ion-row slot="end">
     <ion-icon name="create-outline" size="small"></ion-icon>

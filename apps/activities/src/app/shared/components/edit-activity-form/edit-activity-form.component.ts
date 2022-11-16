@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ActivityTypeEnum } from '@uncool/shared';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -8,24 +9,32 @@ import { DataService } from '../../services/data.service';
 })
 export class EditActivityFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
-  @Output() onInitForm = new EventEmitter<UntypedFormGroup>()
+  @Input() type!: string;
+  @Output() onInitForm = new EventEmitter<UntypedFormGroup>();
+  activityType = ActivityTypeEnum;
   constructor(private service: DataService, private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
     this.form = this.fb.group({
       _id: [, []],
       title: [, [Validators.required]],
-      date: [, [Validators.required]],
-      time: [, [Validators.required]],
-      recurrence: [, Validators.required],
+      time: [new Date().toISOString(), [Validators.required]],
       weekdays: [, Validators.required],
       description: [,],
-      type: [, Validators.required]
+      type: [this.type, Validators.required]
     });
     this.onInitForm.emit(this.form);
   }
 
   getActivityTypes(){
     return this.service.activityTypesMap;
+  }
+
+  get time() {
+		return this.form.get('time');
+	}
+
+  get curType() {
+    return this.form.get('type')?.value || this.type
   }
 }

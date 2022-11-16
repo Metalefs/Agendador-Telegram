@@ -36,7 +36,6 @@ export class LoginPage implements OnInit {
 		this.authService.login(this.credentials.value!).subscribe(
 			async (res) => {
 				await loading.dismiss();
-        console.info("logged in")
 				this.router.navigate(['/home']);
 			},
 			async (res) => {

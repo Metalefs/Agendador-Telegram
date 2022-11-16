@@ -1,0 +1,16 @@
+<ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-label position="stacked">{{'activities.form.hydration.type'|translate}}</ion-label>
+      <ion-select formControlName="unit" interface="action-sheet" [placeholder]="">
+        <ion-select-option *ngFor="let unit of getUnits()" [value]="unit">
+          {{'unit.'+unit|translate}}
+        </ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col>
+      <ion-label position="stacked">{{'activities.form.hydration.quantity.label'|translate}}</ion-label>
+      <ion-input formControlName="quantity" type="number" [placeholder]="'activities.form.hydration.quantity.placeholder'|translate"></ion-input>
+    </ion-col>
+  </ion-row>
+</ion-item>

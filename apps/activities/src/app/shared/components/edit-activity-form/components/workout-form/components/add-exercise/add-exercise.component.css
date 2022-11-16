@@ -1,0 +1,3 @@
+ion-modal.modal-default:not(.overlay-hidden) ~ ion-modal.modal-default{
+  opacity: 0.97;
+}

@@ -25,8 +25,8 @@
             *ngIf="(email!.dirty || email!.touched) && email?.errors"
             class="errors"
           >
-            <span *ngIf="email!.errors!['required']!">Email is required</span>
-            <span *ngIf="email!.errors!['email']!">Email is invalid</span>
+            <span *ngIf="email!.errors!['required']!">{{'auth.email.required'|translate}}</span>
+            <span *ngIf="email!.errors!['email']!">{{'auth.email.invalid'|translate}}</span>
           </div>
           <ion-item>
             <ion-input
@@ -40,16 +40,16 @@
             class="errors"
           >
             <span *ngIf="password!.errors!['required']!"
-              >Password is required</span
+              >{{'auth.password.required'|translate}}</span
             >
             <span *ngIf="password!.errors!['minlength']"
-              >Password needs to be 6 characters</span
+              >{{'auth.password.invalid'|translate}}</span
             >
           </div>
         </div>
 
         <ion-button type="submit" expand="block" [disabled]="!credentials.valid"
-          >Create account</ion-button
+          >{{'auth.account.create'|translate}}</ion-button
         >
         <!--
     <ion-button type="button" expand="block" color="tertiary">

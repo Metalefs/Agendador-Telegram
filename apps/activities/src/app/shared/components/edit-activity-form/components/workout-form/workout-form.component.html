@@ -1,0 +1,22 @@
+<ion-button expand="block" (click)="openAddExerciseModal()">{{
+  'general.addExercise' | translate
+}}</ion-button>
+<ion-list *ngIf="exercisesControl?.value.length > 0">
+  <ion-list-header>
+    <ion-title>{{ 'general.exercises' | translate }}</ion-title>
+  </ion-list-header>
+  <ion-item *ngFor="let exercise of exercisesControl?.value">
+    <ion-thumbnail slot="start">
+      <img
+        alt="Silhouette of mountains"
+        src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
+      />
+    </ion-thumbnail>
+    <div>
+      <ion-label *ngIf="exercise.name"><ion-note>{{'activities.form.workout.exercise.name.label'|translate}}:</ion-note> {{exercise.name}}</ion-label>
+      <ion-label *ngIf="exercise.reps"><ion-note>{{'activities.form.workout.exercise.reps.label'|translate}}:</ion-note> {{exercise.reps}}</ion-label>
+      <ion-label *ngIf="exercise.sets"><ion-note>{{'activities.form.workout.exercise.sets.label'|translate}}:</ion-note> {{exercise.sets}}</ion-label>
+      <ion-label *ngIf="exercise.load"><ion-note>{{'activities.form.workout.exercise.load.label'|translate}}:</ion-note> {{exercise.load?.amount + "" + exercise.load?.unit}}</ion-label>
+    </div>
+  </ion-item>
+</ion-list>

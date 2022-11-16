@@ -5,8 +5,11 @@
     "actions": "Actions",
     "add": "Add",
     "cancel": "Cancel",
+    "delete": "Delete",
     "confirm": "Confirm",
     "type": "Type",
+    "addExercise": "Add an exercise",
+    "exercises": "Exercises",
     "weekdays": {
       "index": "Days of the week",
       "monday": "Monday",
@@ -32,38 +35,31 @@
       "November": "November",
       "december": "December"
     },
-    "occurs": {
-      "index": "Occurs",
-      "once": "Once",
-      "daily": "Daily",
-      "weekly": "Weekly",
-      "monthly": "Monthly",
-      "yearly": "Annually",
-      "every": "Every",
-      "sporadically": "Sporadically"
-    },
-    "startingFrom": {
-      "index": "From",
-      "today": "Today",
-      "tomorrow": "Tomorrow",
-      "nextWeek": "Next week",
-      "nextMonth": "Next month",
-      "nextYear": "Next year",
-      "specificDate": "Specific date"
-    },
-    "until": {
-      "index": "Until",
-      "never": "Never",
-      "after": "After",
-      "afterX": "After {0}",
-      "afterXDays": "After {0} days",
-      "afterXMonths": "After {0} months",
-      "afterXYears": "After {0} years",
-      "afterXWeeks": "After {0} weeks"
-    },
     "or": "or",
     "at": "at",
     "by": "by"
+  },
+  "auth":{
+    "email": {
+      "required": "Email is required",
+      "invalid": "Email is invalid"
+    },
+    "password": {
+      "required": "Password is required",
+      "invalid": "Password needs to be 6 characters"
+    },
+    "login": "Log in",
+    "signup": "Not yet a member? Sign up!",
+    "account": {
+      "create": "Create account"
+    }
+  },
+  "unit":{
+    "cup": "Cup",
+    "gr": "gr",
+    "ml": "ml",
+    "liter": "Liter",
+    "scoop": "Scoop"
   },
   "activities": {
     "add": "Add an activity",
@@ -85,8 +81,77 @@
         "label": "Insert title",
         "placeholder": "Activity title"
       },
+      "groceryItems":{
+        "label": "Insert grocery items (press enter to add item)",
+        "placeholder": "Banana"
+      },
+      "hydration": {
+        "type": "Unit type",
+        "quantity": {
+          "label":"Quantity",
+          "placeholder":""
+        }
+      },
+      "sleep": {
+        "hours": {
+          "label": "Sleep hours",
+          "placeholder": "8"
+        }
+      },
+      "mealprep":{
+        "recipe": {
+          "label": "Insert the recipe",
+          "placeholder": ""
+        }
+      },
+      "meal": {
+        "prepId": {
+          "label": "Select the (optional)Meal prep associated with the meal",
+          "placeholder": ""
+        },
+        "recipe": {
+          "label": "Insert the recipe",
+          "placeholder": ""
+        }
+      },
+      "cleaning": {
+        "audio": {
+          "label": "Insert an (optional) soundtrack for cleaning"
+        }
+      },
+      "workout": {
+        "exercise": {
+          "name": {
+            "label": "Exercise name",
+            "placeholder": "Squat"
+          },
+          "reps": {
+            "label": "Repetitions",
+            "placeholder": "8"
+          },
+          "sets": {
+            "label": "Series",
+            "placeholder": "4"
+          },
+          "load": {
+            "label": "Load",
+            "weight": {
+              "label": "Load",
+              "placeholder": "120"
+            },
+            "unit":{
+              "label": "Unit",
+              "placeholder": "lbs"
+            }
+          },
+          "details": {
+            "label": "Details",
+            "placeholder": ""
+          }
+        }
+      },
       "description": {
-        "label": "Enter description",
+        "label": "Enter (optional) description",
         "placeholder": "Description of the activity"
       },
       "date": {
@@ -95,7 +160,8 @@
       },
       "time": {
         "label": "Insert time",
-        "placeholder": "Schedule of the activity"
+        "placeholder": "Schedule of the activity",
+        "required": "Time is required"
       },
       "recurrence": {
         "label": "Insert recurrence",

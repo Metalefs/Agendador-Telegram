@@ -24,7 +24,7 @@ export class HomePage implements OnInit{
     private loadingController: LoadingController,
     public service: DataService,
     private router: Router) {
-      this.openModal = this.openModal.bind(this);
+      this.openAddActivityModal = this.openAddActivityModal.bind(this);
       this.createActivity = this.createActivity.bind(this);
   }
 
@@ -45,21 +45,31 @@ export class HomePage implements OnInit{
     }, 3000);
   }
 
-  handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
+  async handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
-    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
-
     // Finish the reorder and position the item in the DOM based on
     // where the gesture ended. This method can also be called directly
     // by the reorder group
-    ev.detail.complete();
+    ev.detail.complete(this.activities);
+    this.setPriority(this.activities);
   }
 
-  async openModal() {
+  async setPriority(activities:IActivity[]){
+    let idx = 0;
+    for(let activity of activities){
+      if(activity.priority != idx){
+        activity.priority = idx;
+        this.service.update(activity).subscribe();
+      }
+      idx ++;
+    }
+  }
+
+  async openAddActivityModal(type: string) {
     const activityModal = await this.modalCtrl.create({
       component: EditActivityComponent,
-      componentProps: { userId: 8675309 }
+      componentProps: { type }
     });
     activityModal.onDidDismiss().then(this.createActivity)
     activityModal.present();
@@ -67,8 +77,13 @@ export class HomePage implements OnInit{
 
   async createActivity(activity: OverlayEventDetail){
     if(activity.role === 'confirm')
-      this.service.create(activity.data).subscribe(()=> {
-        this.getActivities()
+      this.service.create(activity.data).subscribe(async()=> {
+        this.getActivities();
+        const toast = await this.toastController.create({
+          message: 'Activity created',
+          duration: 1500,
+          position: 'top'
+        });
       });
   }
 

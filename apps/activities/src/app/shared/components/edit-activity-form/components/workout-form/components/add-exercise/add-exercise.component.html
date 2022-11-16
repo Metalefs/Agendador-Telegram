@@ -1,0 +1,48 @@
+
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="cancel()">{{'general.cancel'|translate}}</ion-button>
+      </ion-buttons>
+      <ion-title>{{'general.addExercise'|translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button [disabled]="this.form?.invalid" (click)="confirm()" [strong]="true">{{'general.confirm'|translate}}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <form [formGroup]="form">
+      <ion-item>
+        <ion-label position="stacked">{{'activities.form.workout.exercise.name.label'|translate}}</ion-label>
+        <ion-input formControlName="name" type="text" [placeholder]="'activities.form.workout.exercise.name.placeholder'|translate"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{'activities.form.workout.exercise.reps.label'|translate}}</ion-label>
+        <ion-input formControlName="reps" type="number" [placeholder]="'activities.form.workout.exercise.reps.placeholder'|translate"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{'activities.form.workout.exercise.sets.label'|translate}}</ion-label>
+        <ion-input formControlName="sets" type="number" [placeholder]="'activities.form.workout.exercise.sets.placeholder'|translate"></ion-input>
+      </ion-item>
+      <ion-item formGroupName="load">
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">{{'activities.form.workout.exercise.load.weight.label'|translate}}</ion-label>
+            <ion-input formControlName="amount" type="number" [placeholder]="'activities.form.workout.exercise.load.weight.placeholder'|translate"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">{{'activities.form.workout.exercise.load.unit.label'|translate}}</ion-label>
+            <ion-input formControlName="unit" type="text" [placeholder]="'activities.form.workout.exercise.load.unit.placeholder'|translate"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{'activities.form.workout.exercise.details.label'|translate}}</ion-label>
+        <ion-textarea formControlName="details" [placeholder]="'activities.form.workout.exercise.details.placeholder'|translate"></ion-textarea>
+      </ion-item>
+    </form>
+  </ion-content>
+</ion-content>

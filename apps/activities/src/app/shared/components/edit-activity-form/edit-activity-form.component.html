@@ -18,6 +18,9 @@
           </ng-template>
         </ion-modal>
       </ion-item>
+      <div *ngIf="(time!.dirty || time!.touched) && time?.errors" class="errors">
+        <span *ngIf="time!.errors!['required']!">{{'activities.form.time.required'|translate}}</span>
+      </div>
     </ion-col>
     <ion-col>
         <app-select-weekdays [formGroup]="form" [controlName]="'weekdays'"></app-select-weekdays>
@@ -35,6 +38,20 @@
       </ion-item>
     </ion-col>
   </ion-row>
+  <ng-container [ngSwitch]="curType">
+    <ion-row *ngIf="curType">
+      <ion-col>
+        <app-cleaning-form *ngSwitchCase="activityType.cleaning" [form]="form"></app-cleaning-form>
+        <app-groceryshopping-form *ngSwitchCase="activityType.shopping" [form]="form"></app-groceryshopping-form>
+        <app-hydration-form *ngSwitchCase="activityType.hydrate" [form]="form"></app-hydration-form>
+        <app-meal-form *ngSwitchCase="activityType.meal" [form]="form"></app-meal-form>
+        <app-mealprep-form *ngSwitchCase="activityType.prep" [form]="form"></app-mealprep-form>
+        <app-sleep-form *ngSwitchCase="activityType.sleep" [form]="form"></app-sleep-form>
+        <app-supplement-form *ngSwitchCase="activityType.supplement" [form]="form"></app-supplement-form>
+        <app-workout-form *ngSwitchCase="activityType.workout" [form]="form"></app-workout-form>
+      </ion-col>
+    </ion-row>
+  </ng-container>
   <ion-row>
     <ion-col>
       <ion-item>

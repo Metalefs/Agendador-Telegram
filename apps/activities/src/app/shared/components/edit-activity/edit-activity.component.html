@@ -2,15 +2,15 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button (click)="cancel()">Cancel</ion-button>
+        <ion-button (click)="cancel()">{{'general.cancel'|translate}}</ion-button>
       </ion-buttons>
       <ion-title>{{'activities.create'|translate}}</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        <ion-button [disabled]="this.form?.invalid" (click)="confirm()" [strong]="true">{{'general.confirm'|translate}}</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <app-edit-activity-form (onInitForm)="this.form = $event"></app-edit-activity-form>
+    <app-edit-activity-form [type]="type!" (onInitForm)="this.form = $event"></app-edit-activity-form>
   </ion-content>
 </ion-content>

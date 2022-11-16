@@ -11,8 +11,9 @@ export class ActivitiesController {
   constructor(private readonly activitiesService: ActivitiesService) { }
 
   @Get('/')
-  list(@Req() req) {
-    return this.activitiesService.find({ userId: new ObjectId(req.user) });
+  async list(@Req() req) {
+    const list = await this.activitiesService.find({ userId: new ObjectId(req.user) });
+    return list.sort((a, b) => (a.priority || 0) - (b.priority|| 0));
   }
   @Get(':id')
   findById(@Param() params, @Req() req) {
@@ -20,14 +21,14 @@ export class ActivitiesController {
   }
   @Post()
   create(@Req() post) {
-    post.body.userId = post.user;
+    post.body.userId = new ObjectId(post.user);
     return this.activitiesService.insert(post.body);
   }
   @Put(':id')
   update(@Param('id') id: string, @Req() request: Request) {
-    const { _id, ...postWithoutId } = request.body as IActivity;
+    const { _id, ...postWithoutId } = request.body as any;
     if (postWithoutId) {
-      postWithoutId.userId = (request as any).user;
+      postWithoutId.userId = new ObjectId((request as any).user);
       return this.activitiesService.update({ _id: new ObjectId(id) }, postWithoutId);
     }
   }

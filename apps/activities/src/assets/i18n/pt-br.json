@@ -6,7 +6,10 @@
     "add": "Adicionar",
     "cancel": "Cancelar",
     "confirm": "Confirmar",
+    "delete": "Deletar",
     "type": "Tipo",
+    "addExercise": "Adicionar exercício",
+    "exercises": "Exercicios",
     "weekdays": {
       "index": "Dias da semana",
       "monday": "Segunda-feira",
@@ -32,38 +35,31 @@
       "november": "Novembro",
       "december": "Dezembro"
     },
-    "occurs": {
-      "index": "Ocorre",
-      "once": "Uma vez",
-      "daily": "Diariamente",
-      "weekly": "Semanalmente",
-      "monthly": "Mensalmente",
-      "yearly": "Anualmente",
-      "every": "A cada",
-      "sporadically": "Esporadicamente"
-    },
-    "startingFrom": {
-      "index": "A partir de",
-      "today": "Hoje",
-      "tomorrow": "Amanhã",
-      "nextWeek": "Próxima semana",
-      "nextMonth": "Próximo mês",
-      "nextYear": "Próximo ano",
-      "specificDate": "Data específica"
-    },
-    "until": {
-      "index": "Até",
-      "never": "Nunca",
-      "after": "Depois",
-      "afterX": "Depois de {0}",
-      "afterXDays": "Depois de {0} dias",
-      "afterXMonths": "Depois de {0} meses",
-      "afterXYears": "Depois de {0} anos",
-      "afterXWeeks": "Depois de {0} semanas"
-    },
     "or": "ou",
     "at": "em",
     "by": "Por"
+  },
+  "auth":{
+    "email": {
+      "required": "Email is required",
+      "invalid": "Email is invalid"
+    },
+    "password": {
+      "required": "Password is required",
+      "invalid": "Password needs to be 6 characters"
+    },
+    "login": "Log in",
+    "signup": "Not yet a member? Sign up!",
+    "account": {
+      "create": "Create account"
+    }
+  },
+  "unit":{
+    "cup": "Copo",
+    "gr": "gr",
+    "ml": "ml",
+    "liter": "Litro",
+    "scoop": "Scoop"
   },
   "activities": {
     "add":"Adicionar uma atividade",
@@ -85,8 +81,77 @@
         "label":"Insira o titulo",
         "placeholder":"Titulo da atividade"
       },
+      "groceryItems":{
+        "label": "Insira items de mercado (separado por enter)",
+        "placeholder": "Banana"
+      },
+      "hydration": {
+        "type": "Unit type",
+        "quantity": {
+          "label":"Quantity",
+          "placeholder":""
+        }
+      },
+      "mealprep":{
+        "recipe": {
+          "label": "Insira a receita",
+          "placeholder": ""
+        }
+      },
+      "meal": {
+        "prepId": {
+          "label": "Selecione a marmita(optional) associada com a comida",
+          "placeholder": ""
+        },
+        "recipe": {
+          "label": "Insira a receita",
+          "placeholder": ""
+        }
+      },
+      "cleaning": {
+        "audio": {
+          "label": "Insira uma trilha sonora (opcional) para a limpeza"
+        }
+      },
+      "sleep": {
+        "hours": {
+          "label": "Horas de sono",
+          "placeholder": "8"
+        }
+      },
+      "workout": {
+        "exercise": {
+          "name": {
+            "label": "Nome do exercício",
+            "placeholder": "Agachamento"
+          },
+          "reps": {
+            "label": "Repetições",
+            "placeholder": "8"
+          },
+          "sets": {
+            "label": "Séries",
+            "placeholder": "4"
+          },
+          "load": {
+            "label": "Carga",
+            "weight": {
+              "label": "Carga",
+              "placeholder": "60"
+            },
+            "unit":{
+              "label": "Unidade",
+              "placeholder": "kg"
+            }
+          },
+          "details": {
+            "label": "Detalhes",
+            "placeholder": ""
+          }
+        }
+      },
       "description": {
-        "label":"Insira a descrição",
+        "label":"Insira a descrição (opcional)",
         "placeholder":"Descrição da atividade"
       },
       "date": {
@@ -95,7 +160,8 @@
       },
       "time": {
         "label": "Insira o horário",
-        "placeholder": "Horário da atividade"
+        "placeholder": "Horário da atividade",
+        "required": "Horário é obrigatório"
       },
       "recurrence": {
         "label": "Insira a recorrência",

@@ -33,7 +33,7 @@
         </ion-item>
 
         <ion-item-options>
-          <ion-item-option (click)="this.delete(activity)" color="danger">Delete</ion-item-option>
+          <ion-item-option (click)="this.delete(activity)" color="danger">{{'general.delete'|translate}}</ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-reorder-group>
@@ -51,13 +51,13 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button (click)="openModal()">
+      <ion-fab-button (click)="openAddActivityModal('')">
         <ion-icon [name]="'add'"></ion-icon>
       </ion-fab-button>
       <ng-container *ngFor="let type of service.activityTypesMap">
         <ion-fab-button
           *ngIf="type.iconType === iconTypes.icon"
-          (click)="openModal()"
+          (click)="openAddActivityModal(type.name)"
         >
           <ion-icon [name]="type.icon"></ion-icon>
         </ion-fab-button>
