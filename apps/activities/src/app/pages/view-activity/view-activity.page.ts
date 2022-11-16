@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { IActivity, UserModel } from '@uncool/shared';
-import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { DataService } from '../../shared/services/data.service';
 
 @Component({
-  selector: 'app-view-message',
-  templateUrl: './view-message.page.html',
-  styleUrls: ['./view-message.page.scss'],
+  selector: 'app-view-activity',
+  templateUrl: './view-activity.page.html',
+  styleUrls: ['./view-activity.page.scss'],
 })
-export class ViewMessagePage implements OnInit {
+export class ViewActivityPage implements OnInit {
   user!:UserModel;
   public activity!: IActivity;
   private _form!: UntypedFormGroup;

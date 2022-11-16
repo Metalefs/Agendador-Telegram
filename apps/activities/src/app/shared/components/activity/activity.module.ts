@@ -5,12 +5,12 @@ import { RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MessageComponent } from './message.component';
-import { SharedModule } from '../../../../shared/shared.module';
+import { ActivityComponent } from './activity.component';
+import { SharedModule } from '../../shared.module';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, IonicModule, RouterModule, SharedModule],
-  declarations: [MessageComponent],
-  exports: [MessageComponent]
+  declarations: [ActivityComponent],
+  exports: [ActivityComponent]
 })
-export class MessageComponentModule {}
+export class ActivityComponentModule {}

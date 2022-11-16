@@ -84,6 +84,7 @@ export class HomePage implements OnInit{
           duration: 1500,
           position: 'top'
         });
+        await toast.present()
       });
   }
 

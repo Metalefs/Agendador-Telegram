@@ -49,13 +49,21 @@ ion-item ion-note.md {
   border-radius: 50%;
   align-self: center;
   // margin: 16px 10px 16px 16px;
-}
+  background: var(--ion-color-warning);
 
-.dot-unread {
-  background: var(--ion-color-primary);
+  &-done{
+    background: var(--ion-color-success);
+  }
 }
 
 ion-footer ion-title {
   font-size: 11px;
   font-weight: normal;
+}
+
+ion-badge {
+  --background: transparent;
+  --color: var(--ion-color-secondary);
+  --padding-end: 20px;
+  --padding-start: 20px;
 }

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
-import { MessageComponentModule } from '../view-message/components/message/message.module';
+import { ActivityComponentModule } from '../../shared/components/activity/activity.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
@@ -13,7 +13,7 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    MessageComponentModule,
+    ActivityComponentModule,
     HomePageRoutingModule,
     SharedModule
   ],

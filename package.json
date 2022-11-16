@@ -36,6 +36,7 @@
     "bcryptjs": "^2.4.3",
     "ionicons": "^6.0.3",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
     "mongodb": "^4.11.0",
     "ngx-spinner": "^14.0.0",
     "ngx-toastr": "^15.2.1",

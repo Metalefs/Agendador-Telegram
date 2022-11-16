@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { MessageComponentModule } from '../view-message/components/message/message.module';
+import { MessageComponentModule } from '../../shared/components/activity/message.module';
 
 import { HomePage } from './home.page';
 

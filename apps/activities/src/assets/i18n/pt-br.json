@@ -78,11 +78,11 @@
     "empty": "Nenhuma atividade encontrada",
     "form": {
       "title": {
-        "label":"Insira o titulo",
+        "label":"Titulo",
         "placeholder":"Titulo da atividade"
       },
       "groceryItems":{
-        "label": "Insira items de mercado (separado por enter)",
+        "label": "Items de mercado (separado por enter)",
         "placeholder": "Banana"
       },
       "hydration": {
@@ -94,7 +94,7 @@
       },
       "mealprep":{
         "recipe": {
-          "label": "Insira a receita",
+          "label": "Receita",
           "placeholder": ""
         }
       },
@@ -104,19 +104,23 @@
           "placeholder": ""
         },
         "recipe": {
-          "label": "Insira a receita",
+          "label": "Receita",
           "placeholder": ""
         }
       },
       "cleaning": {
         "audio": {
-          "label": "Insira uma trilha sonora (opcional) para a limpeza"
+          "label": "Uma trilha sonora (opcional) para a limpeza"
         }
       },
       "sleep": {
         "hours": {
           "label": "Horas de sono",
           "placeholder": "8"
+        },
+        "audio": {
+          "label": "Áudio",
+          "placeholder": ""
         }
       },
       "workout": {
@@ -151,20 +155,20 @@
         }
       },
       "description": {
-        "label":"Insira a descrição (opcional)",
+        "label":"Descrição (opcional)",
         "placeholder":"Descrição da atividade"
       },
       "date": {
-        "label":"Insira a data",
+        "label":"Data",
         "placeholder":"Data da atividade"
       },
       "time": {
-        "label": "Insira o horário",
+        "label": "Horário",
         "placeholder": "Horário da atividade",
         "required": "Horário é obrigatório"
       },
       "recurrence": {
-        "label": "Insira a recorrência",
+        "label": "Recorrência",
         "placeholder": "Recorrência da atividade"
       },
       "weekdays": "Dias da semana",

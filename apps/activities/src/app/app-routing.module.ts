@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'activity/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/view-message/view-message.module').then( m => m.ViewMessagePageModule)
+    loadChildren: () => import('./pages/view-activity/view-activity.module').then( m => m.ViewActivityPageModule)
   },
   {
     path: '',

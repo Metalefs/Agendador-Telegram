@@ -3,19 +3,15 @@
   [routerLink]="'/activity/' + activity._id"
   [detail]="false"
 >
-  <div slot="start" [class]="!activity.done ? 'dot dot-unread' : 'dot'"></div>
-  <ion-row class="ion-justify-content-center ion-align-items-center">
+  <div slot="start" [class]="isDone(activity) ? 'dot dot-done' : 'dot'">
+    <!-- <ion-badge slot="start">{{activity.priority||0}}</ion-badge> -->
+  </div>
+
+  <ion-row class="">
     <ion-note>
       <ion-icon name="alarm-outline"></ion-icon>
       {{ activity.time | date: 'HH:mm' }}
     </ion-note>
-    <span class="date">
-      <ion-icon
-        name="chevron-forward"
-        size="small"
-        *ngIf="isIos()"
-      ></ion-icon>
-    </span>
   </ion-row>
 
   <ion-row>
@@ -26,15 +22,13 @@
   </ion-row>
 
   <ion-label class="ion-text-wrap ion-padding">
-    <!-- <ion-row class="ion-align-items-center">
-      <h2>
+    <ion-row class="ion-align-items-center">
+      <ion-title>
         {{ activity.title }}
-      </h2>
-    </ion-row> -->
-    <ion-row>
-      <p *ngIf="activity.description">
-        {{ activity.description }}
-      </p>
+        <ion-note *ngIf="activity.description">
+          {{ activity.description }}
+        </ion-note>
+      </ion-title>
     </ion-row>
   </ion-label>
 

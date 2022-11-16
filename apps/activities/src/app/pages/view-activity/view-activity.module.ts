@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ViewMessagePage } from './view-message.page';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ViewMessagePageRoutingModule } from './view-message-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { EditActivityFormModule } from '../../shared/components/edit-activity-form/edit-activity-form.module';
+import { ViewActivityPage } from './view-activity.page';
+import { VieActivityPageRoutingModule } from './view-activity-routing.module';
 
 @NgModule({
   imports: [
@@ -15,9 +15,9 @@ import { EditActivityFormModule } from '../../shared/components/edit-activity-fo
     FormsModule,
     IonicModule,
     SharedModule,
-    ViewMessagePageRoutingModule,
+    VieActivityPageRoutingModule,
     EditActivityFormModule
   ],
-  declarations: [ViewMessagePage]
+  declarations: [ViewActivityPage]
 })
-export class ViewMessagePageModule {}
+export class ViewActivityPageModule {}

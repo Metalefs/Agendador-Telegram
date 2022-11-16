@@ -96,11 +96,15 @@
         "hours": {
           "label": "Sleep hours",
           "placeholder": "8"
+        },
+        "audio": {
+          "label": "Audio",
+          "placeholder": ""
         }
       },
       "mealprep":{
         "recipe": {
-          "label": "Insert the recipe",
+          "label": "Recipe",
           "placeholder": ""
         }
       },
@@ -110,7 +114,7 @@
           "placeholder": ""
         },
         "recipe": {
-          "label": "Insert the recipe",
+          "label": "Recipe",
           "placeholder": ""
         }
       },
