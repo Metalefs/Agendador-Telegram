@@ -7,6 +7,7 @@ import { ItemReorderEventDetail } from '@ionic/angular';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core';
+import { LocalNotificationService } from '../../shared/services/localNotification.service';
 
 @Component({
   selector: 'app-home',
@@ -23,13 +24,15 @@ export class HomePage implements OnInit{
     private toastController: ToastController,
     private loadingController: LoadingController,
     public service: DataService,
-    private router: Router) {
+    private router: Router,
+    private notificationService: LocalNotificationService) {
       this.openAddActivityModal = this.openAddActivityModal.bind(this);
       this.createActivity = this.createActivity.bind(this);
   }
 
   async ngOnInit(){
-   this.getActivities()
+   this.getActivities();
+   this.notificationService.Schedule([]);
   }
 
   getActivities(){

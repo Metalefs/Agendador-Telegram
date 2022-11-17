@@ -41,17 +41,17 @@
   },
   "auth":{
     "email": {
-      "required": "Email is required",
-      "invalid": "Email is invalid"
+      "required": "Email é obrigatório",
+      "invalid": "Email está inválido"
     },
     "password": {
-      "required": "Password is required",
-      "invalid": "Password needs to be 6 characters"
+      "required": "Senha é obrigatória",
+      "invalid": "A senha precisa de ao menos 6 caractéres"
     },
-    "login": "Log in",
-    "signup": "Not yet a member? Sign up!",
+    "login": "Login",
+    "signup": "Ainda não é um mebro? Cadastre-se!",
     "account": {
-      "create": "Create account"
+      "create": "Criar conta"
     }
   },
   "unit":{

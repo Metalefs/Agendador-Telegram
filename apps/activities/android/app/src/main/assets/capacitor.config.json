@@ -1,0 +1,6 @@
+{
+	"appId": "com.ionicbyrequest.mealPrepActivitiesScheduler",
+	"appName": "activities",
+	"webDir": "../../dist/activities",
+	"bundledWebRuntime": false
+}

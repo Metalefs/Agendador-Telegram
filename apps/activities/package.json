@@ -1,0 +1,10 @@
+{
+  "name": "activities",
+  "devDependencies": {
+    "@capacitor/cli": "^3.9.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "3.9.0",
+    "@capacitor/ios": "3.9.0"
+  }
+}

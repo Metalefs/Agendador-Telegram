@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">activities</string>
+    <string name="title_activity_main">activities</string>
+    <string name="package_name">com.ionicbyrequest.mealPrepActivitiesScheduler</string>
+    <string name="custom_url_scheme">com.ionicbyrequest.mealPrepActivitiesScheduler</string>
+</resources>

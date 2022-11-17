@@ -1,7 +1,13 @@
+
 {
-  "name": "MealPrepScheduler",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+  "defaultProject": "activities",
+  "projects": {
+    "activities": {
+      "name": "activities",
+      "integrations": {
+        "capacitor": {}
+      },
+      "type": "angular"
+    }
+  }
 }
