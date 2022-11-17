@@ -17,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
 import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
 import { DataService } from './shared/services/data.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { LocalNotificationService } from './shared/services/localNotification.service';
 
 const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -32,7 +33,7 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
         deps: [HttpClient]
       }
     }), AppRoutingModule],
-  providers: [LanguageService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  providers: [LanguageService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, LocalNotificationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   DataService, ToastrService],
