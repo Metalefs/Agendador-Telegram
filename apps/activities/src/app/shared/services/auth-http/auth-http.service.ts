@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Storage } from '@capacitor/storage';
+import { Preferences as Storage } from '@capacitor/preferences';
 
 import { environment } from '../../../../environments/environment';
 import { UserModel } from '@uncool/shared';

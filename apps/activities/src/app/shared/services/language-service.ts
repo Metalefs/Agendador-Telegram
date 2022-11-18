@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Storage } from '@capacitor/storage';
+import { Preferences as Storage } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root',
