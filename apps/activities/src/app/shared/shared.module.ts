@@ -21,6 +21,7 @@ import { LocalNotificationService } from './services/localNotification.service';
   imports: [
     CommonModule,
     TranslateModule,
+    TranslateModule.forChild(),
     FormsModule,
     ReactiveFormsModule,
     IonicModule,

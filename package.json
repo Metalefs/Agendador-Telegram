@@ -9,8 +9,8 @@
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js",
-    "start": "concurrently \"nx serve\" \"nx serve activities-api\"",
-    "build": "nx build",
+    "start": "node dist/apps/api/main",
+    "build": "ng build activities-api --prod",
     "test": "nx test"
   },
   "private": true,
@@ -36,6 +36,7 @@
     "@nestjs/core": "9.2.0",
     "@nestjs/platform-express": "9.2.0",
     "@nestjs/platform-fastify": "9.2.0",
+    "@nestjs/serve-static": "^3.0.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "@nrwl/angular": "15.0.13",
