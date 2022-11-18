@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ILocalNotification, LocalNotifications } from '@awesome-cordova-plugins/local-notifications/ngx';
+import { ELocalNotificationTriggerUnit, ILocalNotification, LocalNotifications } from '@awesome-cordova-plugins/local-notifications/ngx';
+import { IActivity } from '@uncool/shared';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalNotificationService {
 
-  constructor(private localNotifications: LocalNotifications, private push: Push) { }
+  constructor(private localNotifications: LocalNotifications) { }
 
 
   isIos() {
@@ -14,19 +16,36 @@ export class LocalNotificationService {
     return win && win.Ionic && win.Ionic.mode === 'ios';
   }
 
-  Schedule(notifications:ILocalNotification[]){
-    // Schedule multiple notifications
-    this.localNotifications.schedule([{
-      id: 1,
-      text: 'Multi ILocalNotification 1',
-      sound: this.isIos() ? 'file://beep.caf' : 'file://sound.mp3',
-      //data: { secret: key }
-    }, {
-      id: 2,
-      title: 'Local ILocalNotification Example',
-      text: 'Multi ILocalNotification 2',
-      icon: 'http://example.com/icon.png',
+  getNotificationForActivity(activity:IActivity){
+    const activityDate = new Date(activity.time!);
+    const date = new Date();
+    date.setHours(activityDate.getHours())
+    date.setMinutes(activityDate.getMinutes())
+    if(moment(date).isBefore(new Date())) return;
+
+    const trigger = moment(date).fromNow();
+    console.log(trigger,activity.time)
+    return {
+      id: activity.priority,
+      title: activity.title,
+      text: activity.description,
+      //icon: 'http://example.com/icon.png',
       led: 'FF0000',
-    }]);
+      data: { _id: activity._id },
+      trigger: { at: date, unit: ELocalNotificationTriggerUnit.DAY },
+      wakeup: true,
+      priority: 1,
+    } as ILocalNotification
+  }
+
+  schedule(activities:IActivity[] | IActivity){
+    let notifications = []
+    if((activities as Array<IActivity>)?.forEach)
+      for(const activitiy of activities as any)
+      notifications.push(this.getNotificationForActivity(activitiy as IActivity))
+    else
+      notifications.push(this.getNotificationForActivity(activities as IActivity));
+
+    this.localNotifications.schedule(notifications.filter(x=>!!x) as any);
   }
 }
