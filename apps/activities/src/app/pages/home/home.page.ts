@@ -7,6 +7,14 @@ import { ItemReorderEventDetail } from '@ionic/angular';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core';
+
+import {
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+  Token,
+} from '@capacitor/push-notifications';
+
 import { LocalNotificationService } from '../../shared/services/localNotification.service';
 
 @Component({
@@ -14,10 +22,10 @@ import { LocalNotificationService } from '../../shared/services/localNotificatio
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
   result!: string;
   iconTypes = IconTypeEnum;
-  activities!:IActivity[];
+  activities!: IActivity[];
   constructor(
     public modalCtrl: ModalController,
     private authService: AuthenticationService,
@@ -26,16 +34,52 @@ export class HomePage implements OnInit{
     public service: DataService,
     private router: Router,
     private notificationService: LocalNotificationService) {
-      this.openAddActivityModal = this.openAddActivityModal.bind(this);
-      this.createActivity = this.createActivity.bind(this);
+    this.openAddActivityModal = this.openAddActivityModal.bind(this);
+    this.createActivity = this.createActivity.bind(this);
   }
 
-  async ngOnInit(){
-   this.getActivities();
-   await this.notificationService.scheduleTest();
+  async ngOnInit() {
+    console.log('Initializing HomePage');
+
+    // Request permission to use push notifications
+    // iOS will prompt user and return if they granted permission or not
+    // Android will just grant without prompting
+    PushNotifications.requestPermissions().then((result: { receive: string; }) => {
+      if (result.receive === 'granted') {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+      } else {
+        // Show some error
+      }
+    });
+
+    PushNotifications.addListener('registration', (token: Token) => {
+      alert('Push registration success, token: ' + token.value);
+    });
+
+    PushNotifications.addListener('registrationError', (error: any) => {
+      alert('Error on registration: ' + JSON.stringify(error));
+    });
+
+    PushNotifications.addListener(
+      'pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        alert('Push received: ' + JSON.stringify(notification));
+      },
+    );
+
+    PushNotifications.addListener(
+      'pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        alert('Push action performed: ' + JSON.stringify(notification));
+      },
+    );
+
+    this.getActivities();
+    await this.notificationService.scheduleTest();
   }
 
-  getActivities(){
+  getActivities() {
     this.service.getActivities().subscribe(async activities => {
       this.activities = activities;
 
@@ -60,14 +104,14 @@ export class HomePage implements OnInit{
     this.setPriority(this.activities);
   }
 
-  async setPriority(activities:IActivity[]){
+  async setPriority(activities: IActivity[]) {
     let idx = 0;
-    for(let activity of activities){
-      if(activity.priority != idx){
+    for (let activity of activities) {
+      if (activity.priority != idx) {
         activity.priority = idx;
         this.service.update(activity).subscribe();
       }
-      idx ++;
+      idx++;
     }
   }
 
@@ -80,9 +124,9 @@ export class HomePage implements OnInit{
     activityModal.present();
   }
 
-  async createActivity(activity: OverlayEventDetail){
-    if(activity.role === 'confirm')
-      this.service.create(activity.data).subscribe(async()=> {
+  async createActivity(activity: OverlayEventDetail) {
+    if (activity.role === 'confirm')
+      this.service.create(activity.data).subscribe(async () => {
         this.getActivities();
         const toast = await this.toastController.create({
           message: 'Activity created',
@@ -93,11 +137,11 @@ export class HomePage implements OnInit{
       });
   }
 
-  async delete(activity:IActivity){
+  async delete(activity: IActivity) {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    this.service.delete(activity._id!).subscribe(async ()=>{
+    this.service.delete(activity._id!).subscribe(async () => {
       await loading.dismiss();
       this.getActivities();
       const toast = await this.toastController.create({
@@ -111,8 +155,8 @@ export class HomePage implements OnInit{
   }
 
   async logout() {
-		await this.authService.logout();
-		this.router.navigate(['/login']);
-	}
+    await this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 
 }

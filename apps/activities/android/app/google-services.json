@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "911796857770",
+    "project_id": "mealprepscheduler",
+    "storage_bucket": "mealprepscheduler.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911796857770:android:8e900ebddc27caf45119d3",
+        "android_client_info": {
+          "package_name": "com.ionicbyrequest.mealPrepActivitiesScheduler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911796857770-8deo9nlgdal1p54n6cb2v9m0407fg9l0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Bn1KaS8OQ_kdEcWUSYMXjIkaPD6cxaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911796857770-8deo9nlgdal1p54n6cb2v9m0407fg9l0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

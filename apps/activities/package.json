@@ -53,6 +53,7 @@
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/local-notifications": "^4.1.3",
     "@capacitor/preferences": "4.0.2",
+    "@capacitor/push-notifications": "^4.1.2",
     "@capacitor/status-bar": "4.0.1",
     "@fastify/static": "^6.5.0",
     "@ionic/angular": "^6.3.7",
