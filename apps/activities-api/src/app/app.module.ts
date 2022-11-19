@@ -11,6 +11,7 @@ import { UserService } from './services/user.service';
 
 import { MongoClient } from 'mongodb';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AppController } from './app.controller';
     ActivitiesService,
     AuthService,
     UserService,
+    AppService,
     {
       provide: 'DATABASE_CONNECTION',
       useFactory: async (): Promise<Db> => {
