@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LocalNotifications } from '@awesome-cordova-plugins/local-notifications/ngx';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr';
@@ -42,7 +41,6 @@ import { LocalNotificationService } from './services/localNotification.service';
   ],
   providers: [
     LocalNotificationService,
-    LocalNotifications
   ]
 })
 export class SharedModule { }

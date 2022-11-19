@@ -11,10 +11,10 @@
     <ion-col>
       <ion-item>
         <ion-label position="inline">{{'activities.form.time.label'|translate}}</ion-label>
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-datetime-button datetime="datetime1"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime id="datetime" formControlName="time" presentation="time"></ion-datetime>
+            <ion-datetime id="datetime1" formControlName="time" presentation="time"></ion-datetime>
           </ng-template>
         </ion-modal>
       </ion-item>

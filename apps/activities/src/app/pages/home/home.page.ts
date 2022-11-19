@@ -32,14 +32,14 @@ export class HomePage implements OnInit{
 
   async ngOnInit(){
    this.getActivities();
-   this.notificationService.scheduleTest();
+   await this.notificationService.scheduleTest();
   }
 
   getActivities(){
-    this.service.getActivities().subscribe(activities => {
+    this.service.getActivities().subscribe(async activities => {
       this.activities = activities;
 
-      this.notificationService.schedule(this.activities);
+      await this.notificationService.schedule(this.activities);
     });
   }
 

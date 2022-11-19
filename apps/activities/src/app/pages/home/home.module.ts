@@ -7,7 +7,6 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { ActivityComponentModule } from '../../shared/components/activity/activity.module';
 import { SharedModule } from '../../shared/shared.module';
-import { LocalNotifications } from '@awesome-cordova-plugins/local-notifications/ngx';
 
 @NgModule({
   imports: [
@@ -20,7 +19,7 @@ import { LocalNotifications } from '@awesome-cordova-plugins/local-notifications
   ],
   declarations: [HomePage],
   providers: [
-    LocalNotifications
+
   ]
 })
 export class HomePageModule {}
