@@ -9,7 +9,7 @@
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js",
-    "start": "node dist/apps/api/main",
+    "start": "node dist/apps/activities-api/main",
     "build": "ng build activities-api --prod",
     "test": "nx test"
   },

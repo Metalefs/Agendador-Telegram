@@ -13,7 +13,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/activities",
+            "outputPath": "dist/apps/activities",
             "index": "apps/activities/src/index.html",
             "main": "apps/activities/src/main.ts",
             "polyfills": "apps/activities/src/polyfills.ts",

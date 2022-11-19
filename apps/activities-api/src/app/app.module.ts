@@ -15,8 +15,8 @@ import { MongoClient } from 'mongodb';
   imports: [
      // BEGIN INSERT
      ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'activities'),
-      exclude: ['/api*']
+      rootPath: join(__dirname, '..', 'activities'),
+      exclude: ['/activities-api*']
     })
     // END INSERT
   ],
