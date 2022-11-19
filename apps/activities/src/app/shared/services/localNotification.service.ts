@@ -16,15 +16,14 @@ export class LocalNotificationService {
     return win && win.Ionic && win.Ionic.mode === 'ios';
   }
 
-  getNotificationForActivity(activity:IActivity){
+  getNotificationForActivity(activity: IActivity) {
     const activityDate = new Date(activity.time!);
     const date = new Date();
     date.setHours(activityDate.getHours())
     date.setMinutes(activityDate.getMinutes())
-    if(moment(date).isBefore(new Date())) return;
+    if (moment(date).isBefore(new Date())) return;
 
     const trigger = moment(date).fromNow();
-    console.log(trigger,activity.time)
     return {
       id: activity.priority,
       title: activity.title,
@@ -38,14 +37,28 @@ export class LocalNotificationService {
     } as ILocalNotification
   }
 
-  schedule(activities:IActivity[] | IActivity){
+  scheduleTest() {
+    this.localNotifications.schedule(
+      {
+        id: 10,
+        title: 'teste',
+        text: 'activity.description',
+        //icon: 'http://example.com/icon.png',
+        led: 'FF0000',
+        trigger: { in: 5, unit: ELocalNotificationTriggerUnit.SECOND },
+        wakeup: true,
+        priority: 1
+      });
+  }
+
+  schedule(activities: IActivity[] | IActivity) {
     let notifications = []
-    if((activities as Array<IActivity>)?.forEach)
-      for(const activitiy of activities as any)
-      notifications.push(this.getNotificationForActivity(activitiy as IActivity))
+    if ((activities as Array<IActivity>)?.forEach)
+      for (const activitiy of activities as any)
+        notifications.push(this.getNotificationForActivity(activitiy as IActivity))
     else
       notifications.push(this.getNotificationForActivity(activities as IActivity));
 
-    this.localNotifications.schedule(notifications.filter(x=>!!x) as any);
+    this.localNotifications.schedule(notifications.filter(x => !!x) as any);
   }
 }
