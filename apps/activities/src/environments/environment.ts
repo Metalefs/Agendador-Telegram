@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  endpoint: 'http://localhost:3333/api'
+  endpoint: 'https://mealprepscheduler.herokuapp.com/api'
 };
 
 /*

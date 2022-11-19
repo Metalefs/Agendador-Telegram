@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { Db } from 'mongodb';
-import { ServeStaticModule } from '@nestjs/serve-static'; // <- INSERT LINE
-import { join } from 'path'; // <- INSERT LINE
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 import { ActivitiesController } from './controllers/activities/activities.controller';
 import { ActivitiesService } from './controllers/activities/activities.service';
@@ -10,17 +10,16 @@ import { AuthService } from './controllers/auth/auth.service';
 import { UserService } from './services/user.service';
 
 import { MongoClient } from 'mongodb';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
-     // BEGIN INSERT
      ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'activities'),
       exclude: ['/activities-api*']
     })
-    // END INSERT
   ],
-  controllers: [ActivitiesController, AuthController],
+  controllers: [ActivitiesController, AuthController, AppController],
   providers: [
     ActivitiesService,
     AuthService,
