@@ -6,6 +6,7 @@
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "gcm_sender_id": "BMTJDmN6boWbMYmZBjfQRvdfPSI4Z7OcrfiURimBIGlLBWzhsdJDDoWNhxaxdKLUCjef6rknP-TBHyeypr9Q13k",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

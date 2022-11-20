@@ -54,7 +54,6 @@ export class HomePage implements OnInit {
     }
 
     this.getActivities();
-    await this.notificationService.scheduleTest();
   }
 
   getActivities() {

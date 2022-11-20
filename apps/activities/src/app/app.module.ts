@@ -11,6 +11,8 @@ import {
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 
 import { LanguageService } from './shared/services/language-service';
 import { AppComponent } from './app.component';
@@ -32,6 +34,18 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
     SharedModule,
     ToastrModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    AngularFireModule.initializeApp(
+      {
+        apiKey: "AIzaSyBrIZEqzfFDbjPThP_LfQGGjJ680nMef9M",
+        authDomain: "mealprepscheduler.firebaseapp.com",
+        projectId: "mealprepscheduler",
+        storageBucket: "mealprepscheduler.appspot.com",
+        messagingSenderId: "911796857770",
+        appId: "1:911796857770:web:865f5c4f0571d5605119d3",
+        measurementId: "G-2HDM3Y267V"
+      }
+    ),
+    AngularFireMessagingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

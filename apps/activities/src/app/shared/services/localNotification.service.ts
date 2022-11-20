@@ -57,27 +57,6 @@ export class LocalNotificationService {
     return notifications;
   }
 
-  async scheduleTest() {
-    const randomId = Math.floor(Math.random() * 10000) + 1;
-
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: "Test Title",
-          body: "Test Body",
-          id: randomId,
-          sound: "beep.wav",
-          schedule: {
-            allowWhileIdle: true,
-            at: new Date(Date.now() + 1000 * 5),// in 5 seconds
-            repeats: true,
-            every: "minute"
-          }
-        }
-      ]
-    });
-  }
-
   async schedule(activities: IActivity[] | IActivity) {
     let notifications:LocalNotificationSchema[] = []
     if ((activities as Array<IActivity>)?.forEach)
