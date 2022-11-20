@@ -22,6 +22,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { LocalNotificationService } from './shared/services/localNotification.service';
 import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './shared/services/checkForUpdatesService';
+import { WebNotificationService } from './shared/services/webNotificationService';
 
 const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -43,7 +44,9 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
   // or after 30 seconds (whichever comes first).
   registrationStrategy: 'registerWhenStable:30000'
 })],
-  providers: [LanguageService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, LocalNotificationService,
+  providers: [LanguageService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    WebNotificationService,
+    LocalNotificationService,
     CheckForUpdateService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
