@@ -4,7 +4,7 @@
   "license": "MIT",
   "engines": {
     "node": "17.5",
-    "npm": "6.x"
+    "npm": "8.x"
   },
   "scripts": {
     "ng": "nx",
@@ -83,7 +83,6 @@
     "@types/node": "18.7.1",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
-    "cypress": "^10.11.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.12.1",

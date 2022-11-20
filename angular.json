@@ -257,35 +257,6 @@
       },
       "tags": []
     },
-    "activities-e2e": {
-      "root": "apps/activities-e2e",
-      "sourceRoot": "apps/activities-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/activities-e2e/cypress.config.ts",
-            "devServerTarget": "activities:serve:development",
-            "testingType": "e2e"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "activities:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/activities-e2e/**/*.{js,ts}"]
-          }
-        }
-      },
-      "tags": [],
-      "implicitDependencies": ["activities"]
-    },
     "shared": {
       "root": "libs/shared",
       "sourceRoot": "libs/shared/src",
