@@ -11,7 +11,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/activities",
             "index": "apps/activities/src/index.html",
@@ -29,13 +31,17 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              }
+              },
+              "apps/activities/src/manifest.webmanifest"
             ],
             "styles": [
               "apps/activities/src/theme/variables.scss",
               "apps/activities/src/global.scss"
             ],
-            "scripts": []
+            "serviceWorker": true,
+            "preserveSymlinks": true,
+            "scripts": [],
+            "ngswConfigPath": "apps/activities/ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -43,7 +49,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -99,7 +105,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+          "outputs": [
+            "{workspaceRoot}/coverage/{projectRoot}"
+          ],
           "options": {
             "jestConfig": "apps/activities/jest.config.ts",
             "passWithNoTests": true
@@ -205,14 +213,18 @@
       "architect": {
         "build": {
           "builder": "@nrwl/webpack:webpack",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "target": "node",
             "compiler": "tsc",
             "outputPath": "dist/apps/activities-api",
             "main": "apps/activities-api/src/main.ts",
             "tsConfig": "apps/activities-api/tsconfig.app.json",
-            "assets": ["apps/activities-api/src/assets"]
+            "assets": [
+              "apps/activities-api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -241,14 +253,20 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/activities-api/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/activities-api/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+          "outputs": [
+            "{workspaceRoot}/coverage/{projectRoot}"
+          ],
           "options": {
             "jestConfig": "apps/activities-api/jest.config.ts",
             "passWithNoTests": true
@@ -264,14 +282,20 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/shared/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/shared/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+          "outputs": [
+            "{workspaceRoot}/coverage/{projectRoot}"
+          ],
           "options": {
             "jestConfig": "libs/shared/jest.config.ts",
             "passWithNoTests": true

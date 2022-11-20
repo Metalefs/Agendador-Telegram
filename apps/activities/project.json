@@ -28,6 +28,8 @@
           }
         ],
         "styles": ["apps/activities/src/theme/variables.scss", "apps/activities/src/global.scss"],
+        "serviceWorker": true,
+        "preserveSymlinks": true,
         "scripts": []
       },
       "configurations": {
@@ -36,7 +38,7 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "2mb"
             },
             {
               "type": "anyComponentStyle",

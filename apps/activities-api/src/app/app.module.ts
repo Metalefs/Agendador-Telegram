@@ -12,6 +12,8 @@ import { UserService } from './services/user.service';
 import { MongoClient } from 'mongodb';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { NotificationsService } from './controllers/notifications/notifications.service';
+import { NotificationsController } from './controllers/notifications/notifications.controller';
 
 @Module({
   imports: [
@@ -20,8 +22,9 @@ import { AppService } from './app.service';
       exclude: ['/activities-api*']
     })
   ],
-  controllers: [ActivitiesController, AuthController, AppController],
+  controllers: [ActivitiesController, AuthController, AppController, NotificationsController],
   providers: [
+    NotificationsService,
     ActivitiesService,
     AuthService,
     UserService,

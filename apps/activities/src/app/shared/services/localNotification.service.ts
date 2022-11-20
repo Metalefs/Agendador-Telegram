@@ -24,7 +24,6 @@ export class LocalNotificationService {
     const date = new Date();
     date.setHours(activityDate.getHours())
     date.setMinutes(activityDate.getMinutes())
-    if (moment(date).isBefore(new Date())) return null;
 
     const notifications:LocalNotificationSchema[] = [];
 
@@ -39,7 +38,7 @@ export class LocalNotificationService {
           data: { _id: activity._id },
           extra: { _id: activity._id },
           body: activity.description,
-          id: activity.id,
+          id: (activity.id || activity.priority)||0 + weekday,
           sound: "beep.wav",
           // importance: 4,
           // vibration: true,
@@ -54,6 +53,7 @@ export class LocalNotificationService {
         } as LocalNotificationSchema
       )
     })
+    console.log(notifications)
     return notifications;
   }
 

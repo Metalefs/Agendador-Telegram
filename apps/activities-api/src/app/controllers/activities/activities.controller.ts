@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Put, Post, Req, UseInterceptors } from '@nestjs/common';
-import { IActivity } from '@uncool/shared';
+import { Controller, Delete, Get, Param, Put, Post, Req, UseInterceptors } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { AuthInterceptor } from '../../middlewares/auth.interceptor';
 

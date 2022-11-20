@@ -10,7 +10,7 @@ import {
   TranslateLoader,
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { SwPush, SwUpdate } from '@angular/service-worker';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { LanguageService } from './shared/services/language-service';
 import { AppComponent } from './app.component';
@@ -20,6 +20,8 @@ import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
 import { DataService } from './shared/services/data.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { LocalNotificationService } from './shared/services/localNotification.service';
+import { environment } from '../environments/environment';
+import { CheckForUpdateService } from './shared/services/checkForUpdatesService';
 
 const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -28,41 +30,27 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
   imports: [BrowserModule, BrowserAnimationsModule, IonicModule.forRoot(), HttpClientModule,
     SharedModule,
     ToastrModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: httpLoaderFactory,
         deps: [HttpClient]
       }
-    }), AppRoutingModule],
+    }), AppRoutingModule, ServiceWorkerModule.register('ngsw-worker.js', {
+  enabled: environment.production,
+  // Register the ServiceWorker as soon as the application is stable
+  // or after 30 seconds (whichever comes first).
+  registrationStrategy: 'registerWhenStable:30000'
+})],
   providers: [LanguageService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, LocalNotificationService,
+    CheckForUpdateService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     DataService, ToastrService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(private pushSw: SwPush, private update: SwUpdate) {
-    update.versionUpdates.subscribe((update: any) => {
-      console.log("Nova versão disponível");
-    });
 
-    this.SubscribeToPush();
-    pushSw.messages.subscribe((msg: any) => {
-      console.log(JSON.stringify(msg));
-    })
-  }
-  SubscribeToPush() {
-    this.pushSw.requestSubscription({
-      serverPublicKey: 'BL7zaaFxN-cDod1-QDTB7soAyQafNMqTqr4eI-SDWBIhA4NqYqEhjHb451RkxJEP2_Fv8SEcij9OBHfhDsH8FEk'
-    })
-      .then((pushSubscription: any) => {
-        console.log(JSON.stringify(pushSubscription));
-      })
-
-      .catch((err: string) => {
-        console.error("Ocorreu um erro:" + err);
-      })
-  }
 }
 

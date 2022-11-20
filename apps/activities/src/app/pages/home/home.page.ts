@@ -7,6 +7,7 @@ import { ItemReorderEventDetail } from '@ionic/angular';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core';
+import { Capacitor } from '@capacitor/core';
 
 import {
   ActionPerformed,
@@ -41,41 +42,11 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() {
-    console.log('Initializing HomePage');
+    const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
 
-    // Request permission to use push notifications
-    // iOS will prompt user and return if they granted permission or not
-    // Android will just grant without prompting
-    // PushNotifications.requestPermissions().then((result: { receive: string; }) => {
-    //   if (result.receive === 'granted') {
-    //     // Register with Apple / Google to receive push via APNS/FCM
-    //     PushNotifications.register();
-    //   } else {
-    //     // Show some error
-    //   }
-    // });
-
-    PushNotifications.addListener('registration', (token: Token) => {
-      alert('Push registration success, token: ' + token.value);
-    });
-
-    PushNotifications.addListener('registrationError', (error: any) => {
-      alert('Error on registration: ' + JSON.stringify(error));
-    });
-
-    PushNotifications.addListener(
-      'pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
-        //alert('Push received: ' + JSON.stringify(notification));
-      },
-    );
-
-    PushNotifications.addListener(
-      'pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
-        //alert('Push action performed: ' + JSON.stringify(notification));
-      },
-    );
+    if (isPushNotificationsAvailable) {
+      this.initPushNotifications();
+    }
 
     this.getActivities();
     await this.notificationService.scheduleTest();
@@ -161,4 +132,39 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  initPushNotifications(){
+     // Request permission to use push notifications
+    // iOS will prompt user and return if they granted permission or not
+    // Android will just grant without prompting
+    PushNotifications.requestPermissions().then((result: { receive: string; }) => {
+      if (result.receive === 'granted') {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+      } else {
+        // Show some error
+      }
+    });
+
+    PushNotifications.addListener('registration', (token: Token) => {
+      alert('Push registration success, token: ' + token.value);
+    });
+
+    PushNotifications.addListener('registrationError', (error: any) => {
+      alert('Error on registration: ' + JSON.stringify(error));
+    });
+
+    PushNotifications.addListener(
+      'pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        //alert('Push received: ' + JSON.stringify(notification));
+      },
+    );
+
+    PushNotifications.addListener(
+      'pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        //alert('Push action performed: ' + JSON.stringify(notification));
+      },
+    );
+  }
 }
