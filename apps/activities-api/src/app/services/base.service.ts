@@ -4,9 +4,11 @@ import autoIncrement = require("mongo-autoincrement")
 export class BaseService {
   constructor(protected dbconnection: Db, protected collection) {}
 
-  insert =async (item) => {
-    const id = await autoIncrement(this.dbconnection, this.collection, 'id')
-    item.id = id;
+  insert =async (item, increment = true) => {
+    if(increment){
+      const id = await autoIncrement(this.dbconnection, this.collection, 'id')
+      item.id = id;
+    }
     await this.dbconnection.collection(this.collection).insertOne(item);
   };
 
