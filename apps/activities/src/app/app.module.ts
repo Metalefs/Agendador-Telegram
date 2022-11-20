@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -56,7 +54,7 @@ export class AppModule {
   }
   SubscribeToPush() {
     this.pushSw.requestSubscription({
-      serverPublicKey: process.env['VAPID_PUBLIC_KEY'] || 'BL7zaaFxN-cDod1-QDTB7soAyQafNMqTqr4eI-SDWBIhA4NqYqEhjHb451RkxJEP2_Fv8SEcij9OBHfhDsH8FEk'
+      serverPublicKey: 'BL7zaaFxN-cDod1-QDTB7soAyQafNMqTqr4eI-SDWBIhA4NqYqEhjHb451RkxJEP2_Fv8SEcij9OBHfhDsH8FEk'
     })
       .then((pushSubscription: any) => {
         console.log(JSON.stringify(pushSubscription));
