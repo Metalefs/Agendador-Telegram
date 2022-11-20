@@ -36,14 +36,13 @@ export class LocalNotificationService {
           title: this.translate.instant('activities.'+activity.type!)+ " - " + activity.title,
           text: activity.description,
           //icon: 'http://example.com/icon.png',
-          led: 'FF0000',
           data: { _id: activity._id },
           extra: { _id: activity._id },
           body: activity.description,
           id: activity.id,
-          sound: '',
-          importance: 4,
-          vibration: true,
+          sound: "beep.wav",
+          // importance: 4,
+          // vibration: true,
           schedule: {
             allowWhileIdle: true,
             at: date,
@@ -52,7 +51,6 @@ export class LocalNotificationService {
               weekday
             }
           }
-
         } as LocalNotificationSchema
       )
     })
@@ -68,6 +66,7 @@ export class LocalNotificationService {
           title: "Test Title",
           body: "Test Body",
           id: randomId,
+          sound: "beep.wav",
           schedule: {
             allowWhileIdle: true,
             at: new Date(Date.now() + 1000 * 5),// in 5 seconds

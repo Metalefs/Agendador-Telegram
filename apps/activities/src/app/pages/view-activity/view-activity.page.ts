@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { IActivity, UserModel } from '@uncool/shared';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { DataService } from '../../shared/services/data.service';
@@ -29,6 +30,7 @@ export class ViewActivityPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     private loadingController: LoadingController,
+    private translate: TranslateService
   ) { }
 
   async ngOnInit() {
@@ -58,7 +60,7 @@ export class ViewActivityPage implements OnInit {
       await loading.dismiss();
       this.loadActivity();
       const toast = await this.toastController.create({
-        message: 'Activity updated',
+        message: await this.translate.get('activity.updated').toPromise(),
         duration: 1500,
         position: 'top'
       });

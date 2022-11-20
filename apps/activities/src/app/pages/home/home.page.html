@@ -46,22 +46,9 @@
     </ng-template>
   </ion-list>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
     <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="add" (click)="openAddActivityModal('')"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="openAddActivityModal('')">
-        <ion-icon [name]="'add'"></ion-icon>
-      </ion-fab-button>
-      <ng-container *ngFor="let type of service.activityTypesMap">
-        <ion-fab-button
-          *ngIf="type.iconType === iconTypes.icon"
-          (click)="openAddActivityModal(type.name)"
-        >
-          <ion-icon [name]="type.icon"></ion-icon>
-        </ion-fab-button>
-      </ng-container>
-    </ion-fab-list>
   </ion-fab>
 </ion-content>

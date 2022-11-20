@@ -16,6 +16,7 @@ import {
 } from '@capacitor/push-notifications';
 
 import { LocalNotificationService } from '../../shared/services/localNotification.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ export class HomePage implements OnInit {
     private loadingController: LoadingController,
     public service: DataService,
     private router: Router,
+    private translate: TranslateService,
     private notificationService: LocalNotificationService) {
     this.openAddActivityModal = this.openAddActivityModal.bind(this);
     this.createActivity = this.createActivity.bind(this);
@@ -44,14 +46,14 @@ export class HomePage implements OnInit {
     // Request permission to use push notifications
     // iOS will prompt user and return if they granted permission or not
     // Android will just grant without prompting
-    PushNotifications.requestPermissions().then((result: { receive: string; }) => {
-      if (result.receive === 'granted') {
-        // Register with Apple / Google to receive push via APNS/FCM
-        PushNotifications.register();
-      } else {
-        // Show some error
-      }
-    });
+    // PushNotifications.requestPermissions().then((result: { receive: string; }) => {
+    //   if (result.receive === 'granted') {
+    //     // Register with Apple / Google to receive push via APNS/FCM
+    //     PushNotifications.register();
+    //   } else {
+    //     // Show some error
+    //   }
+    // });
 
     PushNotifications.addListener('registration', (token: Token) => {
       alert('Push registration success, token: ' + token.value);
@@ -64,14 +66,14 @@ export class HomePage implements OnInit {
     PushNotifications.addListener(
       'pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        alert('Push received: ' + JSON.stringify(notification));
+        //alert('Push received: ' + JSON.stringify(notification));
       },
     );
 
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
+        //alert('Push action performed: ' + JSON.stringify(notification));
       },
     );
 
@@ -129,7 +131,7 @@ export class HomePage implements OnInit {
       this.service.create(activity.data).subscribe(async () => {
         this.getActivities();
         const toast = await this.toastController.create({
-          message: 'Activity created',
+          message: await this.translate.get('activity.created').toPromise(),
           duration: 1500,
           position: 'top'
         });
@@ -145,7 +147,7 @@ export class HomePage implements OnInit {
       await loading.dismiss();
       this.getActivities();
       const toast = await this.toastController.create({
-        message: 'Activity deleted',
+        message: await this.translate.get('activity.deleted').toPromise(),
         duration: 1500,
         position: 'top'
       });
