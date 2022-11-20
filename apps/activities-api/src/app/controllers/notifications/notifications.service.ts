@@ -8,7 +8,8 @@ export class NotificationsService extends BaseService {
     super(db, "notifications");
   }
   async register(subscription) {
-    await this.insert(subscription, false)
+    if(subscription.endpoint)
+      await this.insert(subscription, false)
     console.log(`Subscription received`);
     const payload = JSON.stringify({
       "notification": {

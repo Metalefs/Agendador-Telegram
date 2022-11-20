@@ -14,8 +14,8 @@ export class NotificationsController {
   notification(@Body() body) {
     const subscription = body.notification;
     const notification = this.notificationsService.register(subscription);
-
-    webpush.sendNotification(subscription, notification)
-    .catch(error => console.error(error));
+    if(subscription.endpoint)
+      webpush.sendNotification(subscription, notification)
+      .catch(error => console.error(error));
   }
 }
