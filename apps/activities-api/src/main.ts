@@ -3,7 +3,19 @@ const webpush = require('web-push');
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+// import { googleCredentials } from './env';
+// import * as fs from "fs";
 
+
+// import admin from 'firebase-admin';
+
+// fs.writeFileSync('./google-credentials.json', googleCredentials);
+
+// const serviceAccount = require("./google-credentials.json");
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// });
 
 async function bootstrap() {
 

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { BaseService } from '../../services/base.service';
+import { getMessaging, Message } from 'firebase-admin/messaging';
 
 @Injectable()
 export class NotificationsService extends BaseService {
@@ -8,8 +9,10 @@ export class NotificationsService extends BaseService {
     super(db, "notifications");
   }
   async register(subscription) {
-    if(subscription.endpoint)
+    console.log(subscription)
+    if (subscription.endpoint){
       await this.insert(subscription, false)
+    }
     console.log(`Subscription received`);
     const payload = JSON.stringify({
       "notification": {
@@ -27,5 +30,29 @@ export class NotificationsService extends BaseService {
       }
     })
     return payload;
+  }
+
+  async sendFCMMessage(fcmToken: string, msg: Message): Promise<string> {
+    try {
+      const res = await getMessaging().send({
+        webpush: {
+          notification: {
+            ...msg,
+            requireInteraction: msg.webpush.notification.requireInteraction ?? false,
+            actions: [{
+              title: 'Open',
+              action: 'open',
+            }],
+            data: {
+
+            },
+          },
+        },
+        token: fcmToken,
+      });
+      return res;
+    } catch (e) {
+      console.error('sendFCMMessage error', e);
+    }
   }
 }
