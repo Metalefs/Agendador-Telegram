@@ -18,6 +18,7 @@ import {
 
 import { LocalNotificationService } from '../../shared/services/localNotification.service';
 import { TranslateService } from '@ngx-translate/core';
+import { WebNotificationService } from '../../shared/services/webNotificationService';
 
 @Component({
   selector: 'app-home',
@@ -36,9 +37,13 @@ export class HomePage implements OnInit {
     public service: DataService,
     private router: Router,
     private translate: TranslateService,
-    private notificationService: LocalNotificationService) {
+    private notificationService: LocalNotificationService,
+    private webNotificationService: WebNotificationService) {
     this.openAddActivityModal = this.openAddActivityModal.bind(this);
     this.createActivity = this.createActivity.bind(this);
+
+
+    this.webNotificationService.subscribeToNotification();
   }
 
   async ngOnInit() {

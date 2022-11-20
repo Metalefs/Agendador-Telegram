@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { LanguageService } from './shared/services/language-service';
 import { SwPush, SwUpdate } from '@angular/service-worker';
 import { CheckForUpdateService } from './shared/services/checkForUpdatesService';
-import { WebNotificationService } from './shared/services/webNotificationService';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +11,8 @@ import { WebNotificationService } from './shared/services/webNotificationService
 export class AppComponent {
   updateAvailable = false;
   constructor(private languageService: LanguageService, private swPush: SwPush, private updates: SwUpdate,
-    private checkForUpdateService: CheckForUpdateService, private webNotificationService: WebNotificationService) {
+    private checkForUpdateService: CheckForUpdateService) {
     this.languageService.loadLanguage();
-    this.webNotificationService.subscribeToNotification();
     this.swPush.notificationClicks.subscribe(event => {
       console.log('Received notification: ', event);
       const url = event.notification.data.url;
@@ -22,7 +20,6 @@ export class AppComponent {
     });
     this.updates.versionUpdates.subscribe((event) => {
       this.updateAvailable = true;
-      alert('new version available')
     });
   }
 }
