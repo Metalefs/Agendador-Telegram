@@ -33,6 +33,7 @@
                 "output": "./svg"
               },
               "apps/activities/src/manifest.webmanifest",
+              "apps/activities/src/manifest.json",
               "apps/activities/src/firebase-messaging-sw.js"
             ],
             "styles": [
