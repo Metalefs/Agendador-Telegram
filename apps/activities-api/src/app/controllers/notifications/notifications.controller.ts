@@ -23,4 +23,8 @@ export class NotificationsController {
       .catch(error => console.error(error));
     }
   }
+  @Post('/fcm')
+  notificationFCM(@Req() request: Request) {
+    return ''
+  }
 }

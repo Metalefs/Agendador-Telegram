@@ -9,16 +9,10 @@ import { Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core';
 import { Capacitor } from '@capacitor/core';
 
-import {
-  ActionPerformed,
-  PushNotificationSchema,
-  PushNotifications,
-  Token,
-} from '@capacitor/push-notifications';
-
 import { LocalNotificationService } from '../../shared/services/localNotification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { WebNotificationService } from '../../shared/services/webNotificationService';
+import { PushNofiticationService } from '../../shared/services/pushNotificationService';
 
 @Component({
   selector: 'app-home',
@@ -37,20 +31,24 @@ export class HomePage implements OnInit {
     public service: DataService,
     private router: Router,
     private translate: TranslateService,
-    private notificationService: LocalNotificationService,
+    private localNotificationService: LocalNotificationService,
+    private pushNotificationService: PushNofiticationService,
     private webNotificationService: WebNotificationService) {
     this.openAddActivityModal = this.openAddActivityModal.bind(this);
     this.createActivity = this.createActivity.bind(this);
 
 
-    this.webNotificationService.subscribeToNotification();
+    //this.webNotificationService.subscribeToNotification();
   }
 
   async ngOnInit() {
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
 
     if (isPushNotificationsAvailable) {
-      this.initPushNotifications();
+      this.pushNotificationService.initPushNotifications()
+    }
+    else {
+      this.webNotificationService.subscribeToNotification()
     }
 
     this.getActivities();
@@ -60,7 +58,7 @@ export class HomePage implements OnInit {
     this.service.getActivities().subscribe(async activities => {
       this.activities = activities;
 
-      await this.notificationService.schedule(this.activities);
+      await this.localNotificationService.schedule(this.activities);
     });
   }
 
@@ -136,39 +134,4 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  initPushNotifications(){
-     // Request permission to use push notifications
-    // iOS will prompt user and return if they granted permission or not
-    // Android will just grant without prompting
-    PushNotifications.requestPermissions().then((result: { receive: string; }) => {
-      if (result.receive === 'granted') {
-        // Register with Apple / Google to receive push via APNS/FCM
-        PushNotifications.register();
-      } else {
-        // Show some error
-      }
-    });
-
-    PushNotifications.addListener('registration', (token: Token) => {
-      alert('Push registration success, token: ' + token.value);
-    });
-
-    PushNotifications.addListener('registrationError', (error: any) => {
-      alert('Error on registration: ' + JSON.stringify(error));
-    });
-
-    PushNotifications.addListener(
-      'pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
-        //alert('Push received: ' + JSON.stringify(notification));
-      },
-    );
-
-    PushNotifications.addListener(
-      'pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
-        //alert('Push action performed: ' + JSON.stringify(notification));
-      },
-    );
-  }
 }

@@ -1,18 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalNotifications, LocalNotificationSchema, LocalNotificationsPlugin } from '@capacitor/local-notifications'
+import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
+
 import { TranslateService } from '@ngx-translate/core';
 import { IActivity, WeekdayEnum } from '@uncool/shared';
-import * as moment from 'moment';
-import { firstValueFrom } from 'rxjs';
+import { environment } from 'apps/activities/src/environments/environment';
+
 import { getWeekdayInNumber } from '../utils/calendar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalNotificationService {
-
-  constructor(private translate: TranslateService) { }
-
+  private baseUrl = `${environment.endpoint}/notifications`;
+  constructor(private http: HttpClient,
+    private translate: TranslateService) {}
 
   isIos() {
     const win = window as any;

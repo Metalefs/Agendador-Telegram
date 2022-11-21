@@ -25,6 +25,7 @@ import { LocalNotificationService } from './shared/services/localNotification.se
 import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './shared/services/checkForUpdatesService';
 import { WebNotificationService } from './shared/services/webNotificationService';
+import { PushNofiticationService } from './shared/services/pushNotificationService';
 
 const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -61,6 +62,7 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
   providers: [LanguageService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     WebNotificationService,
     LocalNotificationService,
+    PushNofiticationService,
     CheckForUpdateService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

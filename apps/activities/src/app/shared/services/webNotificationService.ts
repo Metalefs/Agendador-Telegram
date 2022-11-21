@@ -7,7 +7,7 @@ import { AngularFireMessaging } from '@angular/fire/compat/messaging';
   providedIn: 'root',
 })
 export class WebNotificationService {
-  private baseUrl = `${environment.endpoint}/notifications`;
+  private baseUrl = `${environment.endpoint}/notifications/fcm`;
   constructor(private http: HttpClient,
               private swPush: SwPush,
               private swUpdate: SwUpdate,
@@ -17,9 +17,9 @@ export class WebNotificationService {
   subscribeToNotification() {
     this.afMessaging.requestPermission
       .subscribe(
-        (sub) => this.sendToServer(sub),
+        () => {console.log('permission granted')},
         (error) => { console.error(error); },
-      );
+    );
     this.swPush.requestSubscription({
         serverPublicKey: environment.VAPID_PUBLIC_KEY
     })
