@@ -20,4 +20,9 @@ if (isSupported) {
         const image = payload.image;
         self.registration.showNotification(payload.title, { body, icon: image || '/assets/icons/icon-72x72.png' });
     });
+
+    self.addEventListener('notificationclick', function(event) {
+      event.notification.close();
+      event.waitUntil(self.clients.openWindow(event.notification.data.url));
+  });
 }

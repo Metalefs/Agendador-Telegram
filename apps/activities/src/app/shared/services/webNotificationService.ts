@@ -45,6 +45,15 @@ export class WebNotificationService {
     this.afMessaging.messages
       .subscribe((message: any) => {
         console.log({"afMessaging Message received":message});
+        const NotificationOptions = {
+          body: message.notification.body,
+          data: message.data,
+          icon: message.notification.icon
+        }
+        navigator.serviceWorker.getRegistration('/firebase-cloud-messaging-push-scope').then(registration => {
+          registration?.showNotification(message.notification.title, NotificationOptions);
+        });
+
       });
   }
 
