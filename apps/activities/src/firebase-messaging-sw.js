@@ -7,6 +7,7 @@ firebase.initializeApp({
   projectId: "mealprepscheduler",
   storageBucket: "mealprepscheduler.appspot.com",
   messagingSenderId: "911796857770",
+  appId: "1:911796857770:web:865f5c4f0571d5605119d3",
 });
 
 
