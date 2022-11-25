@@ -35,11 +35,21 @@ export class WebNotificationService {
       console.log(JSON.stringify(msg));
     })
 
+    // Callback fired if Instance ID token is updated.
+    this.afMessaging.tokenChanges.subscribe(()=>{
+      this.afMessaging.getToken.subscribe((refreshedToken)=>{
+          console.log('Token refreshed.', refreshedToken);
+        })
+    });
+
     this.afMessaging.messages
       .subscribe((message: any) => { console.log(message); });
   }
 
   sendToServer(notification: any) {
-    this.http.post(this.baseUrl, { notification }).subscribe();
+    this.afMessaging.getToken.subscribe((token)=>{
+      console.log('Token: ', token);
+      this.http.post(this.baseUrl, { notification, token }).subscribe();
+    })
   }
 }
