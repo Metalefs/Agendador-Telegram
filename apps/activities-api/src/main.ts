@@ -12,9 +12,9 @@ import * as fs from "fs";
 const admin = require('firebase-admin');
 
 fs.writeFileSync('./google-credentials.json', googleCredentials);
-
+const serviceAccount = require("./google-credentials.json");
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(serviceAccount)
 });
 
 async function bootstrap() {
