@@ -5,19 +5,17 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { NotificationScheduler } from './app/routines/notificationSchedule';
 import { dbconnection } from './database';
-// import { googleCredentials } from './env';
-// import * as fs from "fs";
+import { googleCredentials } from './env';
+import * as fs from "fs";
 
 
-// import admin from 'firebase-admin';
+const admin = require('firebase-admin');
 
-// fs.writeFileSync('./google-credentials.json', googleCredentials);
+fs.writeFileSync('./google-credentials.json', googleCredentials);
 
-// const serviceAccount = require("./google-credentials.json");
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount)
-// });
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+});
 
 async function bootstrap() {
 
