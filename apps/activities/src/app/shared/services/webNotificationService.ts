@@ -43,7 +43,9 @@ export class WebNotificationService {
     });
 
     this.afMessaging.messages
-      .subscribe((message: any) => { console.log({"afMessaging Message received":message}); });
+      .subscribe((message: any) => {
+        console.log({"afMessaging Message received":message});
+      });
   }
 
   sendToServer(notification: any) {

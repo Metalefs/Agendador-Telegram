@@ -14,7 +14,10 @@ firebase.initializeApp({
 const isSupported = firebase.messaging.isSupported();
 if (isSupported) {
     const messaging = firebase.messaging();
-    messaging.onBackgroundMessage(({ notification: { title, body, image } }) => {
-        self.registration.showNotification(title, { body, icon: image || '/assets/icons/icon-72x72.png' });
+    messaging.onBackgroundMessage(payload => {
+        console.log(payload)
+        const body = payload.body;
+        const image = payload.image;
+        self.registration.showNotification(payload.title, { body, icon: image || '/assets/icons/icon-72x72.png' });
     });
 }
