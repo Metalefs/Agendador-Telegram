@@ -18,9 +18,11 @@ export class NotificationScheduler {
       const notifications = await activityService.getPendingNotifications();
 
       for(const notification of notifications) {
-        const subscription = await subscriptionService.getUserSubscription(notification.userId);
-        if(subscription)
-          await subscriptionService.sendNotification(subscription, notification);
+        const subscription = await subscriptionService.getUserSubscription(notification.userId) as any;
+        if(subscription.token)
+          await subscriptionService.sendFCMNotification(subscription, notification)
+        else
+          await subscriptionService.sendNotification(subscription.subscription, notification);
       }
     });
 
