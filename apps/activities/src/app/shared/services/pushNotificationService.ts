@@ -29,18 +29,18 @@ export class PushNofiticationService {
       if (result.receive === 'granted') {
         // Register with Apple / Google to receive push via APNS/FCM
         PushNotifications.register();
-        this.sendToServer(result);
       } else {
         // Show some error
       }
     });
 
     PushNotifications.addListener('registration', (token: Token) => {
+      this.sendToServer(token);
       //alert('Push registration success, token: ' + token.value);
     });
 
     PushNotifications.addListener('registrationError', (error: any) => {
-      //alert('Error on registration: ' + JSON.stringify(error));
+      alert('Error on registration: ' + JSON.stringify(error));
     });
 
     PushNotifications.addListener(
@@ -58,7 +58,7 @@ export class PushNofiticationService {
     );
   }
 
-  sendToServer(notification: any) {
-    this.http.post(this.baseUrl, { notification }).subscribe();
+  sendToServer(token: any) {
+    this.http.post(this.baseUrl, { token }).subscribe();
   }
 }

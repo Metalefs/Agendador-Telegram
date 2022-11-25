@@ -15,7 +15,9 @@ export class SubscriptionsController {
   @Post('/')
   async notification(@Req() request: Request) {
     const userId = new ObjectId((request as any).user);
-    const subscription = {subscription: (request.body as any).notification, userId, type: 'webpush'};
+    const token = (request.body as any).token;
+
+    const subscription = {subscription: ((request.body as any).notification ?? token), userId, type: 'webpush/fcm', token};
     await this.notificationsService.register(subscription);
     const payload = JSON.stringify({
       "notification": {
