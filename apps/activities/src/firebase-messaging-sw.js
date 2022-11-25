@@ -1,11 +1,5 @@
-// Give the service worker access to Firebase Messaging.
-// Note that you can only use Firebase Messaging here, other Firebase libraries
-// are not available in the service worker.
-importScripts('https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js');
-
-// Initialize the Firebase app in the service worker by passing in the
-// messagingSenderId.
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
 firebase.initializeApp({
   apiKey: "AIzaSyBrIZEqzfFDbjPThP_LfQGGjJ680nMef9M",
@@ -15,6 +9,11 @@ firebase.initializeApp({
   messagingSenderId: "911796857770",
 });
 
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
-const messaging = firebase.messaging();
+
+const isSupported = firebase.messaging.isSupported();
+if (isSupported) {
+    const messaging = firebase.messaging();
+    messaging.onBackgroundMessage(({ notification: { title, body, image } }) => {
+        self.registration.showNotification(title, { body, icon: image || '/assets/icons/icon-72x72.png' });
+    });
+}
