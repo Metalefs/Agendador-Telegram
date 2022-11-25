@@ -3,6 +3,8 @@ const webpush = require('web-push');
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { NotificationScheduler } from './app/routines/notificationSchedule';
+import { dbconnection } from './database';
 // import { googleCredentials } from './env';
 // import * as fs from "fs";
 
@@ -22,6 +24,9 @@ async function bootstrap() {
   const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
   const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
   webpush.setVapidDetails('mailto:jackson.pires.rm@gmail.com', publicVapidKey, privateVapidKey);
+
+  const [db,con,client] = await dbconnection();
+  new NotificationScheduler(db as any, client as any).start()
 
   const app = await NestFactory.create(AppModule);
   app.enableCors();

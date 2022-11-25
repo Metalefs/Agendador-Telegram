@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Post, Req, UseInterceptors } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { AuthInterceptor } from '../../middlewares/auth.interceptor';
+import { SubscriptionsService } from './subscriptions.service';
 
-import { NotificationsService } from './notifications.service';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpush = require('web-push');
 
 @Controller('notifications')
 @UseInterceptors(AuthInterceptor)
-export class NotificationsController {
-  constructor(private readonly notificationsService: NotificationsService) {}
+export class SubscriptionsController {
+  constructor(private readonly notificationsService: SubscriptionsService) {}
 
   @Post('/')
   notification(@Req() request: Request) {

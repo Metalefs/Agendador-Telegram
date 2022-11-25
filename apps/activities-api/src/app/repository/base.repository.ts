@@ -1,7 +1,7 @@
 import { Db, ObjectId } from 'mongodb';
 import autoIncrement = require("mongo-autoincrement")
 
-export class BaseService {
+export class BaseRepository {
   constructor(protected dbconnection: Db, protected collection) {}
 
   insert =async (item, increment = true) => {

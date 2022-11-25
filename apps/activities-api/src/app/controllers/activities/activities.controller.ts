@@ -11,28 +11,23 @@ export class ActivitiesController {
 
   @Get('/')
   async list(@Req() req) {
-    const list = await this.activitiesService.find({ userId: new ObjectId(req.user) });
-    return list.sort((a, b) => (a.priority || 0) - (b.priority|| 0));
+    return this.activitiesService.getAll(req)
   }
   @Get(':id')
   findById(@Param() params, @Req() req) {
-    return this.activitiesService.findOne({ _id: new ObjectId(params.id), userId: new ObjectId(req.user) });
+    return this.activitiesService.getOne(params.id, req.user);
   }
   @Post()
   create(@Req() post) {
     post.body.userId = new ObjectId(post.user);
-    return this.activitiesService.insert(post.body);
+    return this.activitiesService.add(post.body)
   }
   @Put(':id')
   update(@Param('id') id: string, @Req() request: Request) {
-    const { _id, ...postWithoutId } = request.body as any;
-    if (postWithoutId) {
-      postWithoutId.userId = new ObjectId((request as any).user);
-      return this.activitiesService.update({ _id: new ObjectId(id) }, postWithoutId);
-    }
+    return this.activitiesService.update(id, request.body, (request as any).user);
   }
   @Delete(':id')
-  delete(@Param() params) {
-    return this.activitiesService.removeByFilter({ _id: new ObjectId(params.id) });
+  delete(@Param('id') id) {
+    return this.activitiesService.delete(id);
   }
 }

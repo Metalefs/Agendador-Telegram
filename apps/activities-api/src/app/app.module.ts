@@ -12,8 +12,10 @@ import { UserService } from './services/user.service';
 import { MongoClient } from 'mongodb';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { NotificationsService } from './controllers/notifications/notifications.service';
-import { NotificationsController } from './controllers/notifications/notifications.controller';
+import { SubscriptionsController } from './controllers/subscriptions/subscriptions.controller';
+import { SubscriptionsService } from './controllers/subscriptions/subscriptions.service';
+import { ActivityRepository } from './repository/activity.repository';
+import { SubscriptionRepository } from './repository/subscription.repository';
 
 @Module({
   imports: [
@@ -22,13 +24,16 @@ import { NotificationsController } from './controllers/notifications/notificatio
       exclude: ['/activities-api*']
     })
   ],
-  controllers: [ActivitiesController, AuthController, AppController, NotificationsController],
+  controllers: [ActivitiesController, AuthController, AppController, SubscriptionsController],
   providers: [
-    NotificationsService,
+    SubscriptionsService,
     ActivitiesService,
     AuthService,
     UserService,
     AppService,
+    ActivityRepository,
+    SubscriptionRepository,
+
     {
       provide: 'DATABASE_CONNECTION',
       useFactory: async (): Promise<Db> => {

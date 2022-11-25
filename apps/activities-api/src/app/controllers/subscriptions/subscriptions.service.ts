@@ -1,31 +1,24 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Db } from 'mongodb';
-import { BaseService } from '../../services/base.service';
+import { Injectable } from '@nestjs/common';
 import { getMessaging, Message } from 'firebase-admin/messaging';
+import { SubscriptionRepository } from '../../repository/subscription.repository';
 
 @Injectable()
-export class NotificationsService extends BaseService {
-  constructor(@Inject('DATABASE_CONNECTION') protected db: Db) {
-    super(db, "notifications");
+export class SubscriptionsService {
+  constructor(protected repo: SubscriptionRepository) {
   }
   async register(subscription) {
-    console.log(subscription)
     if (subscription.endpoint){
-      await this.insert(subscription, false)
+      await this.repo.insert(subscription, false)
     }
-    console.log(`Subscription received`);
+    console.log({'Subscription received':subscription});
     const payload = JSON.stringify({
       "notification": {
-        "title": "PWA-PUSH-ANGULAR",
-        "body": "Uma nova notificação chegou!!",
+        "title": "Inscrição realizada com sucesso",
+        "body": "Notificações configuradas",
         "vibrate": [100, 50, 100],
-        "data": {
-          "dateOfArrival": "2018-08-31",
-          "primaryKey": 1
-        },
         "actions": [{
           "action": "explore",
-          "title": "Go to the site"
+          "title": "Visitar o site"
         }]
       }
     })
