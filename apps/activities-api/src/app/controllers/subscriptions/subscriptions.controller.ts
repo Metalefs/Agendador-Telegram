@@ -14,6 +14,7 @@ export class SubscriptionsController {
 
   @Post('/')
   notification(@Req() request: Request) {
+    console.log(request.body);
     const subscription = (request.body as any).notification;
     const userId = new ObjectId((request as any).user);
     if(subscription.endpoint){
