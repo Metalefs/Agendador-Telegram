@@ -17,7 +17,7 @@ export class SubscriptionsService {
         webpush: {
           notification: {
             ...msg,
-            requireInteraction: msg.webpush.notification.requireInteraction ?? false,
+            requireInteraction: msg?.webpush?.notification?.requireInteraction ?? false,
             actions: [{
               title: 'Open',
               action: 'open',
