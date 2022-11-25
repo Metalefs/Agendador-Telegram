@@ -14,7 +14,7 @@ const admin = require('firebase-admin');
 fs.writeFileSync('./google-credentials.json', googleCredentials);
 // const serviceAccount = require("./google-credentials.json");
 admin.initializeApp({
-  credential: admin.credential.cert(googleCredentials)
+  credential: admin.credential.cert('./google-credentials.json')
 });
 
 async function bootstrap() {
