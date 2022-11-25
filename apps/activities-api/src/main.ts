@@ -6,15 +6,15 @@ import { AppModule } from './app/app.module';
 import { NotificationScheduler } from './app/routines/notificationSchedule';
 import { dbconnection } from './database';
 import { googleCredentials } from './env';
-import * as fs from "fs";
+// import * as fs from "fs";
 
 
 const admin = require('firebase-admin');
 
 fs.writeFileSync('./google-credentials.json', googleCredentials);
-const serviceAccount = require("./google-credentials.json");
+// const serviceAccount = require("./google-credentials.json");
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(googleCredentials)
 });
 
 async function bootstrap() {
