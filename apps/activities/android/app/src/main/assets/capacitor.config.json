@@ -9,10 +9,12 @@
 			"iconColor": "#488AFF",
 			"sound": "beep.wav"
 		},
-    "plugins": {
-      "PushNotifications": {
-        "presentationOptions": ["badge", "sound", "alert"]
-      }
-    }
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"alert"
+			]
+		}
 	}
 }
