@@ -7,22 +7,8 @@ export class SubscriptionsService {
   constructor(protected repo: SubscriptionRepository) {
   }
   async register(subscription) {
-    if (subscription.endpoint){
-      await this.repo.insert(subscription, false)
-    }
     console.log({'Subscription received':subscription});
-    const payload = JSON.stringify({
-      "notification": {
-        "title": "Inscrição realizada com sucesso",
-        "body": "Notificações configuradas",
-        "vibrate": [100, 50, 100],
-        "actions": [{
-          "action": "explore",
-          "title": "Visitar o site"
-        }]
-      }
-    })
-    return payload;
+    return await this.repo.insert(subscription, false)
   }
 
   async sendFCMMessage(fcmToken: string, msg: Message): Promise<string> {

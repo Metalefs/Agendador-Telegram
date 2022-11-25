@@ -13,14 +13,27 @@ export class SubscriptionsController {
   constructor(private readonly notificationsService: SubscriptionsService) {}
 
   @Post('/')
-  notification(@Req() request: Request) {
-    console.log(request.body);
+  async notification(@Req() request: Request) {
     const subscription = (request.body as any).notification;
     const userId = new ObjectId((request as any).user);
     subscription.userId = userId;
     subscription.type = 'webpush';
-    const notification = this.notificationsService.register(subscription);
-    webpush.sendNotification(subscription, notification)
+
+    await this.notificationsService.register(subscription);
+
+    const payload = JSON.stringify({
+      "notification": {
+        "title": "Inscrição realizada com sucesso",
+        "body": "Notificações configuradas",
+        "vibrate": [100, 50, 100],
+        "actions": [{
+          "action": "explore",
+          "title": "Visitar o site"
+        }]
+      }
+    })
+
+    webpush.sendNotification(subscription,payload)
     .catch(error => console.error(error));
   }
   @Post('/fcm')
