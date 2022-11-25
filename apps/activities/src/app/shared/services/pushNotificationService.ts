@@ -35,7 +35,7 @@ export class PushNofiticationService {
     });
 
     PushNotifications.addListener('registration', (token: Token) => {
-      this.sendToServer(token);
+      this.sendToServer(token.value);
       //alert('Push registration success, token: ' + token.value);
     });
 
