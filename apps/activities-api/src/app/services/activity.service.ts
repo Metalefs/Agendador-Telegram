@@ -2,6 +2,7 @@ require('dotenv').config()
 import { Db } from 'mongodb';
 import { Inject, Injectable } from '@nestjs/common';
 import { ActivityRepository } from '../repository/activity.repository';
+import * as moment from 'moment';
 
 @Injectable()
 export class ActivityService {
@@ -12,13 +13,23 @@ export class ActivityService {
   }
 
   async getPendingNotifications(){
-    return this.repo.find({
-      'time': {$gta: new Date().toUTCString()},
+    const dueToday = await this.repo.find({
       'weekdays': {
           $in: [
             this.parseActivityDay(new Date().getDay())
           ]
       }
+    });
+
+
+    return dueToday.filter(notification => {
+      const notifDate = new Date(notification.time);
+      const compareDate = new Date();
+      compareDate.setHours(notifDate.getHours());
+      compareDate.setMinutes(notifDate.getMinutes());
+      compareDate.setSeconds(notifDate.getSeconds());
+
+      return moment(compareDate).isSameOrAfter()
     })
   }
 

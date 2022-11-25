@@ -11,21 +11,12 @@ export class SubscriptionsService {
     return await this.repo.insert(subscription, false)
   }
 
-  async sendFCMMessage(fcmToken: string, msg: Message): Promise<string> {
+  async sendFCMMessage(fcmToken: string, title:string, body:string): Promise<string> {
     try {
       const res = await getMessaging().send({
-        webpush: {
-          notification: {
-            ...msg,
-            requireInteraction: msg?.webpush?.notification?.requireInteraction ?? false,
-            actions: [{
-              title: 'Open',
-              action: 'open',
-            }],
-            data: {
-
-            },
-          },
+        notification: {
+          title,
+          body
         },
         token: fcmToken,
       });

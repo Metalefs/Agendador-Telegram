@@ -17,7 +17,7 @@ export class WebNotificationService {
   subscribeToNotification() {
     this.afMessaging.requestPermission
       .subscribe(
-        () => {console.log('permission granted')},
+        () => { console.log('permission granted') },
         (error) => { console.error(error); },
     );
     this.swPush.requestSubscription({
@@ -32,7 +32,7 @@ export class WebNotificationService {
     });
 
     this.swPush.messages.subscribe((msg: any) => {
-      console.log(JSON.stringify(msg));
+      console.log({"Message Received": JSON.stringify(msg)});
     })
 
     // Callback fired if Instance ID token is updated.
@@ -43,7 +43,7 @@ export class WebNotificationService {
     });
 
     this.afMessaging.messages
-      .subscribe((message: any) => { console.log(message); });
+      .subscribe((message: any) => { console.log({"afMessaging Message received":message}); });
   }
 
   sendToServer(notification: any) {
