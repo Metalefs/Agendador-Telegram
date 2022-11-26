@@ -16,12 +16,16 @@ export class ActivityService {
     const dueToday = await this.repo.find({
       'weekdays': {
           $in: [
-            this.parseActivityDay(new Date().getDay())
+            parseActivityDay(new Date().getDay())
           ]
       }
     });
 
-
+    console.log(dueToday, {'weekdays': {
+      $in: [
+        parseActivityDay(new Date().getDay())
+      ]
+  }});
     return dueToday.filter(notification => {
       const notifDate = new Date(notification.time);
       const compareDate = new Date();
@@ -33,10 +37,11 @@ export class ActivityService {
     })
   }
 
-  private parseActivityDay(day){
-    return [
-      'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
-    ][day]
-  }
 
 };
+
+export function parseActivityDay(day){
+  return [
+    'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
+  ][day]
+}

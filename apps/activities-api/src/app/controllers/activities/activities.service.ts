@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { ActivityRepository } from '../../repository/activity.repository';
+const cron = require('cron').CronJob;
 
 @Injectable()
 export class ActivitiesService {
@@ -30,6 +31,10 @@ export class ActivitiesService {
   }
 
   async delete(id){
+    //If already scheduled, stop
+    const my_job = cron.scheduledJobs[id];
+    my_job?.stop();
+
     return this.repo.removeByFilter({ _id: new ObjectId(id) });
   }
 }
