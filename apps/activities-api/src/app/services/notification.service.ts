@@ -27,7 +27,7 @@ export class NotificationService {
         priority: 'high',
         notification: {
           "title": activity.type + " - " + activity.title,
-          "body": activity.description,
+          "body": activity.description ?? '',
           priority: 'high',
           defaultVibrateTimings: true,
           defaultSound: true,
@@ -54,7 +54,7 @@ export class NotificationService {
     return {
       "notification": {
         "title": activity.time,
-        "body": activity.description,
+        "body": activity.description ?? '',
         "vibrate": [100, 50, 100],
         "actions": [{
           "action": "explore",
