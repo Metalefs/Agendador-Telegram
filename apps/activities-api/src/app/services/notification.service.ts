@@ -53,7 +53,7 @@ export class NotificationService {
   private getWebpushConfig(activity: IActivity):WebpushConfig{
     return {
       "notification": {
-        "title": activity.time,
+        "title": activity.type + " - " + activity.title,
         "body": activity.description ?? '',
         "vibrate": [100, 50, 100],
         "actions": [{
