@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Post, Req, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Req, UseInterceptors } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { AuthInterceptor } from '../../middlewares/auth.interceptor';
 import { SubscriptionsService } from './subscriptions.service';
-import { messaging } from "firebase-admin";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpush = require('web-push');

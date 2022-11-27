@@ -29,7 +29,7 @@ async function bootstrap() {
   console.log('Connected successfully to server');
   const db = client.db('mealprep');
 
-  new NotificationScheduler(db, client).start()
+  await new NotificationScheduler(db, client).start()
 
   const app = await NestFactory.create(AppModule);
   app.enableCors();

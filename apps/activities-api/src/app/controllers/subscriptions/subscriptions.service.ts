@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { getMessaging, Message } from 'firebase-admin/messaging';
+import { getMessaging } from 'firebase-admin/messaging';
 import { SubscriptionRepository } from '../../repository/subscription.repository';
 
 @Injectable()

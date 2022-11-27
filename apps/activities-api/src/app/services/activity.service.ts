@@ -12,7 +12,7 @@ export class ActivityService {
     this.repo = new ActivityRepository(db)
   }
 
-  async getPendingNotifications() {
+  async getPendingActivities() {
     const today = parseActivityDay(new Date().getDay()).toString();
     const dueToday = await this.repo.find({ weekdays: today });
 
@@ -26,8 +26,6 @@ export class ActivityService {
       return moment(compareDate).isSameOrAfter()
     })
   }
-
-
 };
 
 export function parseActivityDay(day) {
