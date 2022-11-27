@@ -17,8 +17,8 @@ export class ScheduleService {
 
   async scheduleActivityNotification(activity:IActivity) {
     const dayOfWeek = new Date().getDay()
-    const hour = new Date(activity.time).getHours();
-    const minute = new Date(activity.time).getMinutes();
+    const hour = new Date(activity.time).getUTCHours();
+    const minute = new Date(activity.time).getUTCMinutes();
 
     const scheduleId = activity._id.toString();
 
