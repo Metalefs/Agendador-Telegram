@@ -5,6 +5,7 @@ import { Db } from "mongodb";
 import { SubscriptionsService } from '../controllers/subscriptions/subscriptions.service';
 import { SubscriptionRepository } from '../repository/subscription.repository';
 import { NotificationService } from './notification.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class ScheduleService {
@@ -17,8 +18,9 @@ export class ScheduleService {
 
   async scheduleActivityNotification(activity:IActivity) {
     const dayOfWeek = new Date().getDay()
-    const hour = new Date(activity.time).getUTCHours();
-    const minute = new Date(activity.time).getUTCMinutes();
+    moment().locale('pt-BR');
+    const hour = moment(activity.time).hours();
+    const minute = moment(activity.time).minutes();
 
     const scheduleId = activity._id.toString();
 
