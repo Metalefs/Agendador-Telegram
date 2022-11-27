@@ -19,6 +19,7 @@ export class ScheduleService {
   }
 
   async scheduleActivityNotification(activity:IActivity) {
+    const subscriptions = await this.subscriptionService.getUserSubscription(activity.userId);
     const dayOfWeek = new Date().getDay()
 
     const brazil = moment.tz(activity.time,'America/Sao_Paulo');
@@ -34,7 +35,6 @@ export class ScheduleService {
     console.log("scheduling:", scheduleId, { hour, minute, dayOfWeek })
 
     schedule.scheduleJob(scheduleId, { hour, minute, dayOfWeek }, async () => {
-      const subscriptions = await this.subscriptionService.getUserSubscription(activity.userId);
       for (const sb of subscriptions) {
         if (sb.token)
           await this.notificationService.sendActivityNotificationFCM(sb, activity)

@@ -24,6 +24,8 @@ export class NotificationService {
       android: {
         priority: 'high',
         notification: {
+          "title": activity.type + " - " + activity.title,
+          "body": activity.description,
           priority: 'high',
           defaultVibrateTimings: true,
           defaultSound: true,
