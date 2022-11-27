@@ -3,7 +3,7 @@
   "defaultProject": "activities",
   "projects": {
     "activities": {
-      "name": "activities",
+      "name": "mealprepactivities",
       "integrations": {
         "capacitor": {}
       },

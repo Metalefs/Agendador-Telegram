@@ -55,7 +55,6 @@ export class LocalNotificationService {
         } as LocalNotificationSchema
       )
     })
-    console.log(notifications)
     return notifications;
   }
 
@@ -77,5 +76,12 @@ export class LocalNotificationService {
     await LocalNotifications.schedule({
       notifications: notifications.filter(x => !!x) as any
     });
+  }
+
+  async cancelPending() {
+    const pending = await LocalNotifications.getPending();
+
+    if(pending)
+    await LocalNotifications.cancel({notifications: pending.notifications});
   }
 }

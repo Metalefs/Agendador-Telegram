@@ -1,20 +1,20 @@
 import { IActivity } from '@uncool/shared';
-import { Agenda } from 'agenda/es';
+//import { Agenda } from 'agenda/es';
 import { Db } from 'mongodb';
-import { MongoClient } from "mongodb";
-import { ActivityService } from '../services/activity.service';
+import { ActivitiesService } from '../controllers/activities/activities.service';
+import { ActivityRepository } from '../repository/activity.repository';
+//import { MongoClient } from "mongodb";
 import { ScheduleService } from '../services/schedule.service';
-import { SubscriptionService } from '../services/subscription.service';
 
 export class NotificationScheduler {
-  agenda:Agenda;
-  constructor(private db:Db, client: MongoClient) {
+  //agenda:Agenda;
+  constructor(private db:Db/*, client: MongoClient*/) {
     //this.agenda = new Agenda({ mongo: client.db("agenda") });
   }
 
   async start() {
-    const activityService = new ActivityService(this.db);
-    const scheduleService = new ScheduleService(new SubscriptionService(this.db));
+    const scheduleService = new ScheduleService(this.db);
+    const activityService = new ActivitiesService(new ActivityRepository(this.db), scheduleService);
 
     //this.agenda.define('check pending notifications', async (job) => {
       const activities = await activityService.getPendingActivities() as unknown as IActivity[];
@@ -32,7 +32,7 @@ export class NotificationScheduler {
     // })();
   }
 
-  async stop() {
-    const numRemoved = await this.agenda.cancel({ name: 'check pending notifications' });
-  }
+  // async stop() {
+  //   const numRemoved = await this.agenda.cancel({ name: 'check pending notifications' });
+  // }
 }

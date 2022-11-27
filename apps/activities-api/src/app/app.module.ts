@@ -16,6 +16,7 @@ import { SubscriptionsController } from './controllers/subscriptions/subscriptio
 import { SubscriptionsService } from './controllers/subscriptions/subscriptions.service';
 import { ActivityRepository } from './repository/activity.repository';
 import { SubscriptionRepository } from './repository/subscription.repository';
+import { ScheduleService } from './services/schedule.service';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SubscriptionRepository } from './repository/subscription.repository';
   providers: [
     SubscriptionsService,
     ActivitiesService,
+    ScheduleService,
     AuthService,
     UserService,
     AppService,
@@ -38,9 +40,8 @@ import { SubscriptionRepository } from './repository/subscription.repository';
       provide: 'DATABASE_CONNECTION',
       useFactory: async (): Promise<Db> => {
         console.log('Connecting...');
-        const mongoConnectionString = process.env.DBURL;
-        const client = new MongoClient(mongoConnectionString);
-        const connection = await client.connect();
+        const client = new MongoClient(process.env.DBURL);
+        await client.connect();
         console.log('Connected successfully to server');
         const db = client.db('mealprep');
         return db

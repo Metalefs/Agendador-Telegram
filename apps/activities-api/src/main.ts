@@ -18,18 +18,13 @@ admin.initializeApp({
 });
 
 async function bootstrap() {
-
   const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
   const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
   webpush.setVapidDetails('mailto:jackson.pires.rm@gmail.com', publicVapidKey, privateVapidKey);
 
+  const db = new MongoClient(process.env.DBURL).db('mealprep');
 
-  console.log('Connecting...');
-  const client = new MongoClient(process.env.DBURL);
-  console.log('Connected successfully to server');
-  const db = client.db('mealprep');
-
-  await new NotificationScheduler(db, client).start()
+  await new NotificationScheduler(db/*, client*/).start()
 
   const app = await NestFactory.create(AppModule);
   app.enableCors();

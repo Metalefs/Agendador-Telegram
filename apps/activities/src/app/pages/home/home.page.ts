@@ -13,6 +13,7 @@ import { LocalNotificationService } from '../../shared/services/localNotificatio
 import { TranslateService } from '@ngx-translate/core';
 import { WebNotificationService } from '../../shared/services/webNotificationService';
 import { PushNofiticationService } from '../../shared/services/pushNotificationService';
+import { ConnectivityService } from '../../shared/services/connectivity.service';
 
 @Component({
   selector: 'app-home',
@@ -33,12 +34,11 @@ export class HomePage implements OnInit {
     private translate: TranslateService,
     private localNotificationService: LocalNotificationService,
     private pushNotificationService: PushNofiticationService,
-    private webNotificationService: WebNotificationService) {
-    this.openAddActivityModal = this.openAddActivityModal.bind(this);
-    this.createActivity = this.createActivity.bind(this);
-
-
-    //this.webNotificationService.subscribeToNotification();
+    private webNotificationService: WebNotificationService,
+    private connectivityService: ConnectivityService) {
+      this.openAddActivityModal = this.openAddActivityModal.bind(this);
+      this.createActivity = this.createActivity.bind(this);
+      this.getActivities.bind(this);
   }
 
   async ngOnInit() {
@@ -58,7 +58,10 @@ export class HomePage implements OnInit {
     this.service.getActivities().subscribe(async activities => {
       this.activities = activities;
 
-      await this.localNotificationService.schedule(this.activities);
+      this.connectivityService.offlineEvent?.subscribe(async e=>{
+        await this.localNotificationService.cancelPending();
+        await this.localNotificationService.schedule(this.activities);
+      })
     });
   }
 

@@ -1,6 +1,5 @@
 import { CallHandler, ExecutionContext, HttpException, HttpStatus, Injectable, NestInterceptor  } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
-//import { UserService } from '../services/user.service';
 import { extractToken } from '../_handlers/jwt.extract';
 
 @Injectable()
@@ -12,7 +11,6 @@ export class AuthInterceptor implements NestInterceptor  {
 
     if (token) {
       const decoded: any = jwt.verify(token, process.env.CRYPT);
-      //const user = await this.userService.findById(decoded.sub);
       const user = decoded.sub;
 
       if (!user) {

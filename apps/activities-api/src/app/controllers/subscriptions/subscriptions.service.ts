@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { getMessaging } from 'firebase-admin/messaging';
+import { ObjectId } from 'mongodb';
 import { SubscriptionRepository } from '../../repository/subscription.repository';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const webpush = require('web-push');
 
 @Injectable()
 export class SubscriptionsService {
@@ -24,5 +27,9 @@ export class SubscriptionsService {
     } catch (e) {
       console.error('sendFCMMessage error', e);
     }
+  }
+
+  getUserSubscription(userId) {
+    return this.repo.find({ userId: new ObjectId(userId) })
   }
 }
