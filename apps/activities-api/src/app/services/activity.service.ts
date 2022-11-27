@@ -1,31 +1,21 @@
 require('dotenv').config()
 import { Db } from 'mongodb';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ActivityRepository } from '../repository/activity.repository';
 import * as moment from 'moment';
 
 @Injectable()
 export class ActivityService {
 
-  repo:ActivityRepository;
-  constructor(@Inject('DATABASE_CONNECTION') protected db: Db) {
+  repo: ActivityRepository;
+  constructor(protected db: Db) {
     this.repo = new ActivityRepository(db)
   }
 
-  async getPendingNotifications(){
-    const dueToday = await this.repo.find({
-      'weekdays': {
-          $in: [
-            parseActivityDay(new Date().getDay())
-          ]
-      }
-    });
+  async getPendingNotifications() {
+    const today = parseActivityDay(new Date().getDay()).toString();
+    const dueToday = await this.repo.find({ weekdays: today });
 
-    console.log(dueToday, {'weekdays': {
-      $in: [
-        parseActivityDay(new Date().getDay())
-      ]
-  }});
     return dueToday.filter(notification => {
       const notifDate = new Date(notification.time);
       const compareDate = new Date();
@@ -40,8 +30,8 @@ export class ActivityService {
 
 };
 
-export function parseActivityDay(day){
+export function parseActivityDay(day) {
   return [
-    'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
+    "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"
   ][day]
 }

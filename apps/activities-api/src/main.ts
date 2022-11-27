@@ -4,9 +4,9 @@ const webpush = require('web-push');
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { NotificationScheduler } from './app/routines/notificationSchedule';
-import { dbconnection } from './database';
 import { googleCredentials } from './env';
 import * as fs from "fs";
+import { MongoClient } from 'mongodb';
 
 
 const admin = require('firebase-admin');
@@ -23,8 +23,13 @@ async function bootstrap() {
   const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
   webpush.setVapidDetails('mailto:jackson.pires.rm@gmail.com', publicVapidKey, privateVapidKey);
 
-  const [db,con,client] = await dbconnection();
-  new NotificationScheduler(db as any, client as any).start()
+
+  console.log('Connecting...');
+  const client = new MongoClient(process.env.DBURL);
+  console.log('Connected successfully to server');
+  const db = client.db('mealprep');
+
+  new NotificationScheduler(db, client).start()
 
   const app = await NestFactory.create(AppModule);
   app.enableCors();

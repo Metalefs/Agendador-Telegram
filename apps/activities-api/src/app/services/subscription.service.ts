@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { SubscriptionRepository } from '../repository/subscription.repository';
 import { messaging } from "firebase-admin";
 import { TokenMessage } from 'firebase-admin/messaging';
+import { IActivity } from '@uncool/shared';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpush = require('web-push');
@@ -20,18 +21,29 @@ export class SubscriptionService {
     return this.repo.find({ userId: new ObjectId(userId) })
   }
 
-  async sendNotification(subscription, notification) {
-    return webpush.sendNotification(subscription, notification)
+  async sendActivityNotification(subscription, activity:IActivity) {
+    const _notification = {
+      "notification": {
+        "title": activity.time,
+        "body": activity.description,
+        "vibrate": [100, 50, 100],
+        "actions": [{
+          "action": "explore",
+          "title": "Visitar o site"
+        }]
+      }
+    }
+    return webpush.sendNotification(subscription, _notification)
       .catch(error => console.error(error));
   }
 
-  async sendFCMNotification(subscription, notification) {
-    const message:TokenMessage = {
-      "token": subscription.token,
+  async sendFCMNotification(subscription, activity:IActivity) {
+    const message: TokenMessage = {
       "notification": {
-        "body": notification.title,
-        "title": notification.title
-      }
+        "title": activity.title,
+        "body": activity.description
+      },
+      "token": subscription.token,
     };
 
     await messaging().send(message)

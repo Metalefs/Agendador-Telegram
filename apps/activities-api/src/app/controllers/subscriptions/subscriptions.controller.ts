@@ -35,7 +35,6 @@ export class SubscriptionsController {
       return this.notificationsService.sendFCMMessage(token, "Inscrição realizada com sucesso", "Notificações configuradas")
     }
     else
-
       webpush.sendNotification(subscription, payload)
         .catch(error => console.error(error));
   }
