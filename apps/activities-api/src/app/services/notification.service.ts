@@ -32,7 +32,9 @@ export class NotificationService {
           defaultVibrateTimings: true,
           defaultSound: true,
           visibility: 'public',
-          clickAction: 'mealprepactivities'
+          clickAction: 'mealprepactivities',
+          icon:'https://freeiconshop.com/wp-content/uploads/edd/task-done-flat.png',
+          imageUrl: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1039&q=80'
         }
       },
       "token": subscription.token,
@@ -60,6 +62,7 @@ export class NotificationService {
           "action": "explore",
           "title": "Visitar o site"
         }],
+        icon: 'https://freeiconshop.com/wp-content/uploads/edd/task-done-flat.png'
       }
     } as WebpushConfig
   }
