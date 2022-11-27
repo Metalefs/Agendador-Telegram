@@ -52,6 +52,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.39",
     "mongo-autoincrement": "^1.0.1",
     "mongodb": "^4.11.0",
     "ngx-spinner": "^14.0.0",
