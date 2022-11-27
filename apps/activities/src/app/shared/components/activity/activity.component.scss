@@ -10,8 +10,10 @@ ion-label {
   margin-bottom: 12px;
   overflow: auto;
 }
+.ion-text-wrap.sc-ion-label-md-h, [text-wrap].sc-ion-label-md-h {
+  overflow: auto;
 
-
+}
 ion-item h2 {
   font-weight: 600;
   margin: 0;

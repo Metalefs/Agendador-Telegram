@@ -10,7 +10,9 @@ const webpush = require('web-push');
 export class NotificationService {
 
   async sendActivityNotificationWebpush(subscription, activity: IActivity) {
-    return webpush.sendNotification(subscription, this.getWebpushConfig(activity))
+    const message = this.getWebpushConfig(activity);
+    console.log('sending webpush:',message)
+    return webpush.sendNotification(subscription, message)
       .catch(error => console.error(error));
   }
 
@@ -35,6 +37,8 @@ export class NotificationService {
       },
       "token": subscription.token,
     };
+
+    console.log('sending message',{message})
 
     await messaging().send(message)
       .then((response) => {

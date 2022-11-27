@@ -28,6 +28,7 @@ export class ActivitiesService {
   async update(id, activity:IActivity, userId) {
     const { _id, ...postWithoutId } = activity;
     if (!postWithoutId) return;
+    activity.userId = new ObjectId(userId) as any;
     postWithoutId.userId = new ObjectId(userId) as any;
     await this.scheduleService.scheduleActivityNotification(activity);
     return this.repo.update({ _id: new ObjectId(id) }, postWithoutId);
