@@ -44,7 +44,7 @@ export class ViewActivityPage implements OnInit {
 
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if(id) {
-      this.data.geActivityById(id).subscribe(async (activity) => {
+      this.data.getActivityById(id).subscribe(async (activity) => {
         await loading.dismiss();
 
         this.activity = activity;
@@ -60,7 +60,7 @@ export class ViewActivityPage implements OnInit {
       await loading.dismiss();
       this.loadActivity();
       const toast = await this.toastController.create({
-        message: await this.translate.get('activity.updated').toPromise(),
+        message: await this.translate.get('activities.edited').toPromise(),
         duration: 1500,
         position: 'top'
       });

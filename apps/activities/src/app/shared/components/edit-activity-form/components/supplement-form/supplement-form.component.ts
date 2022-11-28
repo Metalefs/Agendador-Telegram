@@ -14,13 +14,13 @@ import { ServingUnitEnum } from '@uncool/shared';
   ]
 })
 export class SupplementFormComponent implements OnInit {
-
   @Input() form!: UntypedFormGroup;
+  @Input() activity?: any;
   constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
-    this.form.addControl('unit', this.fb.control([]))
-    this.form.addControl('quantity', this.fb.control([]))
+    this.form.addControl('unit', this.fb.control([this.activity?.unit??'']))
+    this.form.addControl('quantity', this.fb.control([this.activity?.quantity??'']))
   }
 
   getUnits(){

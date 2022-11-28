@@ -13,12 +13,12 @@ import { UntypedFormGroup, UntypedFormBuilder, ControlContainer, FormGroupDirect
   ]
 })
 export class CleaningFormComponent implements OnInit {
-
   @Input() form!: UntypedFormGroup;
+  @Input() activity?: any;
   constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
-    this.form.addControl('audioFile', this.fb.control([]))
+    this.form.addControl('audioFile', this.fb.control([this.activity.audioFile]))
   }
 
 }

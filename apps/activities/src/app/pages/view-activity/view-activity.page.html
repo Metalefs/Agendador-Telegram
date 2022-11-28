@@ -22,7 +22,7 @@
   </ion-item>
 
   <div class="ion-padding">
-    <app-edit-activity-form (onInitForm)="this.form = $event"></app-edit-activity-form>
+    <app-edit-activity-form *ngIf="activity" (onInitForm)="this.form = $event" [activity]="activity"></app-edit-activity-form>
     <ion-buttons slot="end">
       <ion-button (click)="update()" [strong]="true">{{'activities.update'|translate}}</ion-button>
     </ion-buttons>

@@ -107,7 +107,7 @@ export class HomePage implements OnInit {
       this.service.create(activity.data).subscribe(async () => {
         this.getActivities();
         const toast = await this.toastController.create({
-          message: await this.translate.get('activity.created').toPromise(),
+          message: await this.translate.get('activities.created').toPromise(),
           duration: 1500,
           position: 'top'
         });
@@ -123,7 +123,7 @@ export class HomePage implements OnInit {
       await loading.dismiss();
       this.getActivities();
       const toast = await this.toastController.create({
-        message: await this.translate.get('activity.deleted').toPromise(),
+        message: await this.translate.get('activities.deleted').toPromise(),
         duration: 1500,
         position: 'top'
       });

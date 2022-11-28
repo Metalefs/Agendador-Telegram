@@ -1,13 +1,13 @@
-<ion-item>
+<ion-item *ngIf="prepActivities|async as acts">
   <ion-label position="stacked">{{'activities.form.meal.prepId.label'|translate}}</ion-label>
   <ion-select formControlName="mealPrepId" interface="action-sheet" [placeholder]="">
-    <ion-select-option *ngFor="let activity of getMealPrepActivities()" [value]="activity._id">
-      {{activity?.title}}
+    <ion-select-option *ngFor="let act of acts" [value]="act._id">
+      {{act.title}}
     </ion-select-option>
   </ion-select>
 </ion-item>
 
-<ion-item>
+<ion-item *ngIf="!this.activity?.mealPrepId">
   <ion-label position="stacked">{{'activities.form.meal.recipe.label'|translate}}</ion-label>
   <ion-textarea formControlName="recipe" [placeholder]="'activities.form.meal.recipe.placeholder'|translate"></ion-textarea>
 </ion-item>

@@ -78,6 +78,7 @@
     "hydrate": "Hydrate",
     "supplement": "Supplement",
     "sleep": "Sleep",
+    "other": "Other",
     "empty": "No activities found",
     "form": {
       "title": {

@@ -14,10 +14,13 @@ import { UntypedFormGroup, UntypedFormBuilder, ControlContainer, FormGroupDirect
 })
 export class SleepFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
+  @Input() activity?: any;
   constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
-    this.form.addControl('hours', this.fb.control([]))
-    this.form.addControl('audioFile', this.fb.control([]))
+    this.form.addControl('hours', this.fb.control([this.activity?.hours]))
+    this.form.addControl('audioFile', this.fb.control([this.activity?.audioFile]))
+
+    console.log(this.activity)
   }
 }

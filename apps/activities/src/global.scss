@@ -41,3 +41,6 @@ img {
 ion-modal.modal-default:not(.overlay-hidden) ~ ion-modal.modal-default{
   opacity: 0.96;
 }
+.reorder-enabled ion-reorder{
+  margin-right: 10px;
+}

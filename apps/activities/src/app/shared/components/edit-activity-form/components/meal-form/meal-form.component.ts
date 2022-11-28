@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { IActivity } from '@uncool/shared';
+import { DataService } from '../../../../services/data.service';
 
 @Component({
   selector: 'app-meal-form',
@@ -15,15 +16,13 @@ import { IActivity } from '@uncool/shared';
 })
 export class MealFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
-  constructor(private fb: UntypedFormBuilder) { }
+  @Input() activity: any = {};
+  prepActivities = this.service.findByType('prep');
+  constructor(private fb: UntypedFormBuilder, private service: DataService) { }
 
   ngOnInit() {
-    this.form.addControl('mealPrepId', this.fb.control([]))
-    this.form.addControl('recipe', this.fb.control([]))
-  }
-
-  getMealPrepActivities() :IActivity[]{
-    return []
+    this.form.addControl('mealPrepId', this.fb.control([(this.activity as any)?.mealPrepId]))
+    this.form.addControl('recipe', this.fb.control([(this.activity as any)?.recipe]))
   }
 
 }

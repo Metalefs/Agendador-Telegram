@@ -2,6 +2,18 @@
   <ion-row>
     <ion-col>
       <ion-item>
+        <ion-label position="inline">{{'activities.form.type'|translate}}</ion-label>
+        <ion-select formControlName="type" interface="action-sheet" [placeholder]="">
+          <ion-select-option *ngFor="let type of getActivityTypes()" [value]="type.name">
+            {{'activities.'+type.name|translate}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
         <ion-label position="stacked">{{'activities.form.title.label'|translate}}</ion-label>
         <ion-input formControlName="title" type="text" [placeholder]="'activities.form.title.placeholder'|translate"></ion-input>
       </ion-item>
@@ -26,29 +38,17 @@
         <app-select-weekdays [formGroup]="form" [controlName]="'weekdays'"></app-select-weekdays>
     </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label position="inline">{{'activities.form.type'|translate}}</ion-label>
-        <ion-select formControlName="type" interface="action-sheet" [placeholder]="">
-          <ion-select-option *ngFor="let type of getActivityTypes()" [value]="type.name">
-            {{'activities.'+type.name|translate}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-col>
-  </ion-row>
   <ng-container [ngSwitch]="curType">
     <ion-row *ngIf="curType">
       <ion-col>
-        <app-cleaning-form        *ngSwitchCase="activityType.cleaning"   [form]="form"></app-cleaning-form>
-        <app-groceryshopping-form *ngSwitchCase="activityType.shopping"   [form]="form"></app-groceryshopping-form>
-        <app-hydration-form       *ngSwitchCase="activityType.hydrate"    [form]="form"></app-hydration-form>
-        <app-meal-form            *ngSwitchCase="activityType.meal"       [form]="form"></app-meal-form>
-        <app-mealprep-form        *ngSwitchCase="activityType.prep"       [form]="form"></app-mealprep-form>
-        <app-sleep-form           *ngSwitchCase="activityType.sleep"      [form]="form"></app-sleep-form>
-        <app-supplement-form      *ngSwitchCase="activityType.supplement" [form]="form"></app-supplement-form>
-        <app-workout-form         *ngSwitchCase="activityType.workout"    [form]="form"></app-workout-form>
+        <app-cleaning-form        *ngSwitchCase="activityType.cleaning"   [activity]="this.activity" [form]="form"></app-cleaning-form>
+        <app-groceryshopping-form *ngSwitchCase="activityType.shopping"   [activity]="this.activity" [form]="form"></app-groceryshopping-form>
+        <app-hydration-form       *ngSwitchCase="activityType.hydrate"    [activity]="this.activity" [form]="form"></app-hydration-form>
+        <app-meal-form            *ngSwitchCase="activityType.meal"       [activity]="this.activity" [form]="form"></app-meal-form>
+        <app-mealprep-form        *ngSwitchCase="activityType.prep"       [activity]="this.activity" [form]="form"></app-mealprep-form>
+        <app-sleep-form           *ngSwitchCase="activityType.sleep"      [activity]="this.activity" [form]="form"></app-sleep-form>
+        <app-supplement-form      *ngSwitchCase="activityType.supplement" [activity]="this.activity" [form]="form"></app-supplement-form>
+        <app-workout-form         *ngSwitchCase="activityType.workout"    [activity]="this.activity" [form]="form"></app-workout-form>
       </ion-col>
     </ion-row>
   </ng-container>

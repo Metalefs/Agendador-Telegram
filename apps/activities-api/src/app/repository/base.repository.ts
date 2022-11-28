@@ -9,7 +9,8 @@ export class BaseRepository {
       const id = await autoIncrement(this.dbconnection, this.collection, 'id')
       item.id = id;
     }
-    await this.dbconnection.collection(this.collection).insertOne(item);
+    const result = await this.dbconnection.collection(this.collection).insertOne(item);
+    return result;
   };
 
   list = async () => {

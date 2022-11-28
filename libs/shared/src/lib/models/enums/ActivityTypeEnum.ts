@@ -7,4 +7,5 @@ export enum ActivityTypeEnum {
   hydrate = 'hydrate',
   supplement = 'supplement',
   sleep = 'sleep',
+  other = 'other',
 }

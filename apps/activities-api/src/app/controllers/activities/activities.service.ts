@@ -20,9 +20,14 @@ export class ActivitiesService {
     return this.repo.findOne({ _id: new ObjectId(id), userId: new ObjectId(userId) })
   }
 
+  async findByTpe(type, userId) {
+    return this.repo.find({ type, userId: new ObjectId(userId) })
+  }
+
   async insert(activity:IActivity) {
-    await this.scheduleService.scheduleActivityNotification(activity);
-    return this.repo.insert(activity);
+    const result = await this.repo.insert(activity);
+    const inserted = await this.findOne(result.insertedId, activity.userId) as any;
+    await this.scheduleService.scheduleActivityNotification(inserted);
   }
 
   async update(id, activity:IActivity, userId) {

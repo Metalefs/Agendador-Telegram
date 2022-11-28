@@ -32,6 +32,13 @@ export class BaseService<T extends IBaseModel> {
     );
   }
 
+  findByType(type: any): Observable<Array<T>> {
+    return this.http.get<Array<T>>(`${environment.endpoint}/${this.domainRoute}/type/${type}`).pipe(
+      retry(3),
+      catchError(()=>{this.errorHandler.handle; return []})
+    );
+  }
+
   update(item: T): Observable<T> {
     return this.http.put<T>(`${environment.endpoint}/${this.domainRoute}/${item._id}`, item).pipe(
         retry(3),

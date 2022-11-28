@@ -12,6 +12,7 @@ import { AddExerciseComponent } from './components/add-exercise/add-exercise.com
 })
 export class WorkoutFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
+  @Input() activity?: any;
 
   constructor(private fb: UntypedFormBuilder,
     public modalCtrl: ModalController) {
@@ -20,8 +21,8 @@ export class WorkoutFormComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.form.addControl('group', this.fb.control([]))
-    this.form.addControl('exercises', this.fb.control([]))
+    this.form.addControl('group', this.fb.control(this.activity.group ?? undefined))
+    this.form.addControl('exercises', this.fb.control(this.activity.exercises ?? undefined))
   }
 
   async openAddExerciseModal(){

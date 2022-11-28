@@ -9,10 +9,11 @@ import { IonInput } from '@ionic/angular';
 })
 export class GroceryshoppingFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
+  @Input() activity?: any;
   constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
-    this.form.addControl('items', this.fb.control([]))
+    this.form.addControl('items', this.fb.control([this.activity.items]))
   }
 
   addChip(value:string|number, input:IonInput){

@@ -14,6 +14,11 @@ export class ActivitiesController {
   async list(@Req() req) {
     return this.activitiesService.list(req)
   }
+  @Get('/type/:type')
+  findByType(@Param() params, @Req() req) {
+    return this.activitiesService.findByTpe(params.type, req.user);
+  }
+
   @Get(':id')
   findById(@Param() params, @Req() req) {
     return this.activitiesService.findOne(params.id, req.user);

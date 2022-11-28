@@ -23,16 +23,31 @@ export class NotificationService {
         "title": activity.type + " - " + activity.title,
         "body": activity.description
       },
+      apns: {
+        payload: {
+          aps:{
+            badge: 42,
+            title:  activity.type + " - " + activity.title,
+            subtitle: activity.type,
+            body: activity.description ?? '',
+            launchImage: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1039&q=80',
+          }
+        },
+        fcmOptions: {
+          imageUrl: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1039&q=80'
+        },
+      },
       android: {
         priority: 'high',
+        ttl: 1800 * 1000,
         notification: {
           "title": activity.type + " - " + activity.title,
           "body": activity.description ?? '',
           priority: 'high',
           defaultVibrateTimings: true,
-          defaultSound: true,
           visibility: 'public',
-          clickAction: 'mealprepactivities',
+          clickAction: 'activities',
+          color: '#f45342',
           icon:'https://freeiconshop.com/wp-content/uploads/edd/task-done-flat.png',
           imageUrl: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1039&q=80'
         }

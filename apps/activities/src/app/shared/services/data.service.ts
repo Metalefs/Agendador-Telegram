@@ -19,6 +19,7 @@ export class DataService extends BaseService<IActivity>{
     { name: ActivityTypeEnum.hydrate, icon: 'water', iconType: 'icon' },
     { name: ActivityTypeEnum.supplement, icon: 'protein-shake.png', iconType: 'thumbnail' },
     { name: ActivityTypeEnum.sleep, icon: 'bed', iconType: 'icon' },
+    { name: ActivityTypeEnum.other, icon: '', iconType: 'icon' },
   ];
 
   constructor(
@@ -32,7 +33,10 @@ export class DataService extends BaseService<IActivity>{
     return this.findAll();
   }
 
-  public geActivityById(id: string): Observable<IActivity> {
+  public getActivityById(id: string): Observable<IActivity> {
     return this.findById(id);
+  }
+  public getActivityByType(type: string): Observable<Array<IActivity>> {
+    return this.findByType(type);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ControlContainer, FormGroupDirective, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { IActivity } from '@uncool/shared';
 
 @Component({
   selector: 'app-mealprep-form',
@@ -14,9 +15,10 @@ import { ControlContainer, FormGroupDirective, UntypedFormBuilder, UntypedFormGr
 })
 export class MealprepFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
+  @Input() activity?: any;
   constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
-    this.form.addControl('recipe', this.fb.control([]))
+    this.form.addControl('recipe', this.fb.control([this.activity.recipe ?? '']))
   }
 }
