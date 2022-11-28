@@ -24,7 +24,8 @@ export class NotificationService {
         "body": activity.description
       },
       data: {
-        activity: JSON.stringify(activity)
+        activity: JSON.stringify(activity),
+        url: 'https://mealprepscheduler.herokuapp.com'
       },
       apns: {
         payload: {
@@ -47,7 +48,7 @@ export class NotificationService {
           channelId: 'mealprep',
           "title": activity.type + " - " + activity.title,
           "body": activity.description ?? '',
-          priority: 'high',
+          priority: 'max',
           defaultVibrateTimings: true,
           visibility: 'public',
           clickAction: 'activities',
@@ -82,7 +83,8 @@ export class NotificationService {
           "title": "Visitar o site"
         }],
         data: {
-          activity: JSON.stringify(activity)
+          activity: JSON.stringify(activity),
+          url: 'https://mealprepscheduler.herokuapp.com'
         },
         icon: 'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png'
       }

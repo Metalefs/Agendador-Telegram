@@ -79,7 +79,6 @@ export class LocalNotificationService {
           data: { activity },
           extra: { activity },
           id: activity.id,
-          importance: 4,
           channelId: 'mealprep',
           vibration: true,
           schedule: {
