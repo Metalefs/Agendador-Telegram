@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 
 import { TranslateService } from '@ngx-translate/core';
-import { IActivity, WeekdayEnum } from '@uncool/shared';
+import { IActivity } from '@uncool/shared';
 import { environment } from 'apps/activities/src/environments/environment';
 
 import { getWeekdayInNumber } from '../utils/calendar';
@@ -14,48 +14,22 @@ import { getWeekdayInNumber } from '../utils/calendar';
 export class LocalNotificationService {
   private baseUrl = `${environment.endpoint}/notifications`;
   constructor(private http: HttpClient,
-    private translate: TranslateService) {}
+    private translate: TranslateService) {
+
+    LocalNotifications.createChannel({
+      id: 'mealprep',
+      name: 'Mealprep activities',
+      description: 'Sua agenda',
+      sound: 'ping.mp3',
+      importance: 4,
+      visibility: 1,
+      vibration: true,
+    })
+  }
 
   isIos() {
     const win = window as any;
     return win && win.Ionic && win.Ionic.mode === 'ios';
-  }
-
-  getNotificationsForActivity(activity: IActivity): LocalNotificationSchema[] | null{
-    const activityDate = new Date(activity.time!);
-    const date = new Date();
-    date.setHours(activityDate.getHours())
-    date.setMinutes(activityDate.getMinutes())
-
-    const notifications:LocalNotificationSchema[] = [];
-
-    activity.weekdays?.forEach((day:string)=>{
-      const weekday = getWeekdayInNumber(day);
-
-      notifications.push(
-        {
-          title: this.translate.instant('activities.'+activity.type!)+ " - " + activity.title,
-          text: activity.description,
-          //icon: 'http://example.com/icon.png',
-          data: { _id: activity._id },
-          extra: { _id: activity._id },
-          body: activity.description,
-          id: (activity.id || activity.priority)||0 + weekday,
-          sound: "beep.wav",
-          // importance: 4,
-          // vibration: true,
-          schedule: {
-            allowWhileIdle: true,
-            at: date,
-            repeats: true,
-            on: {
-              weekday
-            }
-          }
-        } as LocalNotificationSchema
-      )
-    })
-    return notifications;
   }
 
   async schedule(activities: IActivity[] | IActivity) {
@@ -83,5 +57,42 @@ export class LocalNotificationService {
 
     if(pending)
     await LocalNotifications.cancel({notifications: pending.notifications});
+  }
+
+  private getNotificationsForActivity(activity: IActivity): LocalNotificationSchema[] | null{
+    const activityDate = new Date(activity.time!);
+    const date = new Date();
+    date.setHours(activityDate.getHours())
+    date.setMinutes(activityDate.getMinutes())
+
+    const notifications:LocalNotificationSchema[] = [];
+
+    activity.weekdays?.forEach((day:string)=>{
+      const weekday = getWeekdayInNumber(day);
+
+      notifications.push(
+        {
+          title: this.translate.instant('activities.'+activity.type!)+ " - " + activity.title,
+          body: activity.description,
+          largeIcon: 'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png',
+          smallIcon: 'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png',
+          data: { activity },
+          extra: { activity },
+          id: activity.id,
+          importance: 4,
+          channelId: 'mealprep',
+          vibration: true,
+          schedule: {
+            allowWhileIdle: true,
+            at: date,
+            repeats: true,
+            on: {
+              weekday
+            }
+          }
+        } as LocalNotificationSchema
+      )
+    })
+    return notifications;
   }
 }

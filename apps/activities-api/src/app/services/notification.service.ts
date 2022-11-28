@@ -23,6 +23,9 @@ export class NotificationService {
         "title": activity.type + " - " + activity.title,
         "body": activity.description
       },
+      data: {
+        activity: JSON.stringify(activity)
+      },
       apns: {
         payload: {
           aps:{
@@ -30,17 +33,18 @@ export class NotificationService {
             title:  activity.type + " - " + activity.title,
             subtitle: activity.type,
             body: activity.description ?? '',
-            launchImage: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1039&q=80',
+            launchImage: 'https://mealprepscheduler.herokuapp.com/assets/icons/bg.webp',
           }
         },
         fcmOptions: {
-          imageUrl: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1039&q=80'
+          imageUrl: 'https://mealprepscheduler.herokuapp.com/assets/icons/bg.webp'
         },
       },
       android: {
         priority: 'high',
         ttl: 1800 * 1000,
         notification: {
+          channelId: 'mealprep',
           "title": activity.type + " - " + activity.title,
           "body": activity.description ?? '',
           priority: 'high',
@@ -48,8 +52,8 @@ export class NotificationService {
           visibility: 'public',
           clickAction: 'activities',
           color: '#f45342',
-          icon:'https://freeiconshop.com/wp-content/uploads/edd/task-done-flat.png',
-          imageUrl: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1039&q=80'
+          icon:'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png',
+          imageUrl: 'https://mealprepscheduler.herokuapp.com/assets/icons/bg.webp'
         }
       },
       "token": subscription.token,
@@ -77,7 +81,10 @@ export class NotificationService {
           "action": "explore",
           "title": "Visitar o site"
         }],
-        icon: 'https://freeiconshop.com/wp-content/uploads/edd/task-done-flat.png'
+        data: {
+          activity: JSON.stringify(activity)
+        },
+        icon: 'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png'
       }
     } as WebpushConfig
   }

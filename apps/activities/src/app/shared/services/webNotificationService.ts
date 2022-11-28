@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { SwPush, SwUpdate } from '@angular/service-worker';
 import { environment } from 'apps/activities/src/environments/environment';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { async } from '@angular/core/testing';
+import { LocalNotificationService } from './localNotification.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +14,8 @@ export class WebNotificationService {
   constructor(private http: HttpClient,
               private swPush: SwPush,
               private swUpdate: SwUpdate,
-              private afMessaging: AngularFireMessaging) {}
+              private afMessaging: AngularFireMessaging,
+              private localNotificationService: LocalNotificationService) {}
 
 
   subscribeToNotification() {
@@ -43,7 +47,7 @@ export class WebNotificationService {
     });
 
     this.afMessaging.messages
-      .subscribe((message: any) => {
+      .subscribe(async(message: any) => {
         console.log({"afMessaging Message received":message});
         const NotificationOptions = {
           body: message.notification.body,
@@ -53,7 +57,7 @@ export class WebNotificationService {
         navigator.serviceWorker.getRegistration('/firebase-cloud-messaging-push-scope').then(registration => {
           registration?.showNotification(message.notification.title, NotificationOptions);
         });
-
+        await this.localNotificationService.schedule(message.data.activity);
       });
   }
 
