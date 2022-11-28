@@ -24,13 +24,13 @@ export class ActivitiesService {
     return this.repo.find({ type, userId: new ObjectId(userId) })
   }
 
-  async insert(activity:IActivity) {
+  async insert(activity: IActivity) {
     const result = await this.repo.insert(activity);
     const inserted = await this.findOne(result.insertedId, activity.userId) as any;
     await this.scheduleService.scheduleActivityNotification(inserted);
   }
 
-  async update(id, activity:IActivity, userId) {
+  async update(id, activity: IActivity, userId) {
     const { _id, ...postWithoutId } = activity;
     if (!postWithoutId) return;
     activity.userId = new ObjectId(userId) as any;
@@ -46,7 +46,7 @@ export class ActivitiesService {
   }
 
   async getPendingActivities() {
-    const today = parseActivityDay(new Date().getDay()).toString();
+    const today = dateToActivityWeekDay(new Date().getDay()).toString();
     const dueToday = await this.repo.find({ weekdays: today });
 
     return dueToday.filter(notification => {
@@ -62,8 +62,16 @@ export class ActivitiesService {
 }
 
 
-export function parseActivityDay(day) {
-  return [
-    "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"
-  ][day]
+const weekdays =[
+  "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"
+];
+export function dateToActivityWeekDay(day) {
+  return weekdays[day]
+}
+export function activityWeekDaysToDate(days) {
+  const dates = []
+  days.forEach((day,idx) => {
+    dates[idx] = weekdays.indexOf(day);
+  })
+  return dates
 }

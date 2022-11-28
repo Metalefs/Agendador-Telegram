@@ -6,6 +6,7 @@ import { SubscriptionsService } from '../controllers/subscriptions/subscriptions
 import { SubscriptionRepository } from '../repository/subscription.repository';
 import { NotificationService } from './notification.service';
 import * as moment from 'moment';
+import { activityWeekDaysToDate } from '../controllers/activities/activities.service';
 
 @Injectable()
 export class ScheduleService {
@@ -20,7 +21,7 @@ export class ScheduleService {
   }
 
   async scheduleActivityNotification(activity:IActivity) {
-    const dayOfWeek = new Date().getDay()
+    const dayOfWeek = activityWeekDaysToDate(activity.weekdays)
 
     const brazil = moment(activity.time);
     const hour = brazil.hours();
