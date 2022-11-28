@@ -55,7 +55,7 @@ export class NotificationService {
           "title": activity.type + " - " + activity.title,
           "body": activity.description ?? '',
           priority: 'max',
-          vibrateTimingsMillis: [1000, 1000, 1000, 1000, 1000],
+          vibrateTimingsMillis: [1000, 10, 1000, 10, 1000],
           visibility: 'public',
           clickAction: 'activities',
           color: '#f45342',
@@ -83,7 +83,7 @@ export class NotificationService {
       "notification": {
         "title": activity.type + " - " + activity.title,
         "body": activity.description ?? '',
-        "vibrate": [1000, 1000, 1000, 1000, 1000],
+        "vibrate": [1000, 10, 1000, 10, 1000],
         "actions": [{
           "action": "explore",
           "title": "Visitar o site"
