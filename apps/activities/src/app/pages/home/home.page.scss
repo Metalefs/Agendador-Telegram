@@ -8,3 +8,13 @@
 code {
   white-space: pre-wrap;
 }
+
+.chip{
+  &-unchecked{
+    background : rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.088);
+    color : var(--ion-text-color-rgb);
+  }
+  &-checked{
+    background: var(--ion-color-primary);
+  }
+}

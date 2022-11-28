@@ -19,6 +19,11 @@ export class ActivityComponent implements OnInit {
   }
 
   isDone(activity:IActivity){
-    return moment(activity.time).isBefore(new Date())
+    const date = new Date();
+    const activityDate = new Date(activity.time as any);
+    date.setHours(activityDate.getHours())
+    date.setMinutes(activityDate.getMinutes())
+    date.setSeconds(activityDate.getSeconds())
+    return moment(date).isBefore(new Date())
   }
 }

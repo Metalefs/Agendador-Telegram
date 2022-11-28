@@ -5,11 +5,14 @@ import { IActivity } from '@uncool/shared';
 import { BaseService } from './base,service';
 import { ErrorHandler } from './async-services/error.handler';
 import { Observable } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+
+import { environment } from 'apps/activities/src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataService extends BaseService<IActivity>{
+export class ActivitiesService extends BaseService<IActivity>{
   public activityTypesMap = [
     { name: ActivityTypeEnum.shopping, icon: 'cart', iconType: 'icon' },
     { name: ActivityTypeEnum.cleaning, icon: 'dishes.png', iconType: 'thumbnail' },
@@ -26,7 +29,7 @@ export class DataService extends BaseService<IActivity>{
     http: HttpClient,
     errorHandler: ErrorHandler,
   ) {
-    super('activities',http,errorHandler);
+    super('activities', http, errorHandler);
   }
 
   public getActivities(): Observable<IActivity[]> {
@@ -36,6 +39,14 @@ export class DataService extends BaseService<IActivity>{
   public getActivityById(id: string): Observable<IActivity> {
     return this.findById(id);
   }
+
+  public getActivitiesByWeekdays(days: string[]): Observable<IActivity[]> {
+    return this.http.get<Array<IActivity>>(`${environment.endpoint}/${this.domainRoute}/days/${days.join(',')}`).pipe(
+      retry(3),
+      catchError(() => { this.errorHandler.handle; return [] })
+    );
+  }
+
   public getActivityByType(type: string): Observable<Array<IActivity>> {
     return this.findByType(type);
   }

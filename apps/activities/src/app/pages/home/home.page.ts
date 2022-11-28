@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../shared/services/data.service';
+import { ActivitiesService } from '../../shared/services/activities.service';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { EditActivityComponent } from '../../shared/components/edit-activity/edit-activity.component';
 import { IActivity, IconTypeEnum } from '@uncool/shared';
@@ -14,6 +14,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { WebNotificationService } from '../../shared/services/webNotificationService';
 import { PushNofiticationService } from '../../shared/services/pushNotificationService';
 import { ConnectivityService } from '../../shared/services/connectivity.service';
+import { SettingsComponent } from '../../shared/components/settings/settings.component';
+import { SettingsService } from '../../shared/components/settings/settings.service';
 
 @Component({
   selector: 'app-home',
@@ -24,12 +26,17 @@ export class HomePage implements OnInit {
   result!: string;
   iconTypes = IconTypeEnum;
   activities!: IActivity[];
+  activeWeekdays: string[] = []
+
+  weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+
   constructor(
     public modalCtrl: ModalController,
     private authService: AuthenticationService,
     private toastController: ToastController,
     private loadingController: LoadingController,
-    public service: DataService,
+    public service: ActivitiesService,
+    public settingsService: SettingsService,
     private router: Router,
     private translate: TranslateService,
     private localNotificationService: LocalNotificationService,
@@ -38,6 +45,7 @@ export class HomePage implements OnInit {
     private connectivityService: ConnectivityService) {
       this.openAddActivityModal = this.openAddActivityModal.bind(this);
       this.createActivity = this.createActivity.bind(this);
+      this.updateSettings = this.updateSettings.bind(this);
       this.getActivities.bind(this);
   }
 
@@ -102,6 +110,44 @@ export class HomePage implements OnInit {
     activityModal.present();
   }
 
+  async openAddSettingsModal() {
+    const activityModal = await this.modalCtrl.create({
+      component: SettingsComponent,
+      componentProps: {  }
+    });
+    activityModal.onDidDismiss().then(this.updateSettings)
+    activityModal.present();
+  }
+
+  async updateSettings(settings: OverlayEventDetail){
+    if (settings.role !== 'confirm') return;
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    if(settings.data._id)
+      this.settingsService.update(settings.data).subscribe(async ()=>{
+        await loading.dismiss();
+        const toast = await this.toastController.create({
+          message: await this.translate.get('settings.edited').toPromise(),
+          duration: 1500,
+          position: 'top'
+        });
+
+        await toast.present();
+      })
+    else
+    this.settingsService.create(settings.data).subscribe(async ()=>{
+      await loading.dismiss();
+      const toast = await this.toastController.create({
+        message: await this.translate.get('settings.edited').toPromise(),
+        duration: 1500,
+        position: 'top'
+      });
+
+      await toast.present();
+    })
+  }
+
   async createActivity(activity: OverlayEventDetail) {
     if (activity.role === 'confirm')
       this.service.create(activity.data).subscribe(async () => {
@@ -135,6 +181,30 @@ export class HomePage implements OnInit {
   async logout() {
     await this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  toggleWeekday(day:string){
+    if(!this.isDaySelected(day))
+      this.activeWeekdays.push(day)
+    else
+      this.activeWeekdays.splice(this.activeWeekdays.indexOf(day),1)
+    this.filterWeekdays(this.activeWeekdays)
+  }
+
+  filterWeekdays(days:string[]){
+    if(!days || days.length === 0) days = this.weekdays;
+    this.service.getActivitiesByWeekdays(days).subscribe(async (activities:IActivity[]) => {
+      this.activities = activities;
+
+      this.connectivityService.offlineEvent?.subscribe(async e=>{
+        await this.localNotificationService.cancelPending();
+        await this.localNotificationService.schedule(this.activities);
+      })
+    });
+  }
+
+  isDaySelected(day:string){
+    return this.activeWeekdays.includes(day);
   }
 
 }

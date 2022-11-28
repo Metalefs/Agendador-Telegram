@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivityTypeEnum, IActivity } from '@uncool/shared';
-import { DataService } from '../../services/data.service';
+import { ActivitiesService } from '../../services/activities.service';
 
 @Component({
   selector: 'app-edit-activity-form',
@@ -13,7 +13,7 @@ export class EditActivityFormComponent implements OnInit {
   @Input() activity?: IActivity;
   @Output() onInitForm = new EventEmitter<UntypedFormGroup>();
   activityType = ActivityTypeEnum;
-  constructor(private service: DataService, private fb: UntypedFormBuilder) { }
+  constructor(private service: ActivitiesService, private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
     this.form = this.fb.group({

@@ -17,6 +17,9 @@ import { SubscriptionsService } from './controllers/subscriptions/subscriptions.
 import { ActivityRepository } from './repository/activity.repository';
 import { SubscriptionRepository } from './repository/subscription.repository';
 import { ScheduleService } from './services/schedule.service';
+import { SettingsService } from './controllers/settings/settings.service';
+import { UserSettingsRepository } from './repository/userSettings.repository';
+import { SettingsController } from './controllers/settings/settings.controller';
 
 @Module({
   imports: [
@@ -25,7 +28,7 @@ import { ScheduleService } from './services/schedule.service';
       exclude: ['/activities-api*']
     })
   ],
-  controllers: [ActivitiesController, AuthController, AppController, SubscriptionsController],
+  controllers: [ActivitiesController, AuthController, AppController, SubscriptionsController, SettingsController],
   providers: [
     SubscriptionsService,
     ActivitiesService,
@@ -35,7 +38,8 @@ import { ScheduleService } from './services/schedule.service';
     AppService,
     ActivityRepository,
     SubscriptionRepository,
-
+    SettingsService,
+    UserSettingsRepository,
     {
       provide: 'DATABASE_CONNECTION',
       useFactory: async (): Promise<Db> => {

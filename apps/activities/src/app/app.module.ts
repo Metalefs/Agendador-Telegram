@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
-import { DataService } from './shared/services/data.service';
+import { ActivitiesService } from './shared/services/activities.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { LocalNotificationService } from './shared/services/localNotification.service';
 import { environment } from '../environments/environment';
@@ -27,6 +27,7 @@ import { CheckForUpdateService } from './shared/services/checkForUpdatesService'
 import { WebNotificationService } from './shared/services/webNotificationService';
 import { PushNofiticationService } from './shared/services/pushNotificationService';
 import { ConnectivityService } from './shared/services/connectivity.service';
+import { SettingsService } from './shared/components/settings/settings.service';
 
 const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -66,9 +67,10 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
     PushNofiticationService,
     CheckForUpdateService,
     ConnectivityService,
+    SettingsService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    DataService, ToastrService],
+    ActivitiesService, ToastrService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

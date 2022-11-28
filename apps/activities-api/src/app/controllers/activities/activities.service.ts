@@ -20,8 +20,13 @@ export class ActivitiesService {
     return this.repo.findOne({ _id: new ObjectId(id), userId: new ObjectId(userId) })
   }
 
-  async findByTpe(type, userId) {
+  async findByType(type, userId) {
     return this.repo.find({ type, userId: new ObjectId(userId) })
+  }
+
+  async findByWeekdays(days, userId) {
+    const list = await this.repo.find({ weekdays: {$in: days.split(',')}, userId: new ObjectId(userId) })
+    return list.sort((a, b) => (a.priority || 0) - (b.priority || 0));
   }
 
   async insert(activity: IActivity) {

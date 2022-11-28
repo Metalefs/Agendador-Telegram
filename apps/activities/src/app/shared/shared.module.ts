@@ -9,6 +9,7 @@ import { EditActivityFormModule } from './components/edit-activity-form/edit-act
 import { EditActivityComponent } from './components/edit-activity/edit-activity.component';
 import { InlineOptionsSelectComponent } from './components/inline-options-select/inline-options-select.component';
 import { SelectWeekdaysModule } from './components/select-weekdays/select-weekdays.module';
+import { SettingsComponent } from './components/settings/settings.component';
 import { LocalNotificationService } from './services/localNotification.service';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { LocalNotificationService } from './services/localNotification.service';
     EditActivityComponent,
     InlineOptionsSelectComponent,
     ActivityTypeIconComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,7 @@ import { LocalNotificationService } from './services/localNotification.service';
     ReactiveFormsModule,
     IonicModule,
     EditActivityFormModule,
-    ToastrModule
+    ToastrModule,
   ],
   exports: [
     CommonModule,

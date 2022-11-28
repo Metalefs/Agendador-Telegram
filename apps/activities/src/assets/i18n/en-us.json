@@ -10,6 +10,7 @@
     "type": "Type",
     "addExercise": "Add an exercise",
     "exercises": "Exercises",
+    "settings": "Settings",
     "weekdays": {
       "index": "Days of the week",
       "sunday": "Sunday",
@@ -201,6 +202,13 @@
         "label": "Meses do ano",
         "placeholder": "Selecione os meses"
       }
+    }
+  },
+  "settings": {
+    "edited":"Settings updated successfuly",
+    "telegramChatId": {
+      "label":"Telegram Chat Id",
+      "placeholder":"Insert Telegram Chat Id"
     }
   }
 }

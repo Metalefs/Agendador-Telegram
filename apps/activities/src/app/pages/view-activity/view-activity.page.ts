@@ -5,7 +5,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { IActivity, UserModel } from '@uncool/shared';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
-import { DataService } from '../../shared/services/data.service';
+import { ActivitiesService } from '../../shared/services/activities.service';
 
 @Component({
   selector: 'app-view-activity',
@@ -25,7 +25,7 @@ export class ViewActivityPage implements OnInit {
   }
 
   constructor(
-    private data: DataService,
+    private data: ActivitiesService,
     private authentication: AuthenticationService,
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,

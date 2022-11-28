@@ -45,11 +45,17 @@ export class NotificationService {
         priority: 'high',
         ttl: 1800 * 1000,
         notification: {
+          tag: 'mealprep',
+          lightSettings: {
+            color: '##FF830FAD',
+            lightOnDurationMillis: 2000,
+            lightOffDurationMillis: 1000,
+          },
           channelId: 'mealprep',
           "title": activity.type + " - " + activity.title,
           "body": activity.description ?? '',
           priority: 'max',
-          defaultVibrateTimings: true,
+          vibrateTimingsMillis: [1000, 1000, 1000, 1000, 1000],
           visibility: 'public',
           clickAction: 'activities',
           color: '#f45342',
@@ -77,14 +83,16 @@ export class NotificationService {
       "notification": {
         "title": activity.type + " - " + activity.title,
         "body": activity.description ?? '',
-        "vibrate": [100, 50, 100],
+        "vibrate": [1000, 1000, 1000, 1000, 1000],
         "actions": [{
           "action": "explore",
           "title": "Visitar o site"
         }],
+        tag: 'mealprep',
         data: {
           activity: JSON.stringify(activity),
-          url: 'https://mealprepscheduler.herokuapp.com'
+          url: 'https://mealprepscheduler.herokuapp.com',
+          ledColor: [240, 0, 45, 1]
         },
         icon: 'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png'
       }

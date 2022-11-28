@@ -21,8 +21,19 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-row>
+    <ion-chip *ngFor="let day of weekdays"
+      [ngClass]="{'chip-unchecked': !isDaySelected(day), 'chip-checked':isDaySelected(day)}"
+      (click)="toggleWeekday(day)"
+      color="light"
+    >
+      {{'general.weekdays.'+day |translate }}</ion-chip
+    >
+  </ion-row>
+
   <ion-list>
-    <ion-reorder-group *ngIf="activities else noActivities"
+    <ion-reorder-group
+      *ngIf="activities else noActivities"
       [disabled]="false"
       (ionItemReorder)="handleReorder($any($event))"
     >
@@ -33,7 +44,9 @@
         </ion-item>
 
         <ion-item-options>
-          <ion-item-option (click)="this.delete(activity)" color="danger">{{'general.delete'|translate}}</ion-item-option>
+          <ion-item-option (click)="this.delete(activity)" color="danger"
+            >{{'general.delete'|translate}}</ion-item-option
+          >
         </ion-item-options>
       </ion-item-sliding>
     </ion-reorder-group>
@@ -46,6 +59,11 @@
     </ng-template>
   </ion-list>
 
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+    <ion-fab-button color="dark" (click)="openAddSettingsModal()">
+      <ion-icon name="settings"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openAddActivityModal('')">
       <ion-icon name="add"></ion-icon>

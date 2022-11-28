@@ -16,7 +16,12 @@ export class ActivitiesController {
   }
   @Get('/type/:type')
   findByType(@Param() params, @Req() req) {
-    return this.activitiesService.findByTpe(params.type, req.user);
+    return this.activitiesService.findByType(params.type, req.user);
+  }
+  @Get('/days/:weekdays')
+  findByWeekdays(@Param() params, @Req() req) {
+    console.log(params)
+    return this.activitiesService.findByWeekdays(params.weekdays, req.user);
   }
 
   @Get(':id')

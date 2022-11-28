@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivityTypeEnum, IconTypeEnum } from '@uncool/shared';
-import { DataService } from '../../services/data.service';
+import { ActivitiesService } from '../../services/activities.service';
 
 @Component({
   selector: 'app-activity-type-icon',
@@ -13,7 +13,7 @@ export class ActivityTypeIconComponent implements OnInit {
   activityMap!:any;
   iconTypes = IconTypeEnum;
 
-  constructor(private service: DataService) { }
+  constructor(private service: ActivitiesService) { }
 
   ngOnInit() {
     this.activityMap = this.getActivityIconMap();

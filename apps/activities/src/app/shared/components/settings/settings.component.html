@@ -1,0 +1,25 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="cancel()">{{'general.cancel'|translate}}</ion-button>
+      </ion-buttons>
+      <ion-title>{{'general.settings'|translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button [disabled]="this.form?.invalid" (click)="confirm()" [strong]="true">{{'general.confirm'|translate}}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" *ngIf="this.form">
+    <form [formGroup]="form">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">{{'settings.telegramChatId.label'|translate}}</ion-label>
+            <ion-input formControlName="telegramChatId" type="text" [placeholder]="'settings.telegramChatId.placeholder'|translate"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-content>
+</ion-content>
