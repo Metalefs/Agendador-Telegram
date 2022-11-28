@@ -47,7 +47,7 @@ export class NotificationService {
         notification: {
           tag: 'mealprep',
           lightSettings: {
-            color: '##FF830FAD',
+            color: '#FF830FAD',
             lightOnDurationMillis: 2000,
             lightOffDurationMillis: 1000,
           },
