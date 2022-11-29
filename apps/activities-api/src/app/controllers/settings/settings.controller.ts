@@ -17,7 +17,7 @@ export class SettingsController {
 
   @Get(':id')
   findById(@Param() params, @Req() req) {
-    return this.settingsService.findOne(params.id, req.user);
+    return this.settingsService.findByUserId(req.user);
   }
 
   @Post()

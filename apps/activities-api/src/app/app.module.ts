@@ -20,6 +20,8 @@ import { ScheduleService } from './services/schedule.service';
 import { SettingsService } from './controllers/settings/settings.service';
 import { UserSettingsRepository } from './repository/userSettings.repository';
 import { SettingsController } from './controllers/settings/settings.controller';
+import { initBot } from './telegram';
+import { TelegramService } from './services/telegram.service';
 
 @Module({
   imports: [
@@ -40,6 +42,7 @@ import { SettingsController } from './controllers/settings/settings.controller';
     SubscriptionRepository,
     SettingsService,
     UserSettingsRepository,
+    TelegramService,
     {
       provide: 'DATABASE_CONNECTION',
       useFactory: async (): Promise<Db> => {
@@ -49,6 +52,12 @@ import { SettingsController } from './controllers/settings/settings.controller';
         console.log('Connected successfully to server');
         const db = client.db('mealprep');
         return db
+      }
+    },
+    {
+      provide: 'TELEGRAM_BOT',
+      useFactory: async () => {
+        return initBot()
       }
     }
   ],

@@ -21,7 +21,8 @@ export class NotificationService {
       webpush: this.getWebpushConfig(activity),
       "notification": {
         "title": activity.type + " - " + activity.title,
-        "body": activity.description
+        "body": activity.description,
+        imageUrl: 'https://mealprepscheduler.herokuapp.com/assets/icons/bg.webp'
       },
       data: {
         activity: JSON.stringify(activity),

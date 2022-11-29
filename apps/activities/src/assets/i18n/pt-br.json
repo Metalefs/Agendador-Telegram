@@ -205,6 +205,7 @@
     }
   },
   "settings": {
+    "description": "Para receber notificações pelo Telegram, obtenha seu ID através do bot 'MealPrepSchedulerNotifications' no Telegram",
     "edited":"Configurações atualizadas",
     "telegramChatId": {
       "label":"Telegram Chat Id",

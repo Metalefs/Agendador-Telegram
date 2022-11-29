@@ -14,12 +14,8 @@ export class SettingsService {
     return list.sort((a, b) => (a.priority || 0) - (b.priority || 0));
   }
 
-  async findOne(id, userId) {
-    return this.repo.findOne({ _id: new ObjectId(id), userId: new ObjectId(userId) })
-  }
-
-  async findByTpe(type, userId) {
-    return this.repo.find({ type, userId: new ObjectId(userId) })
+  async findByUserId(userId) {
+    return this.repo.findOne({ userId: new ObjectId(userId) })
   }
 
   async insert(settings: IUserSettings) {

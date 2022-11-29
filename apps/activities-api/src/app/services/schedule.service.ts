@@ -7,12 +7,13 @@ import { SubscriptionRepository } from '../repository/subscription.repository';
 import { NotificationService } from './notification.service';
 import * as moment from 'moment';
 import { activityWeekDaysToDate } from '../controllers/activities/activities.service';
+import { TelegramService } from './telegram.service';
 
 @Injectable()
 export class ScheduleService {
   subscriptionService:SubscriptionsService;
   notificationService:NotificationService;
-  constructor(@Inject('DATABASE_CONNECTION') protected db: Db){
+  constructor(@Inject('DATABASE_CONNECTION') protected db: Db, protected telegramService: TelegramService){
     this.subscriptionService = new SubscriptionsService(new SubscriptionRepository(this.db));
     this.notificationService = new NotificationService();
     //moment().locale('pt-BR');
@@ -41,13 +42,13 @@ export class ScheduleService {
   async sendActivityNotification(...args){
     console.log({args})
     const subscriptions = await this.subscriptionService.getUserSubscription(args[0].userId);
-
     for (const sb of subscriptions) {
       if (sb.token)
-        await this.notificationService.sendActivityNotificationFCM(sb, args[0])
+      await this.notificationService.sendActivityNotificationFCM(sb, args[0])
       else
-        await this.notificationService.sendActivityNotificationWebpush(sb.subscription, args[0]);
+      await this.notificationService.sendActivityNotificationWebpush(sb.subscription, args[0]);
     }
+    await this.telegramService.sendActivityNotification(args[0]);
   }
 
   cancelActivitySchedule(id:string){
