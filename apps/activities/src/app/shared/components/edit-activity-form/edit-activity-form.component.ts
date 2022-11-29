@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivityTypeEnum, IActivity } from '@uncool/shared';
+import { ActivityTypeEnum, IActivity, RemindOffsetType } from '@uncool/shared';
 import { ActivitiesService } from '../../services/activities.service';
 
 @Component({
@@ -21,7 +21,10 @@ export class EditActivityFormComponent implements OnInit {
       title: [this.activity?.title??'', [Validators.required]],
       time: [new Date().toISOString(), [Validators.required]],
       weekdays: [this.activity?.weekdays??'', Validators.required],
-      description: [this.activity?.description??'',],
+      description: [this.activity?.description??''],
+      remindUser: [this.activity?.remindUser??false],
+      remindOffset: [this.activity?.remindOffset??''],
+      remindOffsetType: [this.activity?.remindOffsetType??''],
       type: [this.type, Validators.required]
     });
     this.onInitForm.emit(this.form);
@@ -29,6 +32,15 @@ export class EditActivityFormComponent implements OnInit {
 
   getActivityTypes(){
     return this.service.activityTypesMap;
+  }
+
+  getRemindOffsetTypes(){
+    const options:any = []
+    Object.keys(RemindOffsetType).forEach(val => {
+      if(isNaN(val as any))
+      options.push({name: val, value: val})
+    })
+    return options;
   }
 
   get time() {

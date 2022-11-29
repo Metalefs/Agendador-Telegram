@@ -1,5 +1,5 @@
 import * as schedule from 'node-schedule'
-import { IActivity } from "@uncool/shared";
+import { IActivity, RemindOffsetType } from "@uncool/shared";
 import { Inject, Injectable } from "@nestjs/common";
 import { Db } from "mongodb";
 import { SubscriptionsService } from '../controllers/subscriptions/subscriptions.service';
@@ -34,7 +34,14 @@ export class ScheduleService {
     const my_job = schedule?.scheduledJobs[scheduleId];
     my_job?.cancel();
 
-    console.log("scheduling:", scheduleId, { hour, minute, dayOfWeek })
+    console.log("scheduling:", scheduleId, { hour, minute, dayOfWeek });
+
+    if(!(activity as any).isReminder && activity.remindUser){
+      (activity as any).isReminder = true;
+
+      activity.time = moment(activity.time).subtract(activity.remindOffset, activity.remindOffsetType === RemindOffsetType.hours ? 'hours': 'minutes').toDate();
+      await this.scheduleActivityNotification(activity);
+    }
 
     schedule.scheduleJob(scheduleId, { hour, minute, dayOfWeek }, this.sendActivityNotification.bind(this, activity));
   }

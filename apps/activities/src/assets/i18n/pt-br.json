@@ -62,6 +62,10 @@
     "liter": "Litro",
     "scoop": "Scoop"
   },
+  "time": {
+    "minutes": "minutos",
+    "hour": "hora"
+  },
   "activities": {
     "add":"Adicionar uma atividade",
     "create":"Criar uma atividade",
@@ -85,6 +89,18 @@
       "title": {
         "label":"Titulo",
         "placeholder":"Titulo da atividade"
+      },
+      "reminder": {
+        "checkbox": {
+          "label": "Usar lembrete"
+        },
+        "select":{
+          "label":"Ser lembrado",
+          "options":{
+            "minutes": "Minutos antes",
+            "hours": "Horas antes"
+          }
+        }
       },
       "groceryItems":{
         "label": "Items de mercado (separado por enter)",

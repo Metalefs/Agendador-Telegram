@@ -15,8 +15,8 @@ export class SubscriptionsController {
   async notification(@Req() request: Request) {
     const userId = new ObjectId((request as any).user);
     const token = (request.body as any).token;
-
-    const subscription = { subscription: ((request.body as any).notification ?? token), userId, type: 'webpush/fcm', token };
+    const date = new Date();
+    const subscription = { subscription: ((request.body as any).notification ?? token), userId, type: 'webpush/fcm', token, date};
     await this.notificationsService.register(subscription);
     const payload = JSON.stringify({
       "notification": {
@@ -44,8 +44,8 @@ export class SubscriptionsController {
 
     const token = (request.body as any).token;
     const userId = new ObjectId((request as any).user);
-
-    const subscription = { subscription: (request.body as any).notification, userId, type: 'fcm', token };
+    const date = new Date();
+    const subscription = { subscription: (request.body as any).notification, userId, type: 'fcm', token, date};
 
     await this.notificationsService.register(subscription);
     return this.notificationsService.sendFCMMessage(token, "Inscrição realizada com sucesso", "Notificações configuradas")

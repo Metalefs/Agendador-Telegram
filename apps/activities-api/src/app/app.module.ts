@@ -24,6 +24,7 @@ import { initBot } from './telegram';
 import { TelegramService } from './services/telegram.service';
 import { NotificationScheduler } from './routines/notificationSchedule';
 import { KeepAliveScheduler } from './routines/pingApp';
+import { PurgeSubscriptionsScheduler } from './routines/purgeSubscriptions';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { KeepAliveScheduler } from './routines/pingApp';
         console.log('Connected successfully to server');
         const db = client.db('mealprep');
         await new KeepAliveScheduler(db,client).start()
+        await new PurgeSubscriptionsScheduler(db,client).start()
         return db
       }
     },

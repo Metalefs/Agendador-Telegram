@@ -5,7 +5,7 @@ export interface IActivity extends IBaseModel{
   id?: number;
   priority?: number;
   title?: string;
-  time?: string;
+  time?: Date;
   weekdays?: string[];
   description?: string;
   type?: ActivityTypeEnum;
@@ -13,4 +13,12 @@ export interface IActivity extends IBaseModel{
   done?: boolean;
   alarm?:boolean;
   userId?: string;
+  remindUser?:boolean;
+  remindOffset?:number;
+  remindOffsetType?:RemindOffsetType;
+}
+
+export enum RemindOffsetType {
+  hours,
+  minutes
 }

@@ -73,7 +73,7 @@ export class LocalNotificationService {
       notifications.push(
         {
           title: this.translate.instant('activities.'+activity.type!)+ " - " + activity.title,
-          body: activity.description,
+          body: activity.description ?? '',
           largeIcon: 'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png',
           smallIcon: 'https://mealprepscheduler.herokuapp.com/assets/icons/task-done-flat.png',
           data: { activity },

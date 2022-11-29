@@ -55,6 +55,31 @@
   <ion-row>
     <ion-col>
       <ion-item>
+        <ion-label position="inline">{{'activities.form.reminder.checkbox.label'|translate}}</ion-label>
+        <ion-toggle slot="end" formControlName="remindUser"></ion-toggle>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="this.form.value?.remindUser">
+    <ion-col>
+      <ion-item>
+        <ion-label position="inline">{{'activities.form.reminder.select.label'|translate}}</ion-label>
+        <ion-input formControlName="remindOffset" type="number" [placeholder]="30"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-select formControlName="remindOffsetType" interface="action-sheet" [placeholder]="">
+          <ion-select-option *ngFor="let type of getRemindOffsetTypes()" [value]="type.name">
+            {{'activities.form.reminder.select.options.'+type.name|translate}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
         <ion-label position="stacked">{{'activities.form.description.label'|translate}}</ion-label>
         <ion-textarea formControlName="description" [placeholder]="'activities.form.description.placeholder'|translate"></ion-textarea>
       </ion-item>

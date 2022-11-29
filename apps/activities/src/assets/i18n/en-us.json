@@ -62,6 +62,10 @@
     "liter": "Liter",
     "scoop": "Scoop"
   },
+  "time": {
+    "minutes": "minutos",
+    "hour": "hora"
+  },
   "activities": {
     "add": "Add an activity",
     "create": "Create an activity",
@@ -85,6 +89,18 @@
       "title": {
         "label": "Insert title",
         "placeholder": "Activity title"
+      },
+      "reminder": {
+        "checkbox": {
+          "label": "Use reminder"
+        },
+        "select":{
+          "label":"Be reminded",
+          "options":{
+            "minutes": "Minutes before",
+            "hours": "Hours before"
+          }
+        }
       },
       "groceryItems":{
         "label": "Insert grocery items (press enter to add item)",
