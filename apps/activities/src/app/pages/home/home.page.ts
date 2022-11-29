@@ -62,14 +62,7 @@ export class HomePage implements OnInit {
   }
 
   getActivities() {
-    this.service.getActivities().subscribe(async activities => {
-      this.activities = activities;
-
-      this.connectivityService.offlineEvent?.subscribe(async e=>{
-        await this.localNotificationService.cancelPending();
-        await this.localNotificationService.schedule(this.activities);
-      })
-    });
+    this.filterWeekdays(this.activeWeekdays)
   }
 
   refresh(ev: any) {
