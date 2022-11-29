@@ -61,7 +61,7 @@ import { TelegramService } from './services/telegram.service';
       }
     }
   ],
-  exports: ['DATABASE_CONNECTION'],
+  exports: ['DATABASE_CONNECTION','TELEGRAM_BOT'],
 })
 export class AppModule
 {
