@@ -58,7 +58,7 @@ export class WebNotificationService {
           registration?.showNotification(message.notification.title, NotificationOptions);
         });
         await this.localNotificationService.schedule(message.data.activity);
-        CapacitorAlarmNotification['setAlarm']({
+        CapacitorAlarmNotification?.['setAlarm']({
           sec: 1,
           sound: true, // false: vibration only, true: ring system alarm sound
           title: message.notification.title,  // notification title
