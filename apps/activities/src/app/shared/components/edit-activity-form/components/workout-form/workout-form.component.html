@@ -1,7 +1,7 @@
 <ion-button expand="block" (click)="openAddExerciseModal()">{{
   'general.addExercise' | translate
 }}</ion-button>
-<ion-list *ngIf="exercisesControl?.value.length > 0">
+<ion-list *ngIf="exercisesControl?.value?.length > 0">
   <ion-list-header>
     <ion-title>{{ 'general.exercises' | translate }}</ion-title>
   </ion-list-header>
