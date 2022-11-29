@@ -56,7 +56,7 @@ import { TelegramService } from './services/telegram.service';
     },
     {
       provide: 'TELEGRAM_BOT',
-      useFactory: async () => {
+      useFactory: () => {
         return initBot()
       }
     }
