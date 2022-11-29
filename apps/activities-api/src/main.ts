@@ -3,10 +3,8 @@ const webpush = require('web-push');
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { NotificationScheduler } from './app/routines/notificationSchedule';
 import { googleCredentials } from './env';
 import * as fs from "fs";
-import { MongoClient } from 'mongodb';
 
 
 const admin = require('firebase-admin');
@@ -21,10 +19,6 @@ async function bootstrap() {
   const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
   const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
   webpush.setVapidDetails('mailto:jackson.pires.rm@gmail.com', publicVapidKey, privateVapidKey);
-
-  const db = new MongoClient(process.env.DBURL).db('mealprep');
-
-  await new NotificationScheduler(db/*, client*/).start()
 
   const app = await NestFactory.create(AppModule);
   app.enableCors();

@@ -22,6 +22,7 @@ import { UserSettingsRepository } from './repository/userSettings.repository';
 import { SettingsController } from './controllers/settings/settings.controller';
 import { initBot } from './telegram';
 import { TelegramService } from './services/telegram.service';
+import { NotificationScheduler } from './routines/notificationSchedule';
 
 @Module({
   imports: [
@@ -56,8 +57,11 @@ import { TelegramService } from './services/telegram.service';
     },
     {
       provide: 'TELEGRAM_BOT',
-      useFactory: () => {
-        return initBot()
+      useFactory: async () => {
+        const db = new MongoClient(process.env.DBURL).db('mealprep');
+        const bot = initBot();
+        await new NotificationScheduler(db, bot).start()
+        return bot
       }
     }
   ],
