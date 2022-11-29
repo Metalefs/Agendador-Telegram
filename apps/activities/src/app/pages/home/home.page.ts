@@ -26,9 +26,8 @@ export class HomePage implements OnInit {
   result!: string;
   iconTypes = IconTypeEnum;
   activities!: IActivity[];
-  activeWeekdays: string[] = []
-
   weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+  activeWeekdays: string[] = [this.weekdays[new Date().getDay()]]
 
   constructor(
     public modalCtrl: ModalController,
