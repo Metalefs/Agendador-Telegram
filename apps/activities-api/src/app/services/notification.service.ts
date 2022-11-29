@@ -21,7 +21,7 @@ export class NotificationService {
       webpush: this.getWebpushConfig(activity),
       "notification": {
         "title": activity.type + " - " + activity.title,
-        "body": activity.description,
+        "body": activity.description||activity.type,
         imageUrl: 'https://mealprepscheduler.herokuapp.com/assets/icons/bg.webp'
       },
       data: {
@@ -83,7 +83,7 @@ export class NotificationService {
     return {
       "notification": {
         "title": activity.type + " - " + activity.title,
-        "body": activity.description ?? '',
+        "body": activity.type,
         "vibrate": [1000, 10, 1000, 10, 1000],
         "actions": [{
           "action": "explore",
