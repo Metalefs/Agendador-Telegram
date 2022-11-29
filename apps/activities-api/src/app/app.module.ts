@@ -23,6 +23,7 @@ import { SettingsController } from './controllers/settings/settings.controller';
 import { initBot } from './telegram';
 import { TelegramService } from './services/telegram.service';
 import { NotificationScheduler } from './routines/notificationSchedule';
+import { KeepAliveScheduler } from './routines/pingApp';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { NotificationScheduler } from './routines/notificationSchedule';
         await client.connect();
         console.log('Connected successfully to server');
         const db = client.db('mealprep');
+        await new KeepAliveScheduler(db,client).start()
         return db
       }
     },

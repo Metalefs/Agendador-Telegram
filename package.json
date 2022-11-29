@@ -48,6 +48,7 @@
     "@nrwl/angular": "15.0.13",
     "@types/node-schedule": "^2.1.0",
     "agenda": "^5.0.0",
+    "axios": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^7.5.0",
     "firebase-admin": "^11.3.0",
