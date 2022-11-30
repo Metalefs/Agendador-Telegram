@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color='secondary'>
     <ion-title> {{'general.schedule'|translate}} </ion-title>
     <ion-buttons slot="end">
       <ion-thumbnail *ngIf="userSettings?.telegramChatId">
         <img
           [alt]="'telegram integration active'"
           src="../../../assets/icons/telegram.png"
-          height="10"
+          style="width:15px"
         />
       </ion-thumbnail>
       <ion-icon *ngIf="(this.connectivityService.status|async) === false" [name]="'cloud-offline-outline'"></ion-icon>
