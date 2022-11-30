@@ -2,7 +2,7 @@
   *ngIf="activity"
   [routerLink]="'/activity/' + activity._id"
   [detail]="false"
->
+  >
   <div *ngIf="!isDone(activity)" slot="start" [ngClass]="{'dot dot-done': isDone(activity), 'dot': !isDone(activity)}">
     <!-- <ion-badge slot="start">{{activity.priority||0}}</ion-badge> -->
   </div>

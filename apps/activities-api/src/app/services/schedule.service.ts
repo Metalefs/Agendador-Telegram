@@ -27,7 +27,7 @@ export class ScheduleService {
   }
 
   async scheduleActivityNotification(activity:IActivity) {
-    if(!activity.enabled) return;
+    if(activity.disabled) return;
 
     const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
     if(userSettings.disableNotifications) return;

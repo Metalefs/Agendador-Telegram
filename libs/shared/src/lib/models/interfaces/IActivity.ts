@@ -20,7 +20,7 @@ export interface IActivity extends IBaseModel{
   repeatInterval?:number;
   repeatIntervalType?:RepeatIntervalType;
   repeatIntervalStartDate?:Date;
-  enabled?:boolean;
+  disabled?:boolean;
 }
 
 export enum RemindOffsetType {

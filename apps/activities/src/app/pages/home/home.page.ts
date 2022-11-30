@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivitiesService } from '../../shared/services/activities.service';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { EditActivityComponent } from '../../shared/components/edit-activity/edit-activity.component';
-import { IActivity, IconTypeEnum } from '@uncool/shared';
+import { IActivity, IconTypeEnum, IUserSettings } from '@uncool/shared';
 import { ItemReorderEventDetail } from '@ionic/angular';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
   activities!: IActivity[];
   weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
   activeWeekdays: string[] = [this.weekdays[new Date().getDay()]]
-
+  userSettings!: IUserSettings;
   constructor(
     public modalCtrl: ModalController,
     private authService: AuthenticationService,
@@ -57,7 +57,9 @@ export class HomePage implements OnInit {
     else {
       this.webNotificationService.subscribeToNotification()
     }
-
+    await this.settingsService.findUserSettings().subscribe((val: any)=>{
+      this.userSettings = val;
+    });
     this.getActivities();
   }
 

@@ -30,9 +30,9 @@ export class SettingsComponent implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    this.service.findUserSettings().subscribe(async (settings) => {
-      this.settings = settings[0];
-      this.form.patchValue(this.settings);
+    this.service.findUserSettings().subscribe(async (settings:any) => {
+      this.settings = settings;
+      this.form.patchValue(this.settings!);
       await loading.dismiss();
     });
   }

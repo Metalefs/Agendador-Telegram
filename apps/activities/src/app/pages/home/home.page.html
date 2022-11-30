@@ -38,7 +38,8 @@
       (ionItemReorder)="handleReorder($any($event))"
     >
       <ion-item-sliding *ngFor="let activity of activities">
-        <ion-item>
+        <ion-item
+          [ngClass]="{'disabled':activity.disabled || userSettings.disableNotifications}">
           <app-activity [activity]="activity"></app-activity>
           <ion-reorder slot="start"></ion-reorder>
         </ion-item>
