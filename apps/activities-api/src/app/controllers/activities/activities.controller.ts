@@ -20,7 +20,6 @@ export class ActivitiesController {
   }
   @Get('/days/:weekdays')
   findByWeekdays(@Param() params, @Req() req) {
-    console.log(params)
     return this.activitiesService.findByWeekdays(params.weekdays, req.user);
   }
 

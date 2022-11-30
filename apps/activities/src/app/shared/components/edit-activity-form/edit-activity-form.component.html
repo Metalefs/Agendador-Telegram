@@ -1,6 +1,12 @@
 <form [formGroup]="form">
   <ion-row>
     <ion-col>
+      <ion-note position="inline">{{'notifications.enable'|translate}}</ion-note>
+      <ion-toggle formControlName="enabled" [enableOnOffLabels]="true"></ion-toggle>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <ion-item>
         <ion-label position="inline">{{'activities.form.type'|translate}}</ion-label>
         <ion-select formControlName="type" interface="action-sheet" [placeholder]="">
@@ -22,8 +28,10 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-label position="inline">{{'activities.form.time.label'|translate}}</ion-label>
-        <ion-datetime-button datetime="datetime1"></ion-datetime-button>
+        <ion-label position="inline">{{'activities.form.time.label'|translate}}
+          <ion-note *ngIf="this.form.value?.repeatable">{{'activities.form.repeat.validation'|translate}}</ion-note>
+        </ion-label>
+        <ion-datetime-button [disabled]="this.form.value?.repeatable" datetime="datetime1"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
             <ion-datetime id="datetime1" formControlName="time" presentation="time"></ion-datetime>
@@ -64,7 +72,7 @@
     <ion-col>
       <ion-item>
         <ion-label position="inline">{{'activities.form.reminder.select.label'|translate}}</ion-label>
-        <ion-input formControlName="remindOffset" type="number" [placeholder]="30"></ion-input>
+        <ion-input style="text-align:center" formControlName="remindOffset" type="number" [placeholder]="30"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -74,6 +82,42 @@
             {{'activities.form.reminder.select.options.'+type.name|translate}}
           </ion-select-option>
         </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="inline">{{'activities.form.repeat.checkbox.label'|translate}}</ion-label>
+        <ion-toggle slot="end" formControlName="repeatable"></ion-toggle>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="this.form.value?.repeatable">
+    <ion-col>
+      <ion-item>
+        <ion-label position="inline">{{'activities.form.repeat.select.label'|translate}}</ion-label>
+        <ion-input style="text-align:center" min="15" formControlName="repeatInterval" type="number" [placeholder]="30"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-select formControlName="repeatIntervalType" interface="action-sheet" [placeholder]="">
+          <ion-select-option *ngFor="let type of getRepeatIntervalTypes()" [value]="type.name">
+            {{'activities.form.repeat.select.options.'+type.name|translate}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+     <ion-col>
+      <ion-item>
+        <ion-label position="inline">{{'activities.form.repeat.startDate.label'|translate}}</ion-label>
+        <ion-datetime-button datetime="startdateInterval"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="startdateInterval" formControlName="repeatIntervalStartDate"></ion-datetime>
+          </ng-template>
+        </ion-modal>
       </ion-item>
     </ion-col>
   </ion-row>

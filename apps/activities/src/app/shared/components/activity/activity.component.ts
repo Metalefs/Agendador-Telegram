@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IActivity } from '@uncool/shared';
+import { IActivity, RemindOffsetType } from '@uncool/shared';
 import * as moment from 'moment';
 @Component({
   selector: 'app-activity',
@@ -25,5 +25,9 @@ export class ActivityComponent implements OnInit {
     date.setMinutes(activityDate.getMinutes())
     date.setSeconds(activityDate.getSeconds())
     return moment(date).isBefore(new Date())
+  }
+
+  getActivityReminderTime(){
+    return moment(this.activity.time).subtract(this.activity.remindOffset, this.activity.remindOffsetType === RemindOffsetType.hours ? 'hours' : 'minutes').toDate()
   }
 }

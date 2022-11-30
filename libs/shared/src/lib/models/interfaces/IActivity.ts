@@ -16,9 +16,18 @@ export interface IActivity extends IBaseModel{
   remindUser?:boolean;
   remindOffset?:number;
   remindOffsetType?:RemindOffsetType;
+  repeatable?:boolean;
+  repeatInterval?:number;
+  repeatIntervalType?:RepeatIntervalType;
+  repeatIntervalStartDate?:Date;
+  enabled?:boolean;
 }
 
 export enum RemindOffsetType {
   hours,
   minutes
+}
+export enum RepeatIntervalType {
+  hours='hours',
+  minutes='minutes'
 }

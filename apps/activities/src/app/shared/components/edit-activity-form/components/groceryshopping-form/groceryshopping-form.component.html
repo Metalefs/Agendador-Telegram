@@ -1,6 +1,6 @@
 <ion-item>
   <ion-label position="stacked">{{'activities.form.groceryItems.label'|translate}}</ion-label>
-  <ion-chip *ngFor="let e of itemsControl!.value; let i = index">
+  <ion-chip *ngFor="let e of itemsControl?.value; let i = index">
     <ion-label>{{ e }}</ion-label>
     <ion-icon name="close-outline" (click)="removeItem(i)"></ion-icon>
   </ion-chip>

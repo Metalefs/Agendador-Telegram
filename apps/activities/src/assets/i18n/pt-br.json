@@ -64,7 +64,11 @@
   },
   "time": {
     "minutes": "minutos",
-    "hour": "hora"
+    "hours": "horas",
+    "every": "a cada"
+  },
+  "notifications":{
+    "enable": "Habilitar notificações"
   },
   "activities": {
     "add":"Adicionar uma atividade",
@@ -101,6 +105,22 @@
             "hours": "Horas antes"
           }
         }
+      },
+      "repeat": {
+        "checkbox": {
+          "label": "Usar intervalos"
+        },
+        "select":{
+          "label":"Notificar a cada",
+          "options":{
+            "minutes": "Minutos",
+            "hours": "Horas"
+          }
+        },
+        "startDate": {
+          "label": "Data de início"
+        },
+        "validation": "Desconsiderado se repetivel"
       },
       "groceryItems":{
         "label": "Items de mercado (separado por enter)",

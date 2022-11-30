@@ -1,11 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ControlContainer, FormGroupDirective, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-groceryshopping-form',
   templateUrl: './groceryshopping-form.component.html',
   styleUrls: ['./groceryshopping-form.component.css'],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useExisting: FormGroupDirective
+    }
+  ]
 })
 export class GroceryshoppingFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
@@ -13,7 +19,7 @@ export class GroceryshoppingFormComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
-    this.form.addControl('items', this.fb.control([this.activity.items]))
+    this.form.addControl('items', this.fb.control([this.activity?.items]))
   }
 
   addChip(value:string|number, input:IonInput){

@@ -32,7 +32,12 @@ export class ActivitiesService {
   async insert(activity: IActivity) {
     const result = await this.repo.insert(activity);
     const inserted = await this.findOne(result.insertedId, activity.userId) as any;
-    await this.scheduleService.scheduleActivityNotification(inserted);
+    if(activity.enabled){
+      await this.scheduleService.scheduleActivityNotification(activity);
+    }
+    else{
+      await this.scheduleService.scheduleActivityNotification(inserted);
+    }
   }
 
   async update(id, activity: IActivity, userId) {
@@ -40,7 +45,17 @@ export class ActivitiesService {
     if (!postWithoutId) return;
     activity.userId = new ObjectId(userId) as any;
     postWithoutId.userId = new ObjectId(userId) as any;
-    await this.scheduleService.scheduleActivityNotification(activity);
+
+    if(activity.enabled){
+      await this.scheduleService.scheduleActivityNotification(activity);
+    }
+    else{
+      this.scheduleService.cancelActivitySchedule(id);
+    }
+
+    console.log(postWithoutId);
+
+
     return this.repo.update({ _id: new ObjectId(id) }, postWithoutId);
   }
 

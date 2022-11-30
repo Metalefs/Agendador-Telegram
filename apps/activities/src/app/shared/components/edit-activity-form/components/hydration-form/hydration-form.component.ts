@@ -19,8 +19,8 @@ export class HydrationFormComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
-    this.form.addControl('unit', this.fb.control([this.activity.unit]))
-    this.form.addControl('quantity', this.fb.control([this.activity.quantity]))
+    this.form.addControl('unit', this.fb.control([this.activity?.unit]))
+    this.form.addControl('quantity', this.fb.control([this.activity?.quantity]))
   }
 
   getUnits(){

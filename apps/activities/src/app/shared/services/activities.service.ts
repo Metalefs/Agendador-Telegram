@@ -22,7 +22,7 @@ export class ActivitiesService extends BaseService<IActivity>{
     { name: ActivityTypeEnum.hydrate, icon: 'water', iconType: 'icon' },
     { name: ActivityTypeEnum.supplement, icon: 'protein-shake.png', iconType: 'thumbnail' },
     { name: ActivityTypeEnum.sleep, icon: 'bed', iconType: 'icon' },
-    { name: ActivityTypeEnum.other, icon: '', iconType: 'icon' },
+    { name: ActivityTypeEnum.other, icon: 'ellipsis-horizontal-outline', iconType: 'icon' },
   ];
 
   constructor(

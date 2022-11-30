@@ -10,7 +10,15 @@
   <ion-row class="">
     <ion-note>
       <ion-icon name="alarm-outline"></ion-icon>
-      {{ activity.time | date: 'HH:mm' }}
+      <ng-container *ngIf="!activity.repeatable; else repeatableTemp">
+        <ng-container *ngIf="activity.remindUser">
+          *{{ getActivityReminderTime() | date: 'HH:mm' }} /
+        </ng-container>
+        {{ activity.time | date: 'HH:mm' }}
+      </ng-container>
+      <ng-template #repeatableTemp>
+        {{'time.every'|translate}} {{activity.repeatInterval}} {{'time.'+activity.repeatIntervalType|translate}}
+      </ng-template>
     </ion-note>
   </ion-row>
 
