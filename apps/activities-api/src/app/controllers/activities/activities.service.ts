@@ -79,6 +79,12 @@ export class ActivitiesService {
       return moment(compareDate).isSameOrAfter()
     })
   }
+
+  async getAll() {
+    const results = await this.repo.find({});
+
+    return results
+  }
 }
 
 

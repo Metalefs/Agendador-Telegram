@@ -30,6 +30,8 @@ export class ScheduleService {
   async scheduleActivityNotification(activity:IActivity) {
     if(activity.disabled) return;
 
+    console.log({name:activity.title, disabled: activity.disabled, repeatable: activity.repeatable})
+
     const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
     if(userSettings?.disableNotifications) return;
 
@@ -66,6 +68,10 @@ export class ScheduleService {
 
   async scheduleRecurrentActivityNotification(...args){
     const activity:IActivity = args[0];
+    const self = args[1];
+
+    console.log(self);
+
 
     console.log('scheduling recurrent activity:', activity)
 
@@ -76,7 +82,12 @@ export class ScheduleService {
 
       console.log('scheduling job for:', new Date(startDate))
 
-      schedule.scheduleJob(activity._id, new Date(startDate), this.scheduleRecurrentActivityNotification.bind(this, activity));
+      try{
+        schedule.scheduleJob(activity._id.toString(), new Date(startDate), this.scheduleRecurrentActivityNotification.bind(this, activity));
+      }
+      catch(err){
+        console.log(err);
+      }
       return;
     }
 

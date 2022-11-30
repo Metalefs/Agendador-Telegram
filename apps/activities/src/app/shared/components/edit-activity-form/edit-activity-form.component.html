@@ -1,12 +1,6 @@
 <form [formGroup]="form">
   <ion-row>
     <ion-col>
-      <ion-note position="inline">{{'notifications.enable'|translate}}</ion-note>
-      <ion-toggle formControlName="disabled" [enableOnOffLabels]="true"></ion-toggle>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
       <ion-item>
         <ion-label position="inline">{{'activities.form.type'|translate}}</ion-label>
         <ion-select formControlName="type" interface="action-sheet" [placeholder]="">
@@ -127,6 +121,12 @@
         <ion-label position="stacked">{{'activities.form.description.label'|translate}}</ion-label>
         <ion-textarea formControlName="description" [placeholder]="'activities.form.description.placeholder'|translate"></ion-textarea>
       </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-note position="inline">{{'notifications.disable'|translate}}</ion-note>
+      <ion-toggle formControlName="disabled" [enableOnOffLabels]="true"></ion-toggle>
     </ion-col>
   </ion-row>
 </form>

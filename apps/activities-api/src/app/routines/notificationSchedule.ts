@@ -11,20 +11,23 @@ import { TelegramService } from '../services/telegram.service';
 
 export class NotificationScheduler {
   //agenda:Agenda;
+  telegramService:TelegramService
+  scheduleService:ScheduleService
+  activityService:ActivitiesService
   constructor(private db:Db, private bot/*, client: MongoClient*/) {
     //this.agenda = new Agenda({ mongo: client.db("agenda") });
   }
 
   async start() {
-    const telegramService = new TelegramService(this.bot, new SettingsService(new UserSettingsRepository(this.db)))
-    const scheduleService = new ScheduleService(this.db, telegramService);
-    const activityService = new ActivitiesService(new ActivityRepository(this.db), scheduleService);
+    this.telegramService = new TelegramService(this.bot, new SettingsService(new UserSettingsRepository(this.db)))
+    this.scheduleService = new ScheduleService(this.db, this.telegramService);
+    this.activityService = new ActivitiesService(new ActivityRepository(this.db),  new ScheduleService(this.db, null));
 
     //this.agenda.define('check pending notifications', async (job) => {
-      const activities = await activityService.getPendingActivities() as unknown as IActivity[];
+      const activities = await this.activityService.getAll() as unknown as IActivity[];
       console.log("pending notifications: ", activities.length)
       for(const activity of activities) {
-       await scheduleService.scheduleActivityNotification(activity)
+       await this.scheduleService.scheduleActivityNotification(activity)
       }
     //});
 
