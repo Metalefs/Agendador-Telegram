@@ -1,5 +1,5 @@
 import * as schedule from 'node-schedule'
-import { IActivity, RemindOffsetType, RepeatIntervalType } from "@uncool/shared";
+import { IActivity, IUserSettings, RemindOffsetType, RepeatIntervalType } from "@uncool/shared";
 import { Inject, Injectable } from "@nestjs/common";
 import { Db } from "mongodb";
 import { SubscriptionsService } from '../controllers/subscriptions/subscriptions.service';
@@ -8,14 +8,18 @@ import { NotificationService } from './notification.service';
 import * as moment from 'moment';
 import { activityWeekDaysToDate } from '../controllers/activities/activities.service';
 import { TelegramService } from './telegram.service';
+import { SettingsService } from '../controllers/settings/settings.service';
+import { UserSettingsRepository } from '../repository/userSettings.repository';
 
 @Injectable()
 export class ScheduleService {
   subscriptionService:SubscriptionsService;
   notificationService:NotificationService;
+  userSettingsService:SettingsService;
   constructor(@Inject('DATABASE_CONNECTION') protected db: Db, protected telegramService: TelegramService){
     this.subscriptionService = new SubscriptionsService(new SubscriptionRepository(this.db));
     this.notificationService = new NotificationService();
+    this.userSettingsService = new SettingsService(new UserSettingsRepository(this.db));
     //moment().locale('pt-BR');
     //moment.tz.add('America/Sao_Paulo|LMT -03 -02|36.s 30 20|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2glwR.w HdKR.w 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 pTd0 PX0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 1EN0 Lz0 1C10 IL0 1HB0 Db0 1HB0 On0 1zd0 On0 1zd0 Lz0 1zd0 Rb0 1wN0 Wn0 1tB0 Rb0 1tB0 WL0 1tB0 Rb0 1zd0 On0 1HB0 FX0 1C10 Lz0 1Ip0 HX0 1zd0 On0 1HB0 IL0 1wp0 On0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 Rb0 1zd0 Lz0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 On0 1zd0 On0 1HB0 FX0|20e6');
     this.sendActivityNotification = this.sendActivityNotification.bind(this);
@@ -24,6 +28,9 @@ export class ScheduleService {
 
   async scheduleActivityNotification(activity:IActivity) {
     if(!activity.enabled) return;
+
+    const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
+    if(userSettings.disableNotifications) return;
 
     const dayOfWeek = activityWeekDaysToDate(activity.weekdays)
 
@@ -92,6 +99,9 @@ export class ScheduleService {
   async sendActivityNotification(...args){
     console.log({sendActivityNotification:args})
     const activity:IActivity = args[0];
+
+    const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
+    if(userSettings.disableNotifications) return;
 
     const subscriptions = await this.subscriptionService.getUserSubscription(activity.userId);
     for (const sb of subscriptions) {

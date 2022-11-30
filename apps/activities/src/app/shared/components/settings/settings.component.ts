@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
     this.form = this.fb.group({
       _id: [, []],
       telegramChatId: [this.settings?.telegramChatId??'', [Validators.required]],
+      disableNotifications: [this.settings?.disableNotifications??false, [Validators.required]],
     });
   }
 

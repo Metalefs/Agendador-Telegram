@@ -21,6 +21,12 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-note position="inline">{{'notifications.disable'|translate}}</ion-note>
+          <ion-toggle formControlName="disableNotifications" [enableOnOffLabels]="true"></ion-toggle>
+        </ion-col>
+      </ion-row>
     </form>
   </ion-content>
 </ion-content>

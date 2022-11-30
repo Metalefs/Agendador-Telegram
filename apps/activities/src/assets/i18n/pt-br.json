@@ -68,7 +68,8 @@
     "every": "a cada"
   },
   "notifications":{
-    "enable": "Habilitar notificações"
+    "enable": "Habilitar notificações",
+    "disable": "Desabilitar notificações"
   },
   "activities": {
     "add":"Adicionar uma atividade",

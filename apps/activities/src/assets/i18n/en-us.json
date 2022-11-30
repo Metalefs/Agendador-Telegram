@@ -68,7 +68,8 @@
     "every": "every"
   },
   "notifications":{
-    "enable": "Enable notifications"
+    "enable": "Enable notifications",
+    "disable": "Disable notifications"
   },
   "activities": {
     "add": "Add an activity",
