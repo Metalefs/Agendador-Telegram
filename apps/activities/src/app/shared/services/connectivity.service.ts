@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subscription, fromEvent } from "rxjs";
+import { Observable, Subscription, fromEvent, Subject } from "rxjs";
 @Injectable()
 export class ConnectivityService {
   offlineEvent?: Observable<Event>;
   onlineEvent?: Observable<Event>;
   subscriptions: Subscription[] = [];
+
+  status: Subject<any> = new Subject()
 
   constructor() {
     this.handleAppConnectivityChanges();
@@ -17,11 +19,13 @@ export class ConnectivityService {
     this.subscriptions.push(this.onlineEvent.subscribe(e => {
       // handle online mode
       console.log('Online...');
+      this.status.next(true);
     }));
 
     this.subscriptions.push(this.offlineEvent.subscribe(e => {
       // handle offline mode
       console.log('Offline...');
+      this.status.next(false);
     }));
   }
 

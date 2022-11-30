@@ -71,6 +71,14 @@
     "enable": "Enable notifications",
     "disable": "Disable notifications"
   },
+  "connectivity":{
+    "offline": {
+      "message" : "You are offline, notifications will be sent locally"
+    },
+    "online": {
+      "message" : "You are online"
+    }
+  },
   "activities": {
     "add": "Add an activity",
     "create": "Create an activity",

@@ -16,6 +16,7 @@ import { PushNofiticationService } from '../../shared/services/pushNotificationS
 import { ConnectivityService } from '../../shared/services/connectivity.service';
 import { SettingsComponent } from '../../shared/components/settings/settings.component';
 import { SettingsService } from '../../shared/components/settings/settings.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,8 @@ export class HomePage implements OnInit {
   activities!: IActivity[];
   weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
   activeWeekdays: string[] = [this.weekdays[new Date().getDay()]]
-  userSettings!: IUserSettings;
+  userSettings?: IUserSettings;
+
   constructor(
     public modalCtrl: ModalController,
     private authService: AuthenticationService,
@@ -41,7 +43,7 @@ export class HomePage implements OnInit {
     private localNotificationService: LocalNotificationService,
     private pushNotificationService: PushNofiticationService,
     private webNotificationService: WebNotificationService,
-    private connectivityService: ConnectivityService) {
+    public connectivityService: ConnectivityService) {
       this.openAddActivityModal = this.openAddActivityModal.bind(this);
       this.createActivity = this.createActivity.bind(this);
       this.updateSettings = this.updateSettings.bind(this);
@@ -57,9 +59,11 @@ export class HomePage implements OnInit {
     else {
       this.webNotificationService.subscribeToNotification()
     }
-    await this.settingsService.findUserSettings().subscribe((settings: any)=>{
-      this.userSettings = settings[0];
+
+    this.settingsService.findUserSettings().subscribe(settings=>{
+      this.userSettings = settings[0]
     });
+
     this.getActivities();
   }
 

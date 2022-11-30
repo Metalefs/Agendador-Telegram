@@ -1,9 +1,15 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="secondary">
+  <ion-toolbar>
     <ion-title> {{'general.schedule'|translate}} </ion-title>
-
     <ion-buttons slot="end">
-      <ion-icon *ngIf="userSettings?.telegramChatId" [name]="'wifi-outline'"></ion-icon>
+      <ion-thumbnail *ngIf="userSettings?.telegramChatId">
+        <img
+          [alt]="'telegram integration active'"
+          src="../../../assets/icons/telegram.png"
+          height="10"
+        />
+      </ion-thumbnail>
+      <ion-icon *ngIf="(this.connectivityService.status|async) === false" [name]="'cloud-offline-outline'"></ion-icon>
       <ion-button expand="full" (click)="logout()">
         <ion-icon [name]="'log-out'"></ion-icon>
       </ion-button>
@@ -21,7 +27,6 @@
       <ion-title size="large"> {{'general.schedule'|translate}} </ion-title>
     </ion-toolbar>
   </ion-header>
-
   <ion-row>
     <ion-chip *ngFor="let day of weekdays"
       [ngClass]="{'chip-unchecked': !isDaySelected(day), 'chip-checked':isDaySelected(day)}"
@@ -40,7 +45,7 @@
     >
       <ion-item-sliding *ngFor="let activity of activities">
         <ion-item
-          [ngClass]="{'disabled':activity.disabled || userSettings.disableNotifications}">
+          [ngClass]="{'disabled':activity.disabled || userSettings?.disableNotifications}">
           <app-activity [activity]="activity"></app-activity>
           <ion-reorder slot="start"></ion-reorder>
         </ion-item>
