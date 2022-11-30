@@ -144,6 +144,7 @@ export class HomePage implements OnInit {
 
       await toast.present();
     })
+    this.getActivities();
   }
 
   async createActivity(activity: OverlayEventDetail) {
