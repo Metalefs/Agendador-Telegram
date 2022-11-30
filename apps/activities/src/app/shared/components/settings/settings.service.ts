@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IUserSettings } from '@uncool/shared';
-import { Observable } from 'rxjs';
 import { ErrorHandler } from '../../services/async-services/error.handler';
 import { BaseService } from '../../services/base,service';
 
@@ -18,7 +17,7 @@ export class SettingsService extends BaseService<IUserSettings>{
   }
 
   findUserSettings(){
-    return this.findAll() as unknown as Observable<IUserSettings>;
+    return this.findAll();
   }
 
 }

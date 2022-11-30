@@ -57,8 +57,8 @@ export class HomePage implements OnInit {
     else {
       this.webNotificationService.subscribeToNotification()
     }
-    await this.settingsService.findUserSettings().subscribe((val: any)=>{
-      this.userSettings = val;
+    await this.settingsService.findUserSettings().subscribe((settings: any)=>{
+      this.userSettings = settings[0];
     });
     this.getActivities();
   }

@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
     <ion-title> {{'general.schedule'|translate}} </ion-title>
+    <ion-icon *ngIf="userSettings?.telegramChatId" [name]="'wifi-outline'"></ion-icon>
 
     <ion-buttons slot="end">
       <ion-button expand="full" (click)="logout()">

@@ -11,7 +11,7 @@ export class SettingsService {
 
   async list(req) {
     const list = await this.repo.find({ userId: new ObjectId(req.user) });
-    return list[0];
+    return list;
   }
 
   async findByUserId(userId) {

@@ -30,7 +30,7 @@ export class ScheduleService {
     if(activity.disabled) return;
 
     const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
-    if(userSettings.disableNotifications) return;
+    if(userSettings?.disableNotifications) return;
 
     const dayOfWeek = activityWeekDaysToDate(activity.weekdays)
 
@@ -101,7 +101,7 @@ export class ScheduleService {
     const activity:IActivity = args[0];
 
     const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
-    if(userSettings.disableNotifications) return;
+    if(userSettings?.disableNotifications) return;
 
     const subscriptions = await this.subscriptionService.getUserSubscription(activity.userId);
     for (const sb of subscriptions) {
