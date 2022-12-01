@@ -14,7 +14,6 @@ export class KeepAliveScheduler {
       axios.get('https://mealprepscheduler.herokuapp.com/')
       .then(function (response) {
         // handle success
-        console.log(response);
       })
       .catch(function (error) {
         // handle error
