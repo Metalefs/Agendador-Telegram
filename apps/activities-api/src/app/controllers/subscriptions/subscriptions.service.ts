@@ -36,7 +36,7 @@ export class SubscriptionsService {
   }
 
   purgeSubscriptions(){
-    return this.repo.removeByFilter({ date: {$lt: moment().subtract(3, 'months').toDate() } })
+    return this.repo.removeByFilter({ date: {$lt: moment().subtract(1, 'week').toDate() } })
   }
 
 }
