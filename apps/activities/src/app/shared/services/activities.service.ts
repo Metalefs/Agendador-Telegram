@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 
 import { environment } from 'apps/activities/src/environments/environment';
+import { EventApi, EventInput, EventSourceInput } from '@fullcalendar/core';
+import * as moment from 'moment';
+import { getWeekdayInNumber } from '../utils/calendar';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +52,32 @@ export class ActivitiesService extends BaseService<IActivity>{
 
   public getActivityByType(type: string): Observable<Array<IActivity>> {
     return this.findByType(type);
+  }
+
+  public activityToCalendarEvent(activities: IActivity[]): EventInput[] {
+    const events:EventInput[] = [];
+    activities.map(activity => {
+      activity.weekdays!.forEach(weekday => {
+
+        if(activity.repeatable){}
+        if(activity.remindUser){}
+
+        const start = moment();
+        const activityDayInNumber = getWeekdayInNumber(weekday) - 1;
+        start.day(start.day() === 0 ? (activityDayInNumber === 0 ? activityDayInNumber : (activityDayInNumber * -1)) : activityDayInNumber);
+        start.hours(new Date(activity.time!).getHours())
+        start.minutes(new Date(activity.time!).getMinutes())
+        start.seconds(new Date(activity.time!).getSeconds())
+        events.push(
+          {
+            title: activity.title!,
+            start: start.toDate(),
+            data: activity
+          }
+        )
+      })
+    })
+
+    return events;
   }
 }

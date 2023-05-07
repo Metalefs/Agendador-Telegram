@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { IActivity, UserModel } from '@uncool/shared';
@@ -28,6 +28,7 @@ export class ViewActivityPage implements OnInit {
     private data: ActivitiesService,
     private authentication: AuthenticationService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private toastController: ToastController,
     private loadingController: LoadingController,
     private translate: TranslateService
@@ -61,6 +62,24 @@ export class ViewActivityPage implements OnInit {
       this.loadActivity();
       const toast = await this.toastController.create({
         message: await this.translate.get('activities.edited').toPromise(),
+        duration: 1500,
+        position: 'top'
+      });
+
+      await toast.present();
+    })
+  }
+
+  async remove() {
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    this.data.delete(this.activity._id!).subscribe(async () => {
+      await loading.dismiss();
+
+      this.router.navigate(['/']);;
+      const toast = await this.toastController.create({
+        message: await this.translate.get('activities.deleted').toPromise(),
         duration: 1500,
         position: 'top'
       });

@@ -1,15 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventSourceInput } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import ptBrLocale from '@fullcalendar/core/locales/pt-br';
+import enLocale from '@fullcalendar/core/locales/en-au';
+import { LanguageService } from 'apps/activities/src/app/shared/services/language-service';
+
 @Component({
   selector: 'uncool-calendar-view',
   templateUrl: './calendar-view.component.html',
   styleUrls: ['./calendar-view.component.scss'],
 })
-export class CalendarViewComponent {
+export class CalendarViewComponent implements OnInit{
   calendarVisible = true;
   calendarOptions: CalendarOptions = {
     plugins: [
@@ -18,24 +22,21 @@ export class CalendarViewComponent {
       timeGridPlugin,
       listPlugin,
     ],
+    locale: ptBrLocale,
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      right: 'timeGridWeek,timeGridDay,listWeek'
     },
-    initialView: 'dayGridMonth',
-    initialEvents: [
-      { title: 'event 1', date: '2019-04-01' },
-      { title: 'event 2', date: '2019-04-02' }
-    ], // alternatively, use the `events` setting to fetch from a feed
+    initialView: 'timeGridWeek',
     weekends: true,
     editable: true,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    nowIndicator: true,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -43,25 +44,30 @@ export class CalendarViewComponent {
     */
   };
 
-  @Input() events: EventSourceInput[] = []
+  constructor(private languageService: LanguageService){}
+
+  ngOnInit(){
+    this.calendarOptions.locale = this.languageService.selectedLanguage == 'en-us' ? enLocale : ptBrLocale
+  }
+
+  private _events: EventSourceInput = [];
+  public get events(): EventSourceInput {
+    return this._events;
+  }
+  @Input()
+  public set events(value: EventSourceInput) {
+    this._events = value;
+    this.calendarOptions.events = value;
+  }
+
+  @Output() onDateClick = new EventEmitter<any>();
+  @Output() onEventlick = new EventEmitter<any>();
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-
-    }
+    this.onDateClick.emit(selectInfo)
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
-  }
-
-  handleEvents(events: EventApi[]) {
+    this.onEventlick.emit(clickInfo)
   }
 }

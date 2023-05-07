@@ -27,7 +27,7 @@
       <ion-title size="large"> {{'general.schedule'|translate}} </ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-row>
+  <!-- <ion-row>
     <ion-chip *ngFor="let day of weekdays"
       [ngClass]="{'chip-unchecked': !isDaySelected(day), 'chip-checked':isDaySelected(day)}"
       (click)="toggleWeekday(day)"
@@ -35,9 +35,13 @@
     >
       {{'general.weekdays.'+day |translate }}</ion-chip
     >
-  </ion-row>
+  </ion-row> -->
 
-  <uncool-calendar-view></uncool-calendar-view>
+  <uncool-calendar-view
+    [events]='events'
+    (onDateClick)="handleDateClick($event)"
+    (onEventlick)="handleEventlick($event)"
+  ></uncool-calendar-view>
 
   <ion-list>
     <ion-reorder-group
