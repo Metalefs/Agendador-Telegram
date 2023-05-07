@@ -7,6 +7,7 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { ActivityComponentModule } from '../../shared/components/activity/activity.module';
 import { SharedModule } from '../../shared/shared.module';
+import { CalendarViewComponentModule } from './components/calendar-view/calendar-view.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SharedModule } from '../../shared/shared.module';
     IonicModule,
     ActivityComponentModule,
     HomePageRoutingModule,
-    SharedModule
+    SharedModule,
+    CalendarViewComponentModule
   ],
   declarations: [HomePage],
   providers: [
