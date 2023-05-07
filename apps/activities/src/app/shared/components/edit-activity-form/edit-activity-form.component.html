@@ -113,6 +113,12 @@
           </ng-template>
         </ion-modal>
       </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-note position="inline">{{'activities.form.repeat.hideBeforeStartDate'|translate}}</ion-note>
+          <ion-toggle formControlName="hideRepeatIntervalBeforeStartDate" [enableOnOffLabels]="true"></ion-toggle>
+        </ion-col>
+      </ion-row>
     </ion-col>
   </ion-row>
   <ion-row>

@@ -77,7 +77,7 @@ export class ViewActivityPage implements OnInit {
     this.data.delete(this.activity._id!).subscribe(async () => {
       await loading.dismiss();
 
-      this.router.navigate(['/']);;
+      this.router.navigate(['/']);
       const toast = await this.toastController.create({
         message: await this.translate.get('activities.deleted').toPromise(),
         duration: 1500,
@@ -86,6 +86,10 @@ export class ViewActivityPage implements OnInit {
 
       await toast.present();
     })
+  }
+
+  back(){
+    this.router.navigate(['/']);
   }
 
   fillForm(){

@@ -52,6 +52,10 @@ export class HomePage implements OnInit {
     this.getActivities.bind(this);
   }
 
+  async ionViewWillEnter(){
+    await this.ngOnInit();
+ }
+
   async ngOnInit() {
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
 

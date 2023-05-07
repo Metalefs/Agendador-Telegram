@@ -40,6 +40,7 @@ export class EditActivityFormComponent implements OnInit {
       repeatInterval: [this.activity?.repeatInterval??''],
       repeatIntervalType: [this.activity?.repeatIntervalType??''],
       repeatIntervalStartDate: [this.activity?.repeatIntervalStartDate??''],
+      hideRepeatIntervalBeforeStartDate: [this.activity?.hideRepeatIntervalBeforeStartDate ?? false],
       type: [this.type, Validators.required],
       disabled: [this.activity?.disabled ?? false]
     });

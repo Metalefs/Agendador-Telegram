@@ -129,6 +129,7 @@
         "startDate": {
           "label": "Start date"
         },
+        "hideBeforeStartDate": "Hide before start date",
         "validation": "Disregarded if repeatable"
       },
       "groceryItems":{

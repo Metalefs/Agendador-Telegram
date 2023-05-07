@@ -129,6 +129,7 @@
         "startDate": {
           "label": "Data de início"
         },
+        "hideBeforeStartDate": "Hide before start date",
         "validation": "Desconsiderado se repetivel"
       },
       "groceryItems":{
