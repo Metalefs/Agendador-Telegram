@@ -208,8 +208,6 @@ export class HomePage implements OnInit {
 
       this.events = this.service.activityToCalendarEvent(this.activities);
 
-      console.log(this.events)
-
       this.connectivityService.offlineEvent?.subscribe(async e => {
         await this.localNotificationService.cancelPending();
         await this.localNotificationService.schedule(this.activities);

@@ -16,12 +16,12 @@ export class AppComponent implements OnInit {
   constructor(private languageService: LanguageService, private swPush: SwPush, private updates: SwUpdate,
     private checkForUpdateService: CheckForUpdateService, private alertController: AlertController, private translate: TranslateService, private connectivity: ConnectivityService) {
     this.languageService.loadLanguage();
-    this.swPush.notificationClicks.subscribe((event: any) => {
+    this.swPush.notificationClicks.subscribe(event => {
       console.log('Received notification: ', event);
       const url = event.notification.data.url;
       window.open(url, '_blank');
     });
-    this.updates.versionUpdates.subscribe((event: any) => {
+    this.updates.versionUpdates.subscribe((event) => {
       this.updateAvailable = true;
     });
   }
