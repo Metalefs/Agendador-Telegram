@@ -20,6 +20,7 @@ export interface IActivity extends IBaseModel{
   repeatInterval?:number;
   repeatIntervalType?:RepeatIntervalType;
   repeatIntervalStartDate?:Date;
+  hideRepeatIntervalBeforeStartDate?:boolean;
   disabled?:boolean;
 }
 

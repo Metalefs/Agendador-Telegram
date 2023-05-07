@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+      <ion-back-button [text]="getBackButtonText()" (click)="back()"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
