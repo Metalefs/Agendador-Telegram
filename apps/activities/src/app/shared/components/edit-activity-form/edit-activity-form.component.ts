@@ -4,6 +4,9 @@ import { ActivityTypeEnum, IActivity, IconTypeEnum, RemindOffsetType } from '@un
 import { Subscription } from 'rxjs';
 import { RepeatIntervalType } from '../../../../../../../libs/shared/src/lib/models/interfaces/IActivity';
 import { ActivitiesService } from '../../services/activities.service';
+import * as moment from 'moment';
+import { getWeekdayInText, getWeekdays } from '../../utils/calendar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-activity-form',
@@ -12,6 +15,7 @@ import { ActivitiesService } from '../../services/activities.service';
 export class EditActivityFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
   @Input() type!: string;
+  @Input() activityTime?: Date;
   @Input() activity?: IActivity;
   @Output() onInitForm = new EventEmitter<UntypedFormGroup>();
   activityType = ActivityTypeEnum;
@@ -20,12 +24,14 @@ export class EditActivityFormComponent implements OnInit {
 
   constructor(private service: ActivitiesService, private fb: UntypedFormBuilder) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    const weekdays = this.activityTime ? await getWeekdayInText(moment(this.activityTime).weekday()) : this.activity?.weekdays??'';
     this.form = this.fb.group({
       _id: [, []],
       title: [this.activity?.title??'', [Validators.required]],
-      time: [new Date().toISOString(), [Validators.required]],
-      weekdays: [this.activity?.weekdays??'', Validators.required],
+      time: [moment(this.activityTime).toISOString(true) ?? new Date().toISOString(), [Validators.required]],
+      weekdays: [weekdays, Validators.required],
       description: [this.activity?.description??''],
       remindUser: [this.activity?.remindUser??false],
       remindOffset: [this.activity?.remindOffset??''],
@@ -36,7 +42,7 @@ export class EditActivityFormComponent implements OnInit {
       repeatIntervalStartDate: [this.activity?.repeatIntervalStartDate??''],
       hideRepeatIntervalBeforeStartDate: [this.activity?.hideRepeatIntervalBeforeStartDate ?? false],
       type: [this.type, Validators.required],
-      disabled: [this.activity?.disabled]
+      disabled: [this.activity?.disabled ?? false]
     });
     this.onInitForm.emit(this.form);
 

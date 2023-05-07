@@ -10,6 +10,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 export class EditActivityComponent implements OnInit {
   form!: UntypedFormGroup;
   type?: string;
+  time?: Date;
   constructor(
     private params: NavParams,
     private modalCtrl: ModalController,
@@ -17,6 +18,7 @@ export class EditActivityComponent implements OnInit {
 
   ngOnInit() {
     this.type = (this.params.data as any).type;
+    this.time = (this.params.data as any).extra.time;
   }
 
   cancel() {

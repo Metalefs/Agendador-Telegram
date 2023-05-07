@@ -32,3 +32,6 @@ export const getMonths = async (translate: TranslateService, month: string[]) =>
 export function getWeekdayInNumber(day:string){
   return ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(day) + 1
 }
+export function getWeekdayInText(day:number){
+  return ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][day]
+}

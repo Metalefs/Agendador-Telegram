@@ -17,6 +17,7 @@ import { ConnectivityService } from '../../shared/services/connectivity.service'
 import { SettingsComponent } from '../../shared/components/settings/settings.component';
 import { SettingsService } from '../../shared/components/settings/settings.service';
 import { Subject } from 'rxjs';
+import { DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-home',
@@ -28,8 +29,9 @@ export class HomePage implements OnInit {
   iconTypes = IconTypeEnum;
   activities!: IActivity[];
   weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
-  activeWeekdays: string[] = [this.weekdays[new Date().getDay()]]
+  activeWeekdays: string[] = this.weekdays;//[this.weekdays[new Date().getDay()]]
   userSettings?: IUserSettings;
+  events: EventInput[] = [];
 
   constructor(
     public modalCtrl: ModalController,
@@ -44,10 +46,10 @@ export class HomePage implements OnInit {
     private pushNotificationService: PushNofiticationService,
     private webNotificationService: WebNotificationService,
     public connectivityService: ConnectivityService) {
-      this.openAddActivityModal = this.openAddActivityModal.bind(this);
-      this.createActivity = this.createActivity.bind(this);
-      this.updateSettings = this.updateSettings.bind(this);
-      this.getActivities.bind(this);
+    this.openAddActivityModal = this.openAddActivityModal.bind(this);
+    this.createActivity = this.createActivity.bind(this);
+    this.updateSettings = this.updateSettings.bind(this);
+    this.getActivities.bind(this);
   }
 
   async ionViewWillEnter(){
@@ -64,7 +66,7 @@ export class HomePage implements OnInit {
       this.webNotificationService.subscribeToNotification()
     }
 
-    this.settingsService.findUserSettings().subscribe(settings=>{
+    this.settingsService.findUserSettings().subscribe(settings => {
       this.userSettings = settings[0]
     });
 
@@ -103,10 +105,10 @@ export class HomePage implements OnInit {
     }
   }
 
-  async openAddActivityModal(type: string) {
+  async openAddActivityModal(type: string, extra?:any) {
     const activityModal = await this.modalCtrl.create({
       component: EditActivityComponent,
-      componentProps: { type }
+      componentProps: { type, extra }
     });
     activityModal.onDidDismiss().then(this.createActivity)
     activityModal.present();
@@ -115,19 +117,19 @@ export class HomePage implements OnInit {
   async openAddSettingsModal() {
     const activityModal = await this.modalCtrl.create({
       component: SettingsComponent,
-      componentProps: {  }
+      componentProps: {}
     });
     activityModal.onDidDismiss().then(this.updateSettings)
     activityModal.present();
   }
 
-  async updateSettings(settings: OverlayEventDetail){
+  async updateSettings(settings: OverlayEventDetail) {
     if (settings.role !== 'confirm') return;
     const loading = await this.loadingController.create();
     await loading.present();
 
-    if(settings.data._id)
-      this.settingsService.update(settings.data).subscribe(async ()=>{
+    if (settings.data._id)
+      this.settingsService.update(settings.data).subscribe(async () => {
         await loading.dismiss();
         const toast = await this.toastController.create({
           message: await this.translate.get('settings.edited').toPromise(),
@@ -138,22 +140,26 @@ export class HomePage implements OnInit {
         await toast.present();
       })
     else
-    this.settingsService.create(settings.data).subscribe(async ()=>{
-      await loading.dismiss();
-      const toast = await this.toastController.create({
-        message: await this.translate.get('settings.edited').toPromise(),
-        duration: 1500,
-        position: 'top'
-      });
+      this.settingsService.create(settings.data).subscribe(async () => {
+        await loading.dismiss();
+        const toast = await this.toastController.create({
+          message: await this.translate.get('settings.edited').toPromise(),
+          duration: 1500,
+          position: 'top'
+        });
 
-      await toast.present();
-    })
+        await toast.present();
+      })
     this.getActivities();
   }
 
   async createActivity(activity: OverlayEventDetail) {
-    if (activity.role === 'confirm')
-      this.service.create(activity.data).subscribe(async () => {
+    if (activity.role === 'confirm') {
+      const createOBJ = activity.data;
+      if(typeof(createOBJ.weekdays) === 'string'){
+        createOBJ.weekdays = [createOBJ.weekdays];
+      }
+      this.service.create(createOBJ).subscribe(async () => {
         this.getActivities();
         const toast = await this.toastController.create({
           message: await this.translate.get('activities.created').toPromise(),
@@ -162,6 +168,7 @@ export class HomePage implements OnInit {
         });
         await toast.present()
       });
+    }
   }
 
   async delete(activity: IActivity) {
@@ -186,28 +193,40 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  toggleWeekday(day:string){
-    if(!this.isDaySelected(day))
+  toggleWeekday(day: string) {
+    if (!this.isDaySelected(day))
       this.activeWeekdays.push(day)
     else
-      this.activeWeekdays.splice(this.activeWeekdays.indexOf(day),1)
+      this.activeWeekdays.splice(this.activeWeekdays.indexOf(day), 1)
     this.filterWeekdays(this.activeWeekdays)
   }
 
-  filterWeekdays(days:string[]){
-    if(!days || days.length === 0) days = this.weekdays;
-    this.service.getActivitiesByWeekdays(days).subscribe(async (activities:IActivity[]) => {
+  filterWeekdays(days: string[]) {
+    if (!days || days.length === 0) days = this.weekdays;
+    this.service.getActivitiesByWeekdays(days).subscribe(async (activities: IActivity[]) => {
       this.activities = activities;
 
-      this.connectivityService.offlineEvent?.subscribe(async e=>{
+      this.events = this.service.activityToCalendarEvent(this.activities);
+
+      this.connectivityService.offlineEvent?.subscribe(async e => {
         await this.localNotificationService.cancelPending();
         await this.localNotificationService.schedule(this.activities);
       })
     });
   }
 
-  isDaySelected(day:string){
+  isDaySelected(day: string) {
     return this.activeWeekdays.includes(day);
   }
 
+  async handleDateClick(event:DateSelectArg){
+    await this.openAddActivityModal('other', {
+      time: event.start
+    })
+  }
+
+  handleEventlick(event:EventClickArg){
+    const id = (event.event._def.extendedProps as any).data._id;
+    this.router.navigate(['/activity/' + id])
+  }
 }
