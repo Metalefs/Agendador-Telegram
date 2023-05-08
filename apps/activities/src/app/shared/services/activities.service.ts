@@ -50,6 +50,13 @@ export class ActivitiesService extends BaseService<IActivity>{
     );
   }
 
+  public getActivitiesByChronogramId(id: string): Observable<IActivity[]> {
+    return this.http.get<Array<IActivity>>(`${environment.endpoint}/${this.domainRoute}/chronogram/${id}`).pipe(
+      retry(3),
+      catchError(() => { this.errorHandler.handle; return [] })
+    );
+  }
+
   public getActivityByType(type: string): Observable<Array<IActivity>> {
     return this.findByType(type);
   }

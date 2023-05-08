@@ -1,15 +1,18 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color='light'>
+  <ion-toolbar color="light">
     <ion-title> {{'general.schedule'|translate}} </ion-title>
     <ion-buttons slot="end">
       <ion-thumbnail *ngIf="userSettings?.telegramChatId">
         <img
           [alt]="'telegram integration active'"
           src="../../../assets/icons/telegram.png"
-          style="width:15px"
+          style="width: 15px"
         />
       </ion-thumbnail>
-      <ion-icon *ngIf="(this.connectivityService.status|async) === false" [name]="'cloud-offline-outline'"></ion-icon>
+      <ion-icon
+        *ngIf="(this.connectivityService.status|async) === false"
+        [name]="'cloud-offline-outline'"
+      ></ion-icon>
       <ion-button expand="full" (click)="logout()">
         <ion-icon [name]="'log-out'"></ion-icon>
       </ion-button>
@@ -27,18 +30,37 @@
       <ion-title size="large"> {{'general.schedule'|translate}} </ion-title>
     </ion-toolbar>
   </ion-header>
-  <!-- <ion-row>
-    <ion-chip *ngFor="let day of weekdays"
-      [ngClass]="{'chip-unchecked': !isDaySelected(day), 'chip-checked':isDaySelected(day)}"
-      (click)="toggleWeekday(day)"
+
+  <ion-row>
+    <ion-item>
+      <ion-chip
+      [ngClass]="{'chip-unchecked': !isChronogramSelected(null), 'chip-checked':isChronogramSelected(null)}"
       color="light"
     >
-      {{'general.weekdays.'+day |translate }}</ion-chip
-    >
-  </ion-row> -->
+      <ion-label (click)="this.activeChronogram = null; this.getActivities()">
+        {{'general.main'|translate}}
+      </ion-label>
+    </ion-chip>
+      <ion-chip
+        *ngFor="let chronogram of chronograms"
+        [ngClass]="{'chip-unchecked': !isChronogramSelected(chronogram), 'chip-checked':isChronogramSelected(chronogram)}"
+        color="light"
+      >
+        <ion-icon (click)="editChronogram(chronogram)" name="create" color="primary"></ion-icon>
+        <ion-label (click)="toggleChronogram(chronogram)">
+          {{chronogram.title}}
+        </ion-label>
+        <ion-icon (click)="deleteChronogram(chronogram)" name="close"></ion-icon>
+      </ion-chip>
+    </ion-item>
+    <ion-button (click)="openAddChronogramModal()">
+      <ion-icon slot="start" name="add"></ion-icon>
+      {{'general.addChronogram'|translate}}
+    </ion-button>
+  </ion-row>
 
   <uncool-calendar-view
-    [events]='events'
+    [events]="events"
     (onDateClick)="handleDateClick($event)"
     (onEventlick)="handleEventlick($event)"
   ></uncool-calendar-view>
@@ -51,7 +73,8 @@
     >
       <ion-item-sliding *ngFor="let activity of activities">
         <ion-item
-          [ngClass]="{'disabled':activity.disabled || userSettings?.disableNotifications}">
+          [ngClass]="{'disabled':activity.disabled || userSettings?.disableNotifications}"
+        >
           <app-activity [activity]="activity"></app-activity>
           <ion-reorder slot="start"></ion-reorder>
         </ion-item>
@@ -96,7 +119,7 @@
       </ng-container>
     </ion-fab-list>
   </ion-fab>
-<!--
+  <!--
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openAddActivityModal('')">
       <ion-icon name="add"></ion-icon>

@@ -14,6 +14,10 @@ export class ActivitiesController {
   async list(@Req() req) {
     return this.activitiesService.list(req)
   }
+  @Get('/chronogram/:id')
+  findByChronogram(@Param() params, @Req() req) {
+    return this.activitiesService.findByChronogram(params.id, req.user);
+  }
   @Get('/type/:type')
   findByType(@Param() params, @Req() req) {
     return this.activitiesService.findByType(params.type, req.user);
