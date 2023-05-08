@@ -1,5 +1,5 @@
 import * as schedule from 'node-schedule'
-import { IActivity, IUserSettings, RemindOffsetType, RepeatIntervalType } from "@uncool/shared";
+import { IActivity, IChronogram, IUserSettings, RemindOffsetType, RepeatIntervalType } from "@uncool/shared";
 import { Inject, Injectable } from "@nestjs/common";
 import { Db } from "mongodb";
 import { SubscriptionsService } from '../controllers/subscriptions/subscriptions.service';
@@ -10,13 +10,17 @@ import { activityWeekDaysToDate } from '../controllers/activities/activities.ser
 import { TelegramService } from './telegram.service';
 import { SettingsService } from '../controllers/settings/settings.service';
 import { UserSettingsRepository } from '../repository/userSettings.repository';
+import { ChronogramsService } from '../controllers/chronograms/chronograms.service';
+import { ChronogramRepository } from '../repository/chronogram.repository';
 
 @Injectable()
 export class ScheduleService {
   subscriptionService:SubscriptionsService;
   notificationService:NotificationService;
   userSettingsService:SettingsService;
+  chronogramService:ChronogramsService;
   constructor(@Inject('DATABASE_CONNECTION') protected db: Db, protected telegramService: TelegramService){
+    this.chronogramService = new ChronogramsService(new ChronogramRepository(this.db));
     this.subscriptionService = new SubscriptionsService(new SubscriptionRepository(this.db));
     this.notificationService = new NotificationService();
     this.userSettingsService = new SettingsService(new UserSettingsRepository(this.db));
@@ -30,10 +34,17 @@ export class ScheduleService {
   async scheduleActivityNotification(activity:IActivity) {
     if(activity.disabled) return;
 
-    console.log({name:activity.title, disabled: activity.disabled, repeatable: activity.repeatable})
+    console.log({name:activity.title, disabled: activity.disabled, repeatable: activity.repeatable, chronogramId: activity.chronogramId})
 
     const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
+    const chronograms = await this.chronogramService.findByUserId(activity.userId) as unknown as IChronogram[];
     if(userSettings?.disableNotifications) return;
+
+    for(const chronogram of chronograms){
+      if(activity.chronogramId == chronogram._id && !chronogram.enabled) {
+        return;
+      }
+    }
 
     const dayOfWeek = activityWeekDaysToDate(activity.weekdays)
 
@@ -113,7 +124,14 @@ export class ScheduleService {
     const activity:IActivity = args[0];
 
     const userSettings = await this.userSettingsService.findByUserId(activity.userId) as unknown as IUserSettings;
+    const chronograms = await this.chronogramService.findByUserId(activity.userId) as unknown as IChronogram[];
     if(userSettings?.disableNotifications) return;
+
+    for(const chronogram of chronograms){
+      if(activity.chronogramId == chronogram._id && !chronogram.enabled) {
+        return;
+      }
+    }
 
     const subscriptions = await this.subscriptionService.getUserSubscription(activity.userId);
     for (const sb of subscriptions) {

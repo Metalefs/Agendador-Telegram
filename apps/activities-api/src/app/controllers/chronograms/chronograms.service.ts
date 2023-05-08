@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { ChronogramRepository } from '../../repository/chronogram.repository';
-import { ScheduleService } from '../../services/schedule.service';
 import { IChronogram } from '@uncool/shared';
 
 @Injectable()
 export class ChronogramsService {
-  constructor(protected repo: ChronogramRepository, protected scheduleService: ScheduleService) {
+  constructor(protected repo: ChronogramRepository) {
 
   }
 
@@ -21,6 +20,10 @@ export class ChronogramsService {
 
   async findByType(type, userId) {
     return this.repo.find({ type, userId: new ObjectId(userId) })
+  }
+
+  async findByUserId(userId) {
+    return this.repo.find({ userId: new ObjectId(userId) })
   }
 
   async insert(chronogram: IChronogram) {
