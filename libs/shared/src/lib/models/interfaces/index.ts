@@ -1,4 +1,5 @@
 export * from './IActivity'
+export * from './IChronogram'
 export * from './IActivityType'
 export * from './IRecipeNutritionDetails'
 export * from './IGroceryShoppingActivity'

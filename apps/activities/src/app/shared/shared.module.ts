@@ -11,10 +11,12 @@ import { InlineOptionsSelectComponent } from './components/inline-options-select
 import { SelectWeekdaysModule } from './components/select-weekdays/select-weekdays.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LocalNotificationService } from './services/localNotification.service';
+import { EditChronogramComponent } from './components/edit-chronogram/edit-chronogram.component';
 
 @NgModule({
   declarations: [
     EditActivityComponent,
+    EditChronogramComponent,
     InlineOptionsSelectComponent,
     ActivityTypeIconComponent,
     SettingsComponent

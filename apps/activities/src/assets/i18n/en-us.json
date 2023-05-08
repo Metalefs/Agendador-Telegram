@@ -11,6 +11,7 @@
     "addExercise": "Add an exercise",
     "exercises": "Exercises",
     "settings": "Settings",
+    "addChronogram": "Add Chronogram",
     "weekdays": {
       "index": "Days of the week",
       "sunday": "Sunday",
@@ -77,6 +78,20 @@
     },
     "online": {
       "message" : "You are online"
+    }
+  },
+  "chronograms":{
+    "create": "Create a chronogram",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "type": "Type",
+    "enabled": "Enabled",
+    "created": "Chronogram created",
+    "form": {
+      "title": {
+        "label": "Title",
+        "placeholder": "Chronogram title"
+      }
     }
   },
   "activities": {
@@ -223,7 +238,8 @@
         "placeholder": "Activity recurrence"
       },
       "weekdays": "Weekdays",
-      "type": "Activity type"
+      "type": "Activity type",
+      "chronogram": "Chronogram"
     }
   },
   "meals": {

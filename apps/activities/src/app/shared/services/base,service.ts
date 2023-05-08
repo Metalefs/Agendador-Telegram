@@ -25,6 +25,13 @@ export class BaseService<T extends IBaseModel> {
     );
   }
 
+  findBy(filter: any): Observable<T[]> {
+    return this.http.get<T[]>(`${environment.endpoint}/${this.domainRoute}/${filter}`).pipe(
+      retry(3),
+      catchError(()=>{this.errorHandler.handle; return []})
+    );
+  }
+
   findById(id: any): Observable<T> {
     return this.http.get<T>(`${environment.endpoint}/${this.domainRoute}/${id}`).pipe(
       retry(3),

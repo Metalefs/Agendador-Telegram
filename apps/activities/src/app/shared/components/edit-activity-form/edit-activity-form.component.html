@@ -2,6 +2,18 @@
   <ion-row>
     <ion-col>
       <ion-item>
+        <ion-label position="inline">{{'activities.form.chronogram'|translate}}</ion-label>
+        <ion-select formControlName="chronogramId" interface="action-sheet" [placeholder]="">
+          <ion-select-option *ngFor="let chronogram of chronograms" [value]="chronogram._id">
+            {{chronogram.title}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
         <ion-label position="inline">{{'activities.form.type'|translate}}</ion-label>
         <ion-select formControlName="type" interface="action-sheet" [placeholder]="">
           <ion-select-option *ngFor="let type of getActivityTypes()" [value]="type.name">

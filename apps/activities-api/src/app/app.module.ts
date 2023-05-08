@@ -25,6 +25,7 @@ import { TelegramService } from './services/telegram.service';
 import { NotificationScheduler } from './routines/notificationSchedule';
 import { KeepAliveScheduler } from './routines/pingApp';
 import { PurgeSubscriptionsScheduler } from './routines/purgeSubscriptions';
+import { ChronogramsController } from './controllers/chronograms/chronograms.controller';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { PurgeSubscriptionsScheduler } from './routines/purgeSubscriptions';
       exclude: ['/activities-api*']
     })
   ],
-  controllers: [ActivitiesController, AuthController, AppController, SubscriptionsController, SettingsController],
+  controllers: [ActivitiesController, ChronogramsController, AuthController, AppController, SubscriptionsController, SettingsController],
   providers: [
     SubscriptionsService,
     ActivitiesService,

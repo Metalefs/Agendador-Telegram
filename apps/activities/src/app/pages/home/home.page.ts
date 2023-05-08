@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivitiesService } from '../../shared/services/activities.service';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { EditActivityComponent } from '../../shared/components/edit-activity/edit-activity.component';
-import { IActivity, IconTypeEnum, IUserSettings } from '@uncool/shared';
+import { IActivity, IChronogram, IconTypeEnum, IUserSettings } from '@uncool/shared';
 import { ItemReorderEventDetail } from '@ionic/angular';
 import { AuthenticationService } from '../../shared/services/auth-http/auth-http.service';
 import { Router } from '@angular/router';
@@ -16,8 +16,9 @@ import { PushNofiticationService } from '../../shared/services/pushNotificationS
 import { ConnectivityService } from '../../shared/services/connectivity.service';
 import { SettingsComponent } from '../../shared/components/settings/settings.component';
 import { SettingsService } from '../../shared/components/settings/settings.service';
-import { Subject } from 'rxjs';
 import { DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core';
+import { ChronogramsService } from '../../shared/services/chronograms.service';
+import { EditChronogramComponent } from '../../shared/components/edit-chronogram/edit-chronogram.component';
 
 @Component({
   selector: 'app-home',
@@ -27,8 +28,10 @@ import { DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core';
 export class HomePage implements OnInit {
   result!: string;
   iconTypes = IconTypeEnum;
+  chronograms!: IChronogram[];
   activities!: IActivity[];
   weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+  activeChronogram: IChronogram | null = null;
   activeWeekdays: string[] = this.weekdays;//[this.weekdays[new Date().getDay()]]
   userSettings?: IUserSettings;
   events: EventInput[] = [];
@@ -39,6 +42,7 @@ export class HomePage implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     public service: ActivitiesService,
+    public chronogramService: ChronogramsService,
     public settingsService: SettingsService,
     private router: Router,
     private translate: TranslateService,
@@ -69,12 +73,18 @@ export class HomePage implements OnInit {
     this.settingsService.findUserSettings().subscribe(settings => {
       this.userSettings = settings[0]
     });
-
+    this.getChronograms();
     this.getActivities();
   }
 
   getActivities() {
     this.filterWeekdays(this.activeWeekdays)
+  }
+  getChronograms() {
+    this.chronogramService.getChronograms().subscribe(chronograms => {
+      this.chronograms = chronograms;
+      console.log(this.chronograms)
+    })
   }
 
   refresh(ev: any) {
@@ -112,6 +122,15 @@ export class HomePage implements OnInit {
     });
     activityModal.onDidDismiss().then(this.createActivity)
     activityModal.present();
+  }
+
+  async openAddChronogramModal() {
+    const modal = await this.modalCtrl.create({
+      component: EditChronogramComponent,
+      componentProps: { }
+    });
+    modal.onDidDismiss().then(this.createChronogram)
+    modal.present();
   }
 
   async openAddSettingsModal() {
@@ -171,6 +190,21 @@ export class HomePage implements OnInit {
     }
   }
 
+  async createChronogram(activity: OverlayEventDetail) {
+    if (activity.role === 'confirm') {
+      const createOBJ = activity.data;
+      this.chronogramService.create(createOBJ).subscribe(async () => {
+        this.getActivities();
+        const toast = await this.toastController.create({
+          message: await this.translate.get('chronograms.created').toPromise(),
+          duration: 1500,
+          position: 'top'
+        });
+        await toast.present()
+      });
+    }
+  }
+
   async delete(activity: IActivity) {
     const loading = await this.loadingController.create();
     await loading.present();
@@ -193,12 +227,16 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  toggleWeekday(day: string) {
-    if (!this.isDaySelected(day))
-      this.activeWeekdays.push(day)
+  toggleChronogram(chronogram: IChronogram) {
+    if (!this.isChronogramSelected(chronogram))
+      this.activeChronogram = chronogram
     else
-      this.activeWeekdays.splice(this.activeWeekdays.indexOf(day), 1)
+      this.activeChronogram = null
     this.filterWeekdays(this.activeWeekdays)
+  }
+
+  isChronogramSelected(chronogram: IChronogram) {
+    return this.activeChronogram === chronogram;
   }
 
   filterWeekdays(days: string[]) {
@@ -213,10 +251,6 @@ export class HomePage implements OnInit {
         await this.localNotificationService.schedule(this.activities);
       })
     });
-  }
-
-  isDaySelected(day: string) {
-    return this.activeWeekdays.includes(day);
   }
 
   async handleDateClick(event:DateSelectArg){

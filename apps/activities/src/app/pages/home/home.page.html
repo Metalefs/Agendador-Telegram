@@ -27,15 +27,20 @@
       <ion-title size="large"> {{'general.schedule'|translate}} </ion-title>
     </ion-toolbar>
   </ion-header>
-  <!-- <ion-row>
-    <ion-chip *ngFor="let day of weekdays"
-      [ngClass]="{'chip-unchecked': !isDaySelected(day), 'chip-checked':isDaySelected(day)}"
-      (click)="toggleWeekday(day)"
+
+  <ion-row>
+    <ion-chip *ngFor="let chronogram of chronograms"
+      [ngClass]="{'chip-unchecked': !isChronogramSelected(chronogram), 'chip-checked':isChronogramSelected(chronogram)}"
+      (click)="toggleChronogram(chronogram)"
       color="light"
     >
-      {{'general.weekdays.'+day |translate }}</ion-chip
-    >
-  </ion-row> -->
+      {{chronogram.title}}
+    </ion-chip>
+    <ion-button (click)="openAddChronogramModal()">
+      <ion-icon slot="start" name="add"></ion-icon>
+      {{'general.addChronogram'|translate}}
+    </ion-button>
+  </ion-row>
 
   <uncool-calendar-view
     [events]='events'

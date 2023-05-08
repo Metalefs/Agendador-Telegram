@@ -13,6 +13,7 @@ export interface IActivity extends IBaseModel{
   done?: boolean;
   alarm?:boolean;
   userId?: string;
+  chronogramId?: string;
   remindUser?:boolean;
   remindOffset?:number;
   remindOffsetType?:RemindOffsetType;

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivityTypeEnum, IActivity, IconTypeEnum, RemindOffsetType } from '@uncool/shared';
+import { ActivityTypeEnum, IActivity, IChronogram, IconTypeEnum, RemindOffsetType } from '@uncool/shared';
 import { Subscription } from 'rxjs';
 import { RepeatIntervalType } from '../../../../../../../libs/shared/src/lib/models/interfaces/IActivity';
 import { ActivitiesService } from '../../services/activities.service';
 import * as moment from 'moment';
 import { getWeekdayInText, getWeekdays } from '../../utils/calendar';
-import { TranslateService } from '@ngx-translate/core';
+import { ChronogramsService } from '../../services/chronograms.service';
 
 @Component({
   selector: 'app-edit-activity-form',
@@ -18,14 +18,16 @@ export class EditActivityFormComponent implements OnInit {
   @Input() activityTime?: Date;
   @Input() activity?: IActivity;
   @Output() onInitForm = new EventEmitter<UntypedFormGroup>();
+
   activityType = ActivityTypeEnum;
   iconTypes = IconTypeEnum;
   subscriptions: Array<Subscription> = []
 
-  constructor(private service: ActivitiesService, private fb: UntypedFormBuilder) { }
+  chronograms?: IChronogram[];
+
+  constructor(private service: ActivitiesService, private chronogramService: ChronogramsService, private fb: UntypedFormBuilder) { }
 
   async ngOnInit() {
-
     const weekdays = this.activityTime ? await getWeekdayInText(moment(this.activityTime).weekday()) : this.activity?.weekdays??'';
     this.form = this.fb.group({
       _id: [, []],
@@ -41,6 +43,7 @@ export class EditActivityFormComponent implements OnInit {
       repeatIntervalType: [this.activity?.repeatIntervalType??''],
       repeatIntervalStartDate: [this.activity?.repeatIntervalStartDate??''],
       hideRepeatIntervalBeforeStartDate: [this.activity?.hideRepeatIntervalBeforeStartDate ?? false],
+      chronogramId: [this.activity?.chronogramId ?? false],
       type: [this.type, Validators.required],
       disabled: [this.activity?.disabled ?? false]
     });
@@ -56,6 +59,10 @@ export class EditActivityFormComponent implements OnInit {
           this.form.get('remindUser')!.reset(undefined, {onlySelf: true, emitEvent: false});
       }),
     )
+
+    this.chronogramService.getChronograms().subscribe(chronograms => {
+      this.chronograms = chronograms;
+    })
   }
 
   getActivityTypes(){

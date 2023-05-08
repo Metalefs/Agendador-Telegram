@@ -20,6 +20,10 @@ export class ActivitiesService {
     return this.repo.findOne({ _id: new ObjectId(id), userId: new ObjectId(userId) })
   }
 
+  async findBy(by, userId) {
+    return this.repo.find({ by, userId: new ObjectId(userId) })
+  }
+
   async findByType(type, userId) {
     return this.repo.find({ type, userId: new ObjectId(userId) })
   }
