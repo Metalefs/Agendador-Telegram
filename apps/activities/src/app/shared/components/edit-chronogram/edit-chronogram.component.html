@@ -2,49 +2,70 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button (click)="cancel()">{{'general.cancel'|translate}}</ion-button>
+        <ion-button (click)="cancel()">{{
+          'general.cancel' | translate
+        }}</ion-button>
       </ion-buttons>
-      <ion-title>{{'chronograms.create'|translate}}</ion-title>
+      <ion-title>{{ 'chronograms.create' | translate }}</ion-title>
       <ion-buttons slot="end">
-        <ion-button [disabled]="this.form?.invalid" (click)="confirm()" [strong]="true">{{'general.confirm'|translate}}</ion-button>
+        <ion-button
+          [disabled]="this.form?.invalid"
+          (click)="confirm()"
+          [strong]="true"
+          >{{ 'general.confirm' | translate }}</ion-button
+        >
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
+    <form [formGroup]="form">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">{{
+              'chronograms.form.title.label' | translate
+            }}</ion-label>
+            <ion-input
+              formControlName="title"
+              type="text"
+              [placeholder]="'chronograms.form.title.placeholder' | translate"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="stacked">{{'chronograms.form.title.label'|translate}}</ion-label>
-          <ion-input formControlName="title" type="text" [placeholder]="'chronograms.form.title.placeholder'|translate"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="inline">{{
+              'chronograms.type' | translate
+            }}</ion-label>
+            <ion-select
+              formControlName="type"
+              interface="action-sheet"
+              [placeholder]=""
+            >
+              <ion-select-option [value]="type.weekly">
+                {{ 'chronograms.weekly' | translate }}
+              </ion-select-option>
+              <ion-select-option [value]="type.monthly">
+                {{ 'chronograms.monthly' | translate }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="inline">{{'chronograms.type'|translate}}</ion-label>
-          <ion-select formControlName="type" interface="action-sheet" [placeholder]="">
-            <ion-select-option [value]="type.weekly">
-              {{'chronograms.weekly'|translate}}
-            </ion-select-option>
-            <ion-select-option [value]="type.monthly">
-              {{'chronograms.monthly'|translate}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="inline">{{'chronograms.enabled'|translate}}</ion-label>
-          <ion-toggle slot="end" formControlName="disabled"></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="inline">{{
+              'chronograms.enabled' | translate
+            }}</ion-label>
+            <ion-toggle slot="end" formControlName="enabled"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </form>
   </ion-content>
 </ion-content>

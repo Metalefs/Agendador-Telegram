@@ -26,6 +26,8 @@ import { NotificationScheduler } from './routines/notificationSchedule';
 import { KeepAliveScheduler } from './routines/pingApp';
 import { PurgeSubscriptionsScheduler } from './routines/purgeSubscriptions';
 import { ChronogramsController } from './controllers/chronograms/chronograms.controller';
+import { ChronogramsService } from './controllers/chronograms/chronograms.service';
+import { ChronogramRepository } from './repository/chronogram.repository';
 
 @Module({
   imports: [
@@ -38,6 +40,7 @@ import { ChronogramsController } from './controllers/chronograms/chronograms.con
   providers: [
     SubscriptionsService,
     ActivitiesService,
+    ChronogramsService,
     ScheduleService,
     AuthService,
     UserService,
@@ -46,6 +49,7 @@ import { ChronogramsController } from './controllers/chronograms/chronograms.con
     SubscriptionRepository,
     SettingsService,
     UserSettingsRepository,
+    ChronogramRepository,
     TelegramService,
     {
       provide: 'DATABASE_CONNECTION',

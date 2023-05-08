@@ -129,7 +129,7 @@ export class HomePage implements OnInit {
       component: EditChronogramComponent,
       componentProps: { }
     });
-    modal.onDidDismiss().then(this.createChronogram)
+    modal.onDidDismiss().then(this.createChronogram.bind(this))
     modal.present();
   }
 
@@ -194,6 +194,7 @@ export class HomePage implements OnInit {
     if (activity.role === 'confirm') {
       const createOBJ = activity.data;
       this.chronogramService.create(createOBJ).subscribe(async () => {
+        this.getChronograms();
         this.getActivities();
         const toast = await this.toastController.create({
           message: await this.translate.get('chronograms.created').toPromise(),
@@ -203,6 +204,30 @@ export class HomePage implements OnInit {
         await toast.present()
       });
     }
+  }
+
+  async editChronogram(chronogram: IChronogram) {
+    const modal = await this.modalCtrl.create({
+      component: EditChronogramComponent,
+      componentProps: { chronogram }
+    });
+    modal.onDidDismiss().then(((activity: OverlayEventDetail) => {
+      if (activity.role === 'confirm') {
+        const createOBJ = activity.data;
+        this.chronogramService.update(createOBJ).subscribe(async () => {
+          this.getChronograms();
+          this.getActivities();
+          const toast = await this.toastController.create({
+            message: await this.translate.get('chronograms.updated').toPromise(),
+            duration: 1500,
+            position: 'top'
+          });
+          await toast.present()
+        });
+      }
+    }))
+
+    modal.present();
   }
 
   async delete(activity: IActivity) {
@@ -222,24 +247,67 @@ export class HomePage implements OnInit {
     })
   }
 
+  async deleteChronogram(chronogram:IChronogram){
+    const confirmation = await confirm(await this.translate.get('general.delete').toPromise() + " " +chronogram.title +" ?")
+    if(!confirmation) return;
+
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    this.chronogramService.delete(chronogram._id!).subscribe(async () => {
+      await loading.dismiss();
+      this.getChronograms();
+      this.getActivities();
+      const toast = await this.toastController.create({
+        message: await this.translate.get('chronograms.deleted').toPromise(),
+        duration: 1500,
+        position: 'top'
+      });
+
+      await toast.present();
+    })
+  }
+
   async logout() {
     await this.authService.logout();
     this.router.navigate(['/login']);
   }
 
   toggleChronogram(chronogram: IChronogram) {
-    if (!this.isChronogramSelected(chronogram))
+    if (!this.isChronogramSelected(chronogram)){
       this.activeChronogram = chronogram
-    else
+      this.filterChronogram()
+    }
+    else {
       this.activeChronogram = null
-    this.filterWeekdays(this.activeWeekdays)
+      this.filterWeekdays(this.activeWeekdays)
+    }
   }
 
-  isChronogramSelected(chronogram: IChronogram) {
+  isChronogramSelected(chronogram: IChronogram|null) {
     return this.activeChronogram === chronogram;
   }
 
+  filterChronogram() {
+    if(this.activeChronogram!._id!)
+    this.service.getActivitiesByChronogramId(this.activeChronogram!._id!).subscribe(async (activities: IActivity[]) => {
+      this.activities = activities;
+
+      this.events = this.service.activityToCalendarEvent(this.activities);
+      console.log(activities,this.events)
+      this.connectivityService.offlineEvent?.subscribe(async e => {
+        await this.localNotificationService.cancelPending();
+        await this.localNotificationService.schedule(this.activities);
+      })
+    });
+  }
+
   filterWeekdays(days: string[]) {
+    if(this.activeChronogram?._id){
+      this.filterChronogram();
+      return;
+    }
+
     if (!days || days.length === 0) days = this.weekdays;
     this.service.getActivitiesByWeekdays(days).subscribe(async (activities: IActivity[]) => {
       this.activities = activities;

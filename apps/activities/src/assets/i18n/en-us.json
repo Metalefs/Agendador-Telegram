@@ -12,6 +12,7 @@
     "exercises": "Exercises",
     "settings": "Settings",
     "addChronogram": "Add Chronogram",
+    "main": "Main",
     "weekdays": {
       "index": "Days of the week",
       "sunday": "Sunday",
@@ -87,6 +88,8 @@
     "type": "Type",
     "enabled": "Enabled",
     "created": "Chronogram created",
+    "updated": "Chronogram updated",
+    "deleted": "Chronogram deleted",
     "form": {
       "title": {
         "label": "Title",

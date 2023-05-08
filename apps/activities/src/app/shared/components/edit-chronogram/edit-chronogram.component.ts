@@ -18,12 +18,12 @@ export class EditChronogramComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const chronogram:IChronogram = (this.params.data as any).extra.chronogram;
+    const chronogram:IChronogram = (this.params.data as any).chronogram ?? null;
 
     this.form = this.fb.group({
       _id: [chronogram?._id ?? null, []],
-      title: [chronogram?.title ?? '', [Validators.required]],
-      type: [chronogram, Validators.required],
+      title: [chronogram?.title ?? null, [Validators.required]],
+      type: [chronogram?.type ?? null, Validators.required],
       enabled: [chronogram?.enabled ?? false]
     });
   }

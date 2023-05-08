@@ -12,6 +12,7 @@
     "exercises": "Exercicios",
     "settings": "Configurações",
     "addChronogram": "Adicionar Cronograma",
+    "main": "Principal",
     "weekdays": {
       "index": "Dias da semana",
       "sunday": "Domingo",
@@ -87,6 +88,8 @@
     "type": "Tipo",
     "enabled": "Habilitado",
     "created": "Cronograma criado",
+    "updated": "Cronograma atualizado",
+    "deleted": "Chronogram deletado",
     "form": {
       "title": {
         "label": "Titulo",

@@ -4,11 +4,12 @@ import { ObjectId } from 'mongodb';
 import { AuthInterceptor } from '../../middlewares/auth.interceptor';
 
 import { ChronogramsService } from './chronograms.service';
+import { ActivitiesService } from '../activities/activities.service';
 
 @Controller('chronograms')
 @UseInterceptors(AuthInterceptor)
 export class ChronogramsController {
-  constructor(private readonly chronogramsService: ChronogramsService) { }
+  constructor(private readonly chronogramsService: ChronogramsService, private activitiesService: ActivitiesService) { }
 
   @Get('/')
   async list(@Req() req) {
@@ -36,7 +37,11 @@ export class ChronogramsController {
   }
 
   @Delete(':id')
-  delete(@Param('id') id) {
+  async delete(@Param('id') id, @Req() request: Request) {
+    const activities = await this.activitiesService.findByChronogram(id,(request as any).user);
+    for(const activity of activities){
+      await this.activitiesService.delete(activity._id);
+    }
     return this.chronogramsService.delete(id);
   }
 }

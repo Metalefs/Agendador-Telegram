@@ -16,7 +16,7 @@ export class ActivitiesController {
   }
   @Get('/chronogram/:id')
   findByChronogram(@Param() params, @Req() req) {
-    return this.activitiesService.findBy({chronogramId:params.id}, req.user);
+    return this.activitiesService.findByChronogram(params.id, req.user);
   }
   @Get('/type/:type')
   findByType(@Param() params, @Req() req) {
