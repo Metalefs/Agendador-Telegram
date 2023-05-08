@@ -323,7 +323,8 @@ export class HomePage implements OnInit {
 
   async handleDateClick(event:DateSelectArg){
     await this.openAddActivityModal('other', {
-      time: event.start
+      time: event.start,
+      chronogramId: this.activeChronogram?._id ?? null
     })
   }
 

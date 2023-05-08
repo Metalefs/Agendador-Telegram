@@ -15,6 +15,7 @@ import { ChronogramsService } from '../../services/chronograms.service';
 export class EditActivityFormComponent implements OnInit {
   @Input() form!: UntypedFormGroup;
   @Input() type!: string;
+  @Input() chronogramId?: string;
   @Input() activityTime?: Date;
   @Input() activity?: IActivity;
   @Output() onInitForm = new EventEmitter<UntypedFormGroup>();
@@ -43,7 +44,7 @@ export class EditActivityFormComponent implements OnInit {
       repeatIntervalType: [this.activity?.repeatIntervalType??''],
       repeatIntervalStartDate: [this.activity?.repeatIntervalStartDate??''],
       hideRepeatIntervalBeforeStartDate: [this.activity?.hideRepeatIntervalBeforeStartDate ?? false],
-      chronogramId: [this.activity?.chronogramId ?? false],
+      chronogramId: [this.chronogramId ?? this.activity?.chronogramId ?? null],
       type: [this.type, Validators.required],
       disabled: [this.activity?.disabled ?? false]
     });

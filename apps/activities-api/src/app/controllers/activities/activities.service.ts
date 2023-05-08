@@ -29,7 +29,7 @@ export class ActivitiesService {
   }
 
   async findByWeekdays(days, userId) {
-    const list = await this.repo.find({ weekdays: {$in: days.split(',')}, userId: new ObjectId(userId) })
+    const list = await this.repo.find({ weekdays: {$in: days.split(',')}, userId: new ObjectId(userId), chronogramId: null })
     return list.sort((a, b) => (a.priority || 0) - (b.priority || 0));
   }
 
