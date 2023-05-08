@@ -17,7 +17,7 @@ import { CalendarViewComponentModule } from './components/calendar-view/calendar
     ActivityComponentModule,
     HomePageRoutingModule,
     SharedModule,
-    CalendarViewComponentModule
+    CalendarViewComponentModule,
   ],
   declarations: [HomePage],
   providers: [

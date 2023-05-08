@@ -12,7 +12,7 @@ import { CalendarViewComponent } from './calendar-view.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    FullCalendarModule
+    FullCalendarModule,
   ],
   declarations: [CalendarViewComponent],
   exports: [CalendarViewComponent]
