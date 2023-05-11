@@ -48,7 +48,15 @@
         <span *ngIf="time!.errors!['required']!">{{'activities.form.time.required'|translate}}</span>
       </div>
     </ion-col>
-    <ion-col>
+    <ng-container *ngIf="getChronogram()?.type === chronogramType.monthly">
+      <ion-col>
+          <app-select-months [formGroup]="form" [controlName]="'months'"></app-select-months>
+      </ion-col>
+      <ion-col>
+          <app-select-days [formGroup]="form" [controlName]="'days'" [MAX]="daysInMonth"></app-select-days>
+      </ion-col>
+    </ng-container>
+    <ion-col *ngIf="getChronogram()?.type === chronogramType.weekly">
         <app-select-weekdays [formGroup]="form" [controlName]="'weekdays'"></app-select-weekdays>
     </ion-col>
   </ion-row>

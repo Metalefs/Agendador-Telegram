@@ -16,7 +16,7 @@ export const getWeekdays = async (translate: TranslateService, days: string[]) =
 };
 export const getMonths = async (translate: TranslateService, month: string[]) => {
   const months:any = [];
-  month.forEach(async (m) => {
+  month.forEach(async (m,i) => {
     months.push({
       label: (
         (await translate
@@ -24,6 +24,7 @@ export const getMonths = async (translate: TranslateService, month: string[]) =>
           .toPromise()) as string
       ).slice(0, 3).toUpperCase(),
       value: m,
+      number: i+1
     });
   });
   return months;

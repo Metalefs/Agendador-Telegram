@@ -1,5 +1,5 @@
 import * as schedule from 'node-schedule'
-import { IActivity, IChronogram, IUserSettings, RemindOffsetType, RepeatIntervalType } from "@uncool/shared";
+import { ChronogramType, IActivity, IChronogram, IUserSettings, RemindOffsetType, RepeatIntervalType } from "@uncool/shared";
 import { Inject, Injectable } from "@nestjs/common";
 import { Db } from "mongodb";
 import { SubscriptionsService } from '../controllers/subscriptions/subscriptions.service';
@@ -44,6 +44,9 @@ export class ScheduleService {
       if(activity.chronogramId == chronogram._id && !chronogram.enabled) {
         return;
       }
+      else if(activity.chronogramId == chronogram._id){
+        activity.chronogram = chronogram;
+      }
     }
 
     const dayOfWeek = activityWeekDaysToDate(activity.weekdays)
@@ -74,7 +77,11 @@ export class ScheduleService {
 
     console.log("scheduling:", scheduleId, { hour, minute, dayOfWeek });
 
-    schedule.scheduleJob(scheduleId, { hour, minute, dayOfWeek }, this.sendActivityNotification.bind(this, activity));
+    if(activity.chronogram && activity.chronogram.type === ChronogramType.monthly){
+      schedule.scheduleJob(scheduleId, brazil.toDate(), this.sendActivityNotification.bind(this, activity));
+    }
+    else
+      schedule.scheduleJob(scheduleId, { hour, minute, dayOfWeek }, this.sendActivityNotification.bind(this, activity));
   }
 
   async scheduleRecurrentActivityNotification(...args){
@@ -106,8 +113,10 @@ export class ScheduleService {
 
     if(activity.repeatIntervalType === RepeatIntervalType.hours)
       rule.hour = new schedule.Range(0, 23, activity.repeatInterval);
-    else
-      rule.minute = new schedule.Range(0, 59, activity.repeatInterval);
+    else if(activity.repeatIntervalType === RepeatIntervalType.minutes)
+      rule.minute = new schedule.Range(0, 59, activity.repeatInterval)
+    else if(activity.repeatIntervalType === RepeatIntervalType.months)
+      rule.month = new schedule.Range(0, 12, activity.repeatInterval)
 
     rule.tz = 'America/Sao_Paulo';
 

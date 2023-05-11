@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivityTypeEnum, IActivity, IChronogram, IconTypeEnum, RemindOffsetType } from '@uncool/shared';
+import { ActivityTypeEnum, ChronogramType, IActivity, IChronogram, IconTypeEnum, RemindOffsetType } from '@uncool/shared';
 import { Subscription } from 'rxjs';
 import { RepeatIntervalType } from '../../../../../../../libs/shared/src/lib/models/interfaces/IActivity';
 import { ActivitiesService } from '../../services/activities.service';
@@ -21,9 +21,10 @@ export class EditActivityFormComponent implements OnInit {
   @Output() onInitForm = new EventEmitter<UntypedFormGroup>();
 
   activityType = ActivityTypeEnum;
+  chronogramType = ChronogramType;
   iconTypes = IconTypeEnum;
   subscriptions: Array<Subscription> = []
-
+  daysInMonth = 0;
   chronograms?: IChronogram[];
 
   constructor(private service: ActivitiesService, private chronogramService: ChronogramsService, private fb: UntypedFormBuilder) { }
@@ -34,7 +35,9 @@ export class EditActivityFormComponent implements OnInit {
       _id: [, []],
       title: [this.activity?.title??'', [Validators.required]],
       time: [moment(this.activityTime).toISOString(true) ?? new Date().toISOString(), [Validators.required]],
-      weekdays: [weekdays, Validators.required],
+      days: [null],
+      months: [null],
+      weekdays: [weekdays],
       description: [this.activity?.description??''],
       remindUser: [this.activity?.remindUser??false],
       remindOffset: [this.activity?.remindOffset??''],
@@ -64,6 +67,20 @@ export class EditActivityFormComponent implements OnInit {
     this.chronogramService.getChronograms().subscribe(chronograms => {
       this.chronograms = chronograms;
     })
+
+    this.form.get('months')?.valueChanges.subscribe(x=>{
+      const days = []
+      if(x) {
+        for(let month of x){
+          days.push(moment(new Date().getFullYear()+'/'+month, "YYYY-MM").daysInMonth())
+        }
+        this.daysInMonth = Math.min.apply(Math, days)
+      }
+    })
+  }
+
+  getChronogram(){
+    return this.chronograms?.find(c=>c._id === this.form.value.chronogramId)
   }
 
   getActivityTypes(){
