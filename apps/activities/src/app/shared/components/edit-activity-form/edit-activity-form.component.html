@@ -37,10 +37,10 @@
         <ion-label position="inline">{{'activities.form.time.label'|translate}}
           <ion-note *ngIf="this.form.value?.repeatable">{{'activities.form.repeat.validation'|translate}}</ion-note>
         </ion-label>
-        <ion-datetime-button [disabled]="this.form.value?.repeatable" datetime="datetime1"></ion-datetime-button>
+        <ion-datetime-button [disabled]="this.form.value?.repeatable" datetime="datetime10"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime id="datetime1" formControlName="time" presentation="time"></ion-datetime>
+            <ion-datetime id="datetime10" formControlName="time" presentation="time"></ion-datetime>
           </ng-template>
         </ion-modal>
       </ion-item>
@@ -56,7 +56,7 @@
           <app-select-days [formGroup]="form" [controlName]="'days'" [MAX]="daysInMonth"></app-select-days>
       </ion-col>
     </ng-container>
-    <ion-col *ngIf="getChronogram()?.type === chronogramType.weekly">
+    <ion-col *ngIf="getChronogram()?.type !== chronogramType.monthly">
         <app-select-weekdays [formGroup]="form" [controlName]="'weekdays'"></app-select-weekdays>
     </ion-col>
   </ion-row>
