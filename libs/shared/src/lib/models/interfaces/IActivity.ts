@@ -1,5 +1,6 @@
 import { ActivityTypeEnum } from '../enums/ActivityTypeEnum';
 import { IBaseModel } from './IBaseModel';
+import { IChronogram } from './IChronogram';
 
 export interface IActivity extends IBaseModel{
   id?: number;
@@ -13,6 +14,7 @@ export interface IActivity extends IBaseModel{
   done?: boolean;
   alarm?:boolean;
   userId?: string;
+  chronogram?: IChronogram;
   chronogramId?: string;
   remindUser?:boolean;
   remindOffset?:number;
@@ -31,5 +33,6 @@ export enum RemindOffsetType {
 }
 export enum RepeatIntervalType {
   hours='hours',
-  minutes='minutes'
+  minutes='minutes',
+  months='months'
 }

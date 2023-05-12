@@ -14,6 +14,8 @@ import { SupplementFormComponent } from './components/supplement-form/supplement
 import { AddExerciseComponent } from './components/workout-form/components/add-exercise/add-exercise.component';
 import { WorkoutFormComponent } from './components/workout-form/workout-form.component';
 import { EditActivityFormComponent } from './edit-activity-form.component';
+import { SelectMonthsModule } from '../select-months/select-months.module';
+import { SelectDaysModule } from '../select-days/select-days.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { EditActivityFormComponent } from './edit-activity-form.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    SelectWeekdaysModule
+    SelectWeekdaysModule,
+    SelectMonthsModule,
+    SelectDaysModule,
   ],
   exports: [
     EditActivityFormComponent

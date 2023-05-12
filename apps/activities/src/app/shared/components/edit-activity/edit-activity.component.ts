@@ -19,8 +19,8 @@ export class EditActivityComponent implements OnInit {
 
   ngOnInit() {
     this.type = (this.params.data as any).type;
-    this.chronogramId = (this.params.data as any).extra.chronogramId;
-    this.time = (this.params.data as any).extra.time;
+    this.chronogramId = (this.params.data as any).extra?.chronogramId;
+    this.time = (this.params.data as any).extra?.time;
   }
 
   cancel() {

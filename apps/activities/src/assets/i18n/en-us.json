@@ -13,6 +13,7 @@
     "settings": "Settings",
     "addChronogram": "Add Chronogram",
     "main": "Main",
+    "days": "Days",
     "weekdays": {
       "index": "Days of the week",
       "sunday": "Sunday",
@@ -35,7 +36,7 @@
       "august": "August",
       "september": "September",
       "october": "October",
-      "November": "November",
+      "november": "November",
       "december": "December"
     },
     "or": "or",
@@ -141,7 +142,8 @@
           "label":"Notify every",
           "options":{
             "minutes": "Minutes",
-            "hours": "Hours"
+            "hours": "Hours",
+            "months": "Months"
           }
         },
         "startDate": {
