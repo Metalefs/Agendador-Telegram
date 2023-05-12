@@ -41,7 +41,7 @@ export class ScheduleService {
     if(userSettings?.disableNotifications) return;
 
     for(const chronogram of chronograms){
-      if(activity.chronogramId == chronogram._id && !chronogram.enabled) {
+      if(activity.chronogramId && activity.chronogramId == chronogram._id && !chronogram.enabled) {
         return;
       }
       else if(activity.chronogramId == chronogram._id){
@@ -137,7 +137,7 @@ export class ScheduleService {
     if(userSettings?.disableNotifications) return;
 
     for(const chronogram of chronograms){
-      if(activity.chronogramId == chronogram._id && !chronogram.enabled) {
+      if(activity.chronogramId && activity.chronogramId == chronogram._id && !chronogram.enabled) {
         return;
       }
     }
